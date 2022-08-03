@@ -4,7 +4,8 @@
     "password": null,
     "database": "user",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "loging": false
   },
   "test": {
     "username": "root",
