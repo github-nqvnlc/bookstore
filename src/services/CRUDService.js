@@ -12,11 +12,11 @@ let createdNewUser = async (data) => {
         firstName: data.firstName,
         lastName: data.lastName,
         address: data.address,
-        phoneNumber: data.phoneNumber,
+        phonenumber: data.phonenumber,
         gender: data.gender === "1" ? true : false,
         roleId: data.roleId,
       });
-      resolve("oke");
+      resolve("Connect successfully");
     } catch (e) {
       console.log(e);
     }

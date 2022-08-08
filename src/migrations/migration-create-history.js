@@ -5,6 +5,7 @@ module.exports = {
       // patientid: DataTypes.INTEGER,
       // doctorid: DataTypes.INTEGER,
       // description: DataTypes.TEXT,
+      // files: DataTypes.TEXT,
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -18,6 +19,9 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       description: {
+        type: Sequelize.TEXT,
+      },
+      files: {
         type: Sequelize.TEXT,
       },
 
