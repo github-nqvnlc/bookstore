@@ -1,0 +1,130 @@
+.loginBackground {
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: sans-serif;
+  background: linear-gradient(90deg, #ffa9a9, #64a1e0, #ffa9a9, #64a1e0);
+  background-size: 400% 400%;
+  -webkit-animation: gradientBG 7s ease infinite forwards;
+  animation: gradientBG 7s ease infinite forwards;
+  .loginContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 5rem;
+    background-color: rgba(0, 0, 0, 0.75);
+    width: 35rem;
+    height: auto;
+    border-radius: 10%;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+  h1 {
+    text-align: center;
+    margin: 1rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+
+  label span {
+    display: inline-block;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    position: relative;
+    bottom: 4rem;
+    transition: transform 200ms ease-in-out;
+    color: #fff;
+  }
+
+  input {
+    position: relative;
+    margin-bottom: 2rem;
+    padding: 0.5rem 0;
+    background-color: transparent;
+    outline: none;
+    border: unset;
+    border-bottom: 1.5px solid white;
+    font-size: 1.25rem;
+    letter-spacing: 1.5px;
+    color: white;
+    z-index: 1;
+  }
+
+  button {
+    display: inline-block;
+    margin: 1rem 0;
+    padding: 0.75rem;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 0.25em;
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    transition: all 100ms ease-in-out;
+    background-color: rgb(225, 225, 255);
+  }
+
+  button:hover {
+    background-color: rgb(235, 235, 235);
+  }
+
+  a {
+    color: rgb(235, 235, 235);
+  }
+
+  a:hover {
+    color: rgb(215, 215, 215);
+  }
+
+  p {
+    text-align: center;
+    color: #fff;
+  }
+
+  input:focus,
+  input:valid {
+    border-bottom: 2px solid white;
+  }
+
+  input:focus + label span,
+  input:valid + label span {
+    color: white;
+    transform: translateY(-2rem);
+  }
+}
+
+@-webkit-keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.loginContainer {
+  margin: 0 auto;
+  width: 500px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 10%;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  display: block;
+}
