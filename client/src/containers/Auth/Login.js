@@ -27,7 +27,8 @@ class Login extends Component {
             </label>
             <button type="submit">Login</button>
             <p>
-              Don't have an account? <a href="">Register</a>.
+              <a href="">Forgot password?</a>
+              <a href="">Don't have an account?</a>
             </p>
           </div>
         </div>

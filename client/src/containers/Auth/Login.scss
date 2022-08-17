@@ -1,3 +1,4 @@
+@import "../../styles/variables";
 .loginBackground {
   margin: 0;
   width: 100%;
@@ -10,10 +11,11 @@
   -webkit-animation: gradientBG 7s ease infinite forwards;
   animation: gradientBG 7s ease infinite forwards;
   .loginContainer {
+    font-family: $fontexo;
     display: flex;
     flex-direction: column;
     padding: 3rem 5rem;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.45);
     width: 35rem;
     height: auto;
     border-radius: 10%;
@@ -23,6 +25,7 @@
     text-align: center;
     margin: 1rem;
     margin-bottom: 2rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #fff;
@@ -33,7 +36,7 @@
     font-size: 1.25rem;
     letter-spacing: 2px;
     position: relative;
-    bottom: 4rem;
+    bottom: 5rem;
     transition: transform 200ms ease-in-out;
     color: #fff;
   }
@@ -41,7 +44,7 @@
   input {
     position: relative;
     margin-bottom: 2rem;
-    padding: 0.5rem 0;
+    padding: 1rem 0;
     background-color: transparent;
     outline: none;
     border: unset;
@@ -60,7 +63,7 @@
     outline: none;
     border: none;
     border-radius: 0.25em;
-    font-size: 1rem;
+    font-size: 1.5rem;
     letter-spacing: 1.5px;
     font-weight: 500;
     transition: all 100ms ease-in-out;
@@ -73,6 +76,9 @@
 
   a {
     color: rgb(235, 235, 235);
+    text-decoration: none;
+    font-style: italic;
+    padding: 0 1rem;
   }
 
   a:hover {
