@@ -44,7 +44,7 @@
   input {
     position: relative;
     margin-bottom: 2rem;
-    padding: 1rem 0;
+    padding: 0.5rem 1rem;
     background-color: transparent;
     outline: none;
     border: unset;
@@ -123,14 +123,6 @@
   100% {
     background-position: 0% 50%;
   }
-}
 
-.loginContainer {
-  margin: 0 auto;
-  width: 500px;
-  height: 600px;
-  background-color: #fff;
-  border-radius: 10%;
-  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-  display: block;
+  
 }
