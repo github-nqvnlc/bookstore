@@ -1,14 +1,4 @@
 {
-    "header": {
-        "vietnamesebooks": "Vietnamese Books",
-        "foregionbooks": "Foregion Books",
-        "e-books": "E-Books",
-        "stationery": "Stationery",
-        "sovernir": "Sovernir & Gift",
-        "musictaps": "Music Taps",
-        "promotions": "Promotions"
-    },
-
     "common": {
         "add": "Add",
         "edit": "Edit",

@@ -22,7 +22,7 @@ class IntlProviderWrapper extends Component {
             <IntlProvider
                 locale={language}
                 messages={messages[language]}
-                defaultLocale="en">
+                defaultLocale="vi">
                 {children}
             </IntlProvider>
         );
