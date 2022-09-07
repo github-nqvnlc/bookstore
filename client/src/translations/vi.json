@@ -1,4 +1,14 @@
 {
+    "header": {
+        "vietnamesebooks": "Sách Tiếng Việt",
+        "foregionbooks": "Sách nước ngoài",
+        "e-books": "Sách điện tử",
+        "stationery": "Văn phòng phẩm",
+        "sovernir": "Quà lưu niệm & Thiệp",
+        "musictaps": "Đĩa Nhạc",
+        "promotions": "Khuyến mãi"
+    },
+
     "common": {
         "add": "Thêm",
         "edit": "Sửa",
