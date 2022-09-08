@@ -12,7 +12,7 @@ let createdNewUser = async (data) => {
         firstName: data.firstName,
         lastName: data.lastName,
         address: data.address,
-        phonenumber: data.phonenumber,
+        phoneNumber: data.phoneNumber,
         gender: data.gender === "1" ? true : false,
         roleId: data.roleId,
       });
@@ -76,7 +76,7 @@ let updateUserData = (data) => {
         user.firstName = data.firstName;
         user.lastName = data.lastName;
         user.address = data.address;
-        user.phonenumber = data.phonenumber;
+        user.phoneNumber = data.phoneNumber;
         await user.save();
         let allUsers = await db.User.findAll();
         resolve(allUsers);
