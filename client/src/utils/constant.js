@@ -1,12 +1,13 @@
 export const path = {
-    HOME: '/',
-    HOMEPAGE: '/home',
+    // HOME: '/',
+    HOMEPAGE: '/',
     LOGIN: '/login',
+    REGISTER: '/register',
     LOG_OUT: '/logout',
     SYSTEM: '/system'
 };
 
-export const languages = {
+export const LANGUAGES = {
     VI: 'vi',
     EN: 'en'
 };

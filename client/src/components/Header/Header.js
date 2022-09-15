@@ -12,13 +12,19 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Button,
 } from "reactstrap";
+import { LANGUAGES } from "../../utils/constant";
+import * as actions from "../../store/actions";
+import { changeLanguageApp } from "../../store/actions/appActions";
 
 import "./Header.scss";
 import logo from "../../assets/logo.png";
-import avt from "../../assets/avt.jpg";
+import avt from "../../assets/avatar.png";
+import { getUserImage } from "../../store/actions";
+import { Link } from "react-router-dom";
 
-class HomePage extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,13 +56,35 @@ class HomePage extends Component {
       togglerOpen: !this.state.togglerOpen,
     });
   }
+
+
+  changeLanguage = (language) => {
+    this.props.changeLanguageAppRedux(language)
+  }
   render() {
     let logoBrand = logo;
     let avatar = avt;
+    const { processLogout, language, userInfo, image } = this.props;
+    if (userInfo && userInfo !== null) {
+
+      this.props.getUserImage(userInfo.id)
+    }
 
     window.addEventListener("scroll", this.checkSticky);
+
     return (
       <div className="header_container ">
+        <div className="container">
+          <div className="language">
+            <div className={language === LANGUAGES.VI ? "lang-vi active" : "lang-vi"}>
+              <span onClick={() => this.changeLanguage(LANGUAGES.VI)}>VI</span>
+            </div>
+            <span>|</span>
+            <div className={language === LANGUAGES.EN ? "lang-en active" : "lang-en"}>
+              <span onClick={() => this.changeLanguage(LANGUAGES.EN)}>EN</span>
+            </div>
+          </div>
+        </div>
         <div className="header_topbar">
           <div className="topbar_content container">
             <div className="topbar_content_left col-xs-12 col-sm-6 col-md-6">
@@ -66,22 +94,7 @@ class HomePage extends Component {
             </div>
             <div className="topbar_content_right col-xs-12 col-sm-6 col-md-6">
               <div className="topbar_icon">
-                <UncontrolledDropdown>
-                  <DropdownToggle tag="div" className="ex_lang">
-                    <DropdownItem
-                      tag="i"
-                      className="fa fa-language"
-                    ></DropdownItem>
-                  </DropdownToggle>
-                  <DropdownMenu tag="div" className="icon_drop" right>
-                    <DropdownItem tag="div" className="lang_en">
-                      English
-                    </DropdownItem>
-                    <DropdownItem tag="div" className="lang_vi">
-                      Vietnamese
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
+
                 <UncontrolledDropdown>
                   <DropdownToggle tag="div" className="cart">
                     <DropdownItem
@@ -90,7 +103,7 @@ class HomePage extends Component {
                     ></DropdownItem>
                     <DropdownItem
                       tag="span"
-                      style={{ right: 10 }}
+                      style={{ right: "-5px" }}
                       className="count"
                     >
                       1
@@ -122,7 +135,25 @@ class HomePage extends Component {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </div>
-              <img className="avatar_user" src={avatar} />
+              {this.props.isLoggedIn ?
+                <UncontrolledDropdown>
+                  <DropdownToggle tag="div" style={{ display: "flex", flexDirection: "row", padding: "0 10px" }}>
+
+                    <img className="avatar_user" src={image && image !== null ? image : avatar} />
+                  </DropdownToggle>
+                  <DropdownMenu className="icon_drop" right>
+                    <DropdownItem tag="div" className="lang_en">
+                      Profile <span>{userInfo && userInfo.lastName ? userInfo.lastName : ''}</span>
+                    </DropdownItem>
+                    <DropdownItem tag="div" className="lang_vi" onClick={processLogout}>
+                      Logout
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown> :
+                <Button className="px-3 button_login" ><Link style={{ textDecoration: "none", color: "#fff" }} to="/login">Login</Link></Button>
+              }
+
+
             </div>
           </div>
         </div>
@@ -190,11 +221,17 @@ const mapStateToProps = (state) => {
   return {
     language: state.app.language,
     isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
+    image: state.user.image
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    processLogout: () => dispatch(actions.processLogout()),
+    changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
+    getUserImage: (id) => dispatch(actions.getUserImage(id))
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

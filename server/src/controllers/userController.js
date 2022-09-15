@@ -20,6 +20,7 @@ let handleLogin = async (req, res) => {
   });
 };
 
+
 let handleGetAllUsers = async (req, res) => {
   let id = req.query.id; //ALL, SINGLE
   let users = await userService.getAllUsers(id);
@@ -53,10 +54,38 @@ let handleDeleteUser = async (req, res) => {
   return res.status(200).json(message);
 }
 
+let getRole = async (req, res) => {
+  try {
+    let data = await userService.getRoleService(req.query.id);
+    return res.status(200).json(data);
+    
+  } catch (e) {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "Server error"
+    })
+  }
+}
+
+let getUserImage = async (req, res) => {
+  try {
+    let image = await userService.getUserImageService(req.query.id);
+    return res.status(200).json(image)
+  } catch (e) {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "Server error"
+    })
+  }
+}
+
 module.exports = {
   handleLogin: handleLogin,
   handleGetAllUsers: handleGetAllUsers,
   handleCreateNewUser: handleCreateNewUser,
   handleEditUser: handleEditUser,
   handleDeleteUser: handleDeleteUser,
+
+  getRole: getRole,
+  getUserImage: getUserImage,
 };

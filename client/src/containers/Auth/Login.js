@@ -6,6 +6,9 @@ import * as actions from "../../store/actions";
 import "./Login.scss";
 import { FormattedMessage } from "react-intl";
 import { handleLoginApi } from "../../services/userService";
+import banner from "../../assets/Banner/bookwallpapers.jfif"
+import logo from "../../assets/logo.png"
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -57,54 +60,74 @@ class Login extends Component {
 
     return (
       <>
-        <div className="loginBackground">
-          <div className="loginContainer">
-            <h1>Login</h1>
-            <input
-              type="text"
-              value={this.state.username}
-              onChange={(e) => {
-                this.handleOnChangeUsername(e);
-              }}
-              required
-            />
-            <label for="text">
-              <span>Username</span>
-            </label>
-            <input
-              type="password"
-              value={this.state.password}
-              onChange={(e) => {
-                this.handleOnChangePassword(e);
-              }}
-              required
-            />
-            <label for="password">
-              <span>Password</span>
-            </label>
-            <p
-              style={{
-                // color: "red",
-                fontSize: 12,
-                textAlign: "left",
-                fontStyle: "italic",
-              }}
-            >
-              {this.state.errMessage}
-            </p>
-            <button
-              onClick={(e) => {
-                this.handleLogin(e);
-              }}
-            >
-              Login
-            </button>
-            <p>
-              <a href="">Forgot password?</a>
-              <a href="">Don't have an account?</a>
-            </p>
+        <div className="login">
+          <div className="banner_image">
+            <img src={banner} className="banner" />
+          </div>
+          <div className="section_left">
+            <div className="form_container">
+              <img src={logo} className="logo" />
+              <div className="title">Login</div>
+              <div className="form_group">
+                <div className="input_group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    value={this.state.username}
+                    onChange={(e) => {
+                      this.handleOnChangeUsername(e);
+                    }}
+                    required
+                  />
+                </div>
+                <div className="input_group">
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    value={this.state.password}
+                    onChange={(e) => {
+                      this.handleOnChangePassword(e);
+                    }}
+                    required
+                  />
+                </div>
+                <div className="text_group">
+                  <span
+                    style={{
+                      color: "red",
+                      fontSize: 12,
+                      textAlign: "left",
+                      fontStyle: "italic",
+                    }}
+                  >{this.state.errMessage}</span>
+                  <span>You don't have account? <Link to='/register'>Register</Link></span>
+                </div>
+                <div className="text_group">
+                  <span
+                    style={{
+                      color: "red",
+                      fontSize: 12,
+                      textAlign: "left",
+                      fontStyle: "italic",
+                    }}
+                  ></span>
+                  <span> <a >Forgot password?</a></span>
+                </div>
+                <div className="input_group">
+                  <button
+                    type="submit"
+                    onClick={(e) => {
+                      this.handleLogin(e);
+                    }}
+                  >
+                    Login
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
       </>
     );
   }
@@ -119,7 +142,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     navigate: (path) => dispatch(push(path)),
-    // userLoginFail: () => dispatch(actions.userLoginFail()),
+    userLoginFail: () => dispatch(actions.userLoginFail()),
     userLoginSuccess: (userInfo) =>
       dispatch(actions.userLoginSuccess(userInfo)),
   };

@@ -1,0 +1,94 @@
+@import "../../styles/resposive.scss";
+@import "../../styles/color.scss";
+
+.card {
+    @include Responsive(SM) {
+        width: 150px
+    }
+
+    .card_body {
+        display: flex;
+        flex-direction: row;
+
+        @include Responsive(SM) {
+            flex-direction: column;
+        }
+
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+
+        .card_content {
+            width: 65%;
+
+            @include Responsive(SM) {
+                width: 100%;
+            }
+
+            .card_text {
+                display: flex;
+                flex-direction: row;
+
+                flex-wrap: nowrap;
+                align-content: center;
+                justify-content: flex-start;
+                align-items: baseline;
+
+                @include Responsive(XL) {
+                    flex-direction: column;
+                }
+
+                p {
+                    text-decoration-line: line-through;
+
+                    @include Responsive(XL) {
+                        font-size: 14px;
+                        margin: 0;
+                    }
+                }
+
+                span {
+                    text-decoration-line: none;
+                    font-size: 20px;
+
+                    @include Responsive(XL) {
+                        font-size: 18px;
+                        padding-left: 0;
+                    }
+
+                    font-weight: 900;
+                    color: $color-red;
+                    padding-left: 0.5em;
+                }
+            }
+
+        }
+
+        button {
+            width: 30%;
+            padding: 0 1em;
+            cursor: pointer;
+            background-color: $color-main;
+
+            @include Responsive(SM) {
+                width: 100%;
+            }
+
+            &:hover {
+                background-color: $color-focus;
+                box-shadow: 0 0 0 0.25rem $color-shadow !important;
+            }
+
+            &:focus {
+                background-color: $color-focus;
+                box-shadow: 0 0 0 0.25rem $color-shadow !important;
+            }
+
+            &:active {
+                background-color: $color-focus;
+                box-shadow: 0 0 0 0.25rem $color-shadow !important;
+            }
+        }
+    }
+}

@@ -1,0 +1,54 @@
+$color-main: #27ae61;
+$color-focus: #229955;
+$color-border: #f5f5f5;
+$color-shadow: rgba(40, 175, 98, 0.4);
+$color-shadow_red: rgba(182, 0, 0, 0.4);
+
+$color-red: #ff0000;
+$color-red-bold: #b60000;
+$color-white: #fff;
+$color-grey: #b3b3b3;
+$color-darken: #7e7e7e;
+
+$box_shadow: 0 0 0 0.25rem;
+$box_shadow_input: 0 0 3px;
+
+.button_hover {
+    &:hover {
+        background-color: $color-focus;
+        color: $color-white;
+        border: none;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+}
+
+.button_focus {
+    &:focus {
+        background-color: $color-focus;
+        color: $color-white;
+        border: none;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+}
+
+.button_active {
+    &:active {
+        background-color: $color-focus;
+        color: $color-white;
+        border: none;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+}
+
+.input_hover {
+    &:hover {
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+}
+
+.input_focus {
+    &:focus {
+        outline: none;
+        box-shadow: $box_shadow_input $color-shadow  !important;
+    }
+}

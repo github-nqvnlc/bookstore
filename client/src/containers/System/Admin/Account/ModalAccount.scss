@@ -1,0 +1,76 @@
+@import "../../../../styles/resposive.scss";
+@import "../../../../styles/color.scss";
+
+.upload_image {
+    padding: 0.5em;
+    border: 1px solid;
+    border-radius: 5px;
+
+    &:hover {
+        color: $color-white;
+        background-color: $color-focus;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+
+    &:active {
+        background-color: $color-focus;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+}
+
+.preview_image {
+    width: 300px;
+    height: 300px;
+    padding: 1em;
+    border: 1px solid $color-border;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+
+.button {
+    background-color: $color-main;
+    color: $color-white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+
+    &:hover {
+        background-color: $color-focus;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+
+    &:focus {
+        background-color: $color-focus;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+
+    &:active {
+        background-color: $color-focus;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+
+}
+
+.button_danger {
+    background-color: $color-red;
+    color: $color-white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+
+    &:hover {
+        background-color: $color-red-bold;
+        box-shadow: $box_shadow $color-shadow_red;
+    }
+
+    &:focus {
+        background-color: $color-red;
+        box-shadow: $box_shadow $color-shadow_red  !important;
+    }
+
+    &:active {
+        background-color: $color-red;
+        box-shadow: $box_shadow $color-shadow_red  !important;
+    }
+}

@@ -2,12 +2,14 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoggedIn: false,
-    userInfo: null
+    userInfo: null,
+    image: null
 }
 
 const appReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.USER_LOGIN_SUCCESS:
+            console.log(action)
             return {
                 ...state,
                 isLoggedIn: true,
@@ -24,6 +26,18 @@ const appReducer = (state = initialState, action) => {
                 ...state,
                 isLoggedIn: false,
                 userInfo: null
+            }
+        
+        case actionTypes.GET_USER_IMAGE_SUCCESS:
+            console.log(action)
+            return {
+                ...state,
+                image: action.image
+            }
+        case actionTypes.GET_USER_IMAGE_FAILED:
+            return {
+                ...state,
+                image: null
             }
         default:
             return state;

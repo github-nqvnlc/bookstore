@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import Banner from "../../components/Banner/Banner";
-
 import Header from "../../components/Header/Header";
+import Banner from "../../components/Banner/Banner";
+import Section from "../../components/Section/Section";
 
 class HomePage extends Component {
     render() {
@@ -12,8 +12,17 @@ class HomePage extends Component {
             <React.Fragment>
                 <Header />
                 <Banner />
-                <Banner />
-                <Banner />
+                
+                <Section
+                    name="Vietnamese Books"
+                />
+                <Section
+                    name="English Books"
+                />
+                <Section
+                    name="E-Books"
+                />
+
             </React.Fragment>
         )
         

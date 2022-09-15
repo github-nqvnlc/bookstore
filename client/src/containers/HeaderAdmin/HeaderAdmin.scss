@@ -1,0 +1,66 @@
+@import "../../styles/common.scss";
+@import "../../styles/resposive.scss";
+@import "../../styles/color.scss";
+
+.header-container {
+    z-index: 99;
+    display: flex;
+    justify-content: space-between;
+    background-color: $color-main;
+    color: $color-white;
+    height: 40px;
+    position: relative;
+
+
+    .header-button {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        align-content: center;
+
+        // background-color: #d4d3d3;
+        .lang-vi {
+            font-size: 16px;
+            font-weight: 700;
+            padding: 0.1em 0.5em;
+            margin: 0em;
+            width: 40px;
+            height: 30px;
+            cursor: pointer;
+            border: 1px solid $color-border;
+            opacity: 0.3;
+
+            &.active {
+                opacity: 1;
+                background-color: $color-main;
+                color: $color-white;
+            }
+        }
+
+        .lang-en {
+            @extend .lang-vi;
+        }
+
+        .welcome {
+            padding: 0 1em;
+        }
+    }
+
+    .btn-logout {
+        color: $common-text-color;
+        line-height: 40px;
+        height: 40px;
+        padding: 0 10px;
+
+        &:hover {
+            background-color: darken($colormain, 5);
+        }
+
+        i {
+            font-size: $base-size + 1px;
+        }
+    }
+
+
+}

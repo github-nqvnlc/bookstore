@@ -21,7 +21,7 @@ let handleUserLogin = (email, password) => {
       let isExist = await checkUserEmail(email);
       if (isExist) {
         let user = await db.User.findOne({
-          attributes: ["email", "roleId", "password"],
+          attributes: ["id","email", "roleId", "password", "lastName", ],
           where: { email: email },
           raw: true,
         });
@@ -76,16 +76,27 @@ let getAllUsers = (userId) => {
       if (userId === "ALL") {
         users = await db.User.findAll({
           attributes: {
-            exclude: ["password"],
+            exclude: ["password", "createdAt", "updatedAt"],
           },
+          included: [db.Role],
+          raw: true,
+          nest: true,
         });
+        console.log()
       }
       if (userId && userId !== "ALL") {
         users = await db.User.findOne({
           where: { id: userId },
           attributes: {
-            exclude: ["password"],
+            exclude: ["password", "image", "createdAt", "updatedAt"],
           },
+          included: [
+            {
+              model: db.Role,
+            }
+          ],
+          raw: true,
+          nest: true,
         });
       }
       resolve(users);
@@ -116,6 +127,7 @@ let createNewUser = (data) => {
           phoneNumber: data.phoneNumber,
           gender: data.gender === "1" ? true : false,
           roleId: data.roleId,
+          image: data.image
         });
         resolve({
           errCode: 0,
@@ -124,6 +136,7 @@ let createNewUser = (data) => {
       }
     } catch (e) {
       reject(e);
+      console.log('lỗi')
     }
   });
 };
@@ -147,6 +160,11 @@ let editUser = (data) => {
         user.lastName = data.lastName;
         user.address = data.address;
         user.phoneNumber = data.phoneNumber;
+        user.gender = data.gender;
+        user.roleId = data.roleId;
+        if (data.image) {
+          user.image = data.image
+        }
         await user.save();
         resolve({
           errCode: 0,
@@ -186,10 +204,78 @@ let deleteUser = (id) => {
     });
   });
 };
+
+let getRoleService = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!id) {
+        resolve({
+          errCode: 1,
+          errMessage: "Missing require role"
+        })
+      } else if (id === "role") {
+        let res = {}
+        let role = await db.Role.findAll();
+        res.errCode = 0;
+        res.data = role
+        resolve(res);
+      }
+      else {
+        let res = {}
+        let role = await db.Role.findAll({
+          where: { id: id }
+        });
+        res.errCode = 0;
+        res.data = role
+        resolve(res);
+      }
+
+
+
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+
+let getUserImageService = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!id) {
+        resolve({
+          errCode: 2,
+          errMessage: "missing input"
+        })
+      } else {
+        let user = await db.User.findOne({
+          where: {id: id}
+        })
+        console.log(user)
+        if (user && user !== null) {
+          resolve({
+            errCode: 0,
+            errMessage: "oke",
+            image: user.image
+          })
+        } else resolve({
+          errCode: 3,
+          errMessage: "User not found",
+          image: {}
+        })
+        
+      }
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
 module.exports = {
   handleUserLogin: handleUserLogin,
   getAllUsers: getAllUsers,
   createNewUser: createNewUser,
   editUser: editUser,
   deleteUser: deleteUser,
+
+  getRoleService: getRoleService,
+  getUserImageService: getUserImageService,
 };

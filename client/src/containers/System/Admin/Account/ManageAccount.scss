@@ -1,0 +1,64 @@
+@import "../../../../styles/resposive.scss";
+@import "../../../../styles/color.scss";
+
+.button {
+    background-color: $color_main;
+    color: $color_white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+
+    &:hover {
+        background-color: $color-focus;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+
+    &:focus {
+        background-color: $color-focus;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+
+    &:active {
+        background-color: $color-focus;
+        box-shadow: $box_shadow $color-shadow  !important;
+    }
+}
+
+
+#admin {
+    // font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#admin td,
+#admin th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#admin tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#admin tr:hover {
+    background-color: #ddd;
+}
+
+#admin th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+.preview_image_account {
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    // padding: 1em;
+    border: 1px solid $color-border;
+    object-fit: cover;
+    object-position: 50% 50%;
+}

@@ -32,15 +32,12 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       image: {
-        type: Sequelize.STRING,
+        type: Sequelize.BLOB('long'),
+        allowNull: true
       },
       roleId: {
         allowNull: false,
         type: Sequelize.STRING,
-        references: {
-          model: "UserRole",
-          key: "userId",
-        },
       },
 
       createdAt: {

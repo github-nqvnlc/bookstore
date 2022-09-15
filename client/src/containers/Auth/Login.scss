@@ -1,128 +1,117 @@
-@import "../../styles/variables";
-.loginBackground {
-  margin: 0;
-  width: 100%;
+@import "../../styles/resposive.scss";
+@import "../../styles/color.scss";
+
+.login {
+  width: 100vw;
   height: 100vh;
-  display: grid;
-  place-items: center;
-  font-family: sans-serif;
-  background: linear-gradient(90deg, #ffa9a9, #64a1e0, #ffa9a9, #64a1e0);
-  background-size: 400% 400%;
-  -webkit-animation: gradientBG 7s ease infinite forwards;
-  animation: gradientBG 7s ease infinite forwards;
-  .loginContainer {
-    font-family: $fontexo;
-    display: flex;
-    flex-direction: column;
-    padding: 3rem 5rem;
-    background-color: rgba(0, 0, 0, 0.45);
-    width: 35rem;
-    height: auto;
-    border-radius: 10%;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  }
-  h1 {
-    text-align: center;
-    margin: 1rem;
-    margin-bottom: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #fff;
+  background-color: $color_red;
+  display: flex;
+
+  .banner_image {
+    width: 60%;
+    height: 100%;
+    background-color: $color_main;
+
+    .banner {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+
+
   }
 
-  label span {
-    display: inline-block;
-    font-size: 1.25rem;
-    letter-spacing: 2px;
-    position: relative;
-    bottom: 5rem;
-    transition: transform 200ms ease-in-out;
-    color: #fff;
-  }
+  .section_left {
+    width: 40%;
+    height: 100%;
+    background-color: $color_white;
+    display: grid;
+    place-items: center;
 
-  input {
-    position: relative;
-    margin-bottom: 2rem;
-    padding: 0.5rem 1rem;
-    background-color: transparent;
-    outline: none;
-    border: unset;
-    border-bottom: 1.5px solid white;
-    font-size: 1.25rem;
-    letter-spacing: 1.5px;
-    color: white;
-    z-index: 1;
-  }
+    .form_container {
+      width: 70%;
+      height: auto;
+      display: grid;
+      justify-items: start;
 
-  button {
-    display: inline-block;
-    margin: 1rem 0;
-    padding: 0.75rem;
-    cursor: pointer;
-    outline: none;
-    border: none;
-    border-radius: 0.25em;
-    font-size: 1.5rem;
-    letter-spacing: 1.5px;
-    font-weight: 500;
-    transition: all 100ms ease-in-out;
-    background-color: rgb(225, 225, 255);
-  }
+      .logo {
+        width: 100%;
+        padding: 0.5em;
+        background-color: $color-white;
+        cursor: pointer;
+      }
 
-  button:hover {
-    background-color: rgb(235, 235, 235);
-  }
+      .title {
+        font-weight: 800;
+        text-align: left !important;
+      }
 
-  a {
-    color: rgb(235, 235, 235);
-    text-decoration: none;
-    font-style: italic;
-    padding: 0 1rem;
-  }
+      .form_group {
+        width: 100%;
+        height: auto;
+        margin: 2em 0;
+        border: 1px solid #efefef;
 
-  a:hover {
-    color: rgb(215, 215, 215);
-  }
+        .input_group {
+          display: flex;
+          flex-direction: column;
+          padding: 10px 15px;
 
-  p {
-    text-align: center;
-    color: #fff;
-  }
+          label {
+            font-size: 14px;
+            font-weight: 400;
+            color: $color-main;
+          }
 
-  input:focus,
-  input:valid {
-    border-bottom: 2px solid white;
-  }
+          input {
+            width: 100%;
+            height: 2.5em;
+            font-size: 16px;
+            padding: 0;
+            border: none;
+            border-bottom: 2px solid $color-border;
 
-  input:focus + label span,
-  input:valid + label span {
-    color: white;
-    transform: translateY(-2rem);
-  }
-}
+            &:focus {
+              outline: none;
+              border: none;
+              border-bottom: 2px solid $color-main;
+            }
 
-@-webkit-keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-@keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+            &::placeholder {
+              font-size: 20px;
+              font-style: italic;
+            }
+          }
 
-  
+          select {
+            @extend input;
+
+          }
+
+          button {
+            @extend input;
+            background-color: $color-main;
+            color: $color-white;
+            @extend .button_hover;
+            @extend .button_focus;
+
+          }
+        }
+
+        .text_group {
+          padding: 5px 15px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: $color-grey;
+
+          a {
+            color: $color-main;
+          }
+        }
+
+      }
+    }
+  }
 }
