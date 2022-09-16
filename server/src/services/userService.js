@@ -82,7 +82,6 @@ let getAllUsers = (userId) => {
           raw: true,
           nest: true,
         });
-        console.log()
       }
       if (userId && userId !== "ALL") {
         users = await db.User.findOne({
@@ -110,7 +109,6 @@ let createNewUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       let check = await checkUserEmail(data.email);
-      console.log(check);
       if (check === true) {
         resolve({
           errCode: 1,
@@ -136,7 +134,6 @@ let createNewUser = (data) => {
       }
     } catch (e) {
       reject(e);
-      console.log('lỗi')
     }
   });
 };
@@ -250,7 +247,6 @@ let getUserImageService = (id) => {
         let user = await db.User.findOne({
           where: {id: id}
         })
-        console.log(user)
         if (user && user !== null) {
           resolve({
             errCode: 0,

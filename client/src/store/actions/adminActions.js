@@ -42,7 +42,6 @@ export const createNewAccount = (data) => {
         try {
 
             let res = await createNewAccountSevice(data)
-            console.log(res)
             if (res && res.errCode === 0) {
                 toast("Create new account successful!", {
                     position: "top-right",
@@ -83,7 +82,6 @@ export const getAllAccount = () => {
         try {
 
             let res = await getAllAccountSevice('ALL')
-            console.log("get all account",res)
             if (res && res.errCode === 0) {
 
                 dispatch(getAllAccountSuccess(res.users.reverse()))
@@ -111,7 +109,6 @@ export const deleteAccount = (id) => {
         try {
 
             let res = await deleteUserSevice(id)
-            console.log(res)
             if (res && res.errCode === 0) {
                 toast(`Delete account successful!`, {
                     position: "top-right",
@@ -149,7 +146,6 @@ export const editAccount = (account) => {
         try {
 
             let res = await editAccountSevice(account)
-            console.log(res)
             if (res && res.errCode === 0) {
                 toast(`Edit account successful!`, {
                     position: "top-right",

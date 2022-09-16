@@ -21,7 +21,6 @@ import { changeLanguageApp } from "../../store/actions/appActions";
 import "./Header.scss";
 import logo from "../../assets/logo.png";
 import avt from "../../assets/avatar.png";
-import { getUserImage } from "../../store/actions";
 import { Link } from "react-router-dom";
 
 class Header extends Component {
@@ -57,17 +56,15 @@ class Header extends Component {
     });
   }
 
-
   changeLanguage = (language) => {
-    this.props.changeLanguageAppRedux(language)
-  }
+    this.props.changeLanguageAppRedux(language);
+  };
   render() {
     let logoBrand = logo;
     let avatar = avt;
     const { processLogout, language, userInfo, image } = this.props;
     if (userInfo && userInfo !== null) {
-
-      this.props.getUserImage(userInfo.id)
+      this.props.getUserImage(userInfo.id);
     }
 
     window.addEventListener("scroll", this.checkSticky);
@@ -76,11 +73,19 @@ class Header extends Component {
       <div className="header_container ">
         <div className="container">
           <div className="language">
-            <div className={language === LANGUAGES.VI ? "lang-vi active" : "lang-vi"}>
+            <div
+              className={
+                language === LANGUAGES.VI ? "lang-vi active" : "lang-vi"
+              }
+            >
               <span onClick={() => this.changeLanguage(LANGUAGES.VI)}>VI</span>
             </div>
             <span>|</span>
-            <div className={language === LANGUAGES.EN ? "lang-en active" : "lang-en"}>
+            <div
+              className={
+                language === LANGUAGES.EN ? "lang-en active" : "lang-en"
+              }
+            >
               <span onClick={() => this.changeLanguage(LANGUAGES.EN)}>EN</span>
             </div>
           </div>
@@ -94,7 +99,6 @@ class Header extends Component {
             </div>
             <div className="topbar_content_right col-xs-12 col-sm-6 col-md-6">
               <div className="topbar_icon">
-
                 <UncontrolledDropdown>
                   <DropdownToggle tag="div" className="cart">
                     <DropdownItem
@@ -135,25 +139,47 @@ class Header extends Component {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </div>
-              {this.props.isLoggedIn ?
+              {this.props.isLoggedIn ? (
                 <UncontrolledDropdown>
-                  <DropdownToggle tag="div" style={{ display: "flex", flexDirection: "row", padding: "0 10px" }}>
-
-                    <img className="avatar_user" src={image && image !== null ? image : avatar} />
+                  <DropdownToggle
+                    tag="div"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      padding: "0 10px",
+                    }}
+                  >
+                    <img
+                      className="avatar_user"
+                      src={image && image !== null ? image : avatar}
+                    />
                   </DropdownToggle>
                   <DropdownMenu className="icon_drop" right>
                     <DropdownItem tag="div" className="lang_en">
-                      Profile <span>{userInfo && userInfo.lastName ? userInfo.lastName : ''}</span>
+                      Profile{" "}
+                      <span>
+                        {userInfo && userInfo.lastName ? userInfo.lastName : ""}
+                      </span>
                     </DropdownItem>
-                    <DropdownItem tag="div" className="lang_vi" onClick={processLogout}>
+                    <DropdownItem
+                      tag="div"
+                      className="lang_vi"
+                      onClick={processLogout}
+                    >
                       Logout
                     </DropdownItem>
                   </DropdownMenu>
-                </UncontrolledDropdown> :
-                <Button className="px-3 button_login" ><Link style={{ textDecoration: "none", color: "#fff" }} to="/login">Login</Link></Button>
-              }
-
-
+                </UncontrolledDropdown>
+              ) : (
+                <Button className="px-3 button_login">
+                  <Link
+                    style={{ textDecoration: "none", color: "#fff" }}
+                    to="/login"
+                  >
+                    Login
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
         </div>
@@ -222,7 +248,7 @@ const mapStateToProps = (state) => {
     language: state.app.language,
     isLoggedIn: state.user.isLoggedIn,
     userInfo: state.user.userInfo,
-    image: state.user.image
+    image: state.user.image,
   };
 };
 
@@ -230,7 +256,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     processLogout: () => dispatch(actions.processLogout()),
     changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
-    getUserImage: (id) => dispatch(actions.getUserImage(id))
+    getUserImage: (id) => dispatch(actions.getUserImage(id)),
   };
 };
 

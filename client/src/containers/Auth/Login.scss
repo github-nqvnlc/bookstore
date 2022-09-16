@@ -8,7 +8,7 @@
   display: flex;
 
   .banner_image {
-    width: 60%;
+    width: 50%;
     height: 100%;
     background-color: $color_main;
 
@@ -18,12 +18,10 @@
       object-fit: cover;
       object-position: 50% 50%;
     }
-
-
   }
 
   .section_left {
-    width: 40%;
+    width: 50%;
     height: 100%;
     background-color: $color_white;
     display: grid;
@@ -35,11 +33,16 @@
       display: grid;
       justify-items: start;
 
-      .logo {
+      .logo_container {
         width: 100%;
-        padding: 0.5em;
-        background-color: $color-white;
-        cursor: pointer;
+        display: flex;
+        flex-direction: row-reverse;
+        .logo {
+          width: 60%;
+          padding: 0.5em;
+          background-color: $color-white;
+          cursor: pointer;
+        }
       }
 
       .title {
@@ -86,7 +89,6 @@
 
           select {
             @extend input;
-
           }
 
           button {
@@ -95,7 +97,6 @@
             color: $color-white;
             @extend .button_hover;
             @extend .button_focus;
-
           }
         }
 
@@ -110,7 +111,6 @@
             color: $color-main;
           }
         }
-
       }
     }
   }

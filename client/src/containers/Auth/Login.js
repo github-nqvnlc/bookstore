@@ -6,8 +6,8 @@ import * as actions from "../../store/actions";
 import "./Login.scss";
 import { FormattedMessage } from "react-intl";
 import { handleLoginApi } from "../../services/userService";
-import banner from "../../assets/Banner/bookwallpapers.jfif"
-import logo from "../../assets/logo.png"
+import banner from "../../assets/Banner/bookwallpapers.jfif";
+import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 
 class Login extends Component {
@@ -66,7 +66,9 @@ class Login extends Component {
           </div>
           <div className="section_left">
             <div className="form_container">
-              <img src={logo} className="logo" />
+              <div className="logo_container">
+                <img src={logo} className="logo" />
+              </div>
               <div className="title">Login</div>
               <div className="form_group">
                 <div className="input_group">
@@ -99,8 +101,12 @@ class Login extends Component {
                       textAlign: "left",
                       fontStyle: "italic",
                     }}
-                  >{this.state.errMessage}</span>
-                  <span>You don't have account? <Link to='/register'>Register</Link></span>
+                  >
+                    {this.state.errMessage}
+                  </span>
+                  <span>
+                    You don't have account? <Link to="/register">Register</Link>
+                  </span>
                 </div>
                 <div className="text_group">
                   <span
@@ -111,7 +117,10 @@ class Login extends Component {
                       fontStyle: "italic",
                     }}
                   ></span>
-                  <span> <a >Forgot password?</a></span>
+                  <span>
+                    {" "}
+                    <a>Forgot password?</a>
+                  </span>
                 </div>
                 <div className="input_group">
                   <button
@@ -127,7 +136,6 @@ class Login extends Component {
             </div>
           </div>
         </div>
-
       </>
     );
   }
