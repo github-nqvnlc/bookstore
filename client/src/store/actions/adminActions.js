@@ -55,7 +55,7 @@ export const createNewAccount = (data) => {
                 dispatch(createAccountSuccess())
                 dispatch(getAllAccount())
             } else {
-                toast.error(`Edit account error! ${res.errMessage}`, {
+                toast.error(`Create account error! ${res.errMessage}`, {
                     position: "top-right",
                     autoClose: 3000,
                 })
