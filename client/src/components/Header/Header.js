@@ -64,7 +64,7 @@ class Header extends Component {
     let avatar = avt;
     const { processLogout, language, userInfo, image } = this.props;
     if (userInfo && userInfo !== null) {
-      this.props.getUserImage(userInfo.id);
+      this.props.getUserImage(userInfo.userId);
     }
 
     window.addEventListener("scroll", this.checkSticky);
@@ -72,7 +72,14 @@ class Header extends Component {
     return (
       <div className="header_container ">
         <div className="container">
+          
           <div className="language">
+            <div className="check_route">
+              {userInfo && userInfo.roleId === 1 ?
+                <Link to="/system/admin/manage-account">Go Admin</Link> :
+                <Link to="/system/admin/manage-account">Go Manager</Link>
+              }
+            </div>
             <div
               className={
                 language === LANGUAGES.VI ? "lang-vi active" : "lang-vi"

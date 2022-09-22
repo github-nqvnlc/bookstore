@@ -79,9 +79,9 @@ export const createAccountFailed = () => ({
 //Get all account
 export const getAllAccount = () => {
     return async (dispatch, getState) => {
+        let token = getState().user.token
         try {
-
-            let res = await getAllAccountSevice('ALL')
+            let res = await getAllAccountSevice('ALL', token)
             if (res && res.errCode === 0) {
 
                 dispatch(getAllAccountSuccess(res.users.reverse()))

@@ -9,7 +9,6 @@ const adminReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case actionTypes.FETCH_ROLE_START:
-            console.log('start', action);
             return {
                 ...state,
 

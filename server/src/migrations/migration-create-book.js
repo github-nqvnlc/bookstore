@@ -31,7 +31,8 @@ module.exports = {
                 type: Sequelize.INTEGER,
             },
             image: {
-                type: Sequelize.STRING,
+                type: Sequelize.BLOB('long'),
+                allowNull: true
             },
             authorId: {
                 allowNull: false,

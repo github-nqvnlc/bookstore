@@ -1,4 +1,4 @@
-export const adminMenu = [
+export const adminMenu = [    
     { //admin
         name: 'menu.admin.manage_account',
         menus: [

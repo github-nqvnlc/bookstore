@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
             discount: DataTypes.FLOAT,
             quantity: DataTypes.INTEGER,
             vote: DataTypes.INTEGER,
-            image: DataTypes.STRING,
+            image: DataTypes.BLOB('long'),
             authorId: DataTypes.INTEGER,
             categoryId: DataTypes.INTEGER,
             publisherId: DataTypes.INTEGER,

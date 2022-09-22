@@ -1,23 +1,17 @@
 import userService from "../services/userService";
 
 let handleLogin = async (req, res) => {
-  let email = req.body.email;
-  let password = req.body.password;
+  const email = req.body.email;
+  const password = req.body.password;
 
   if (!email || !password) {
-    return res.status(500).json({
-      errorCode: 1,
-      message: "Missing Input Parameter!",
+    res.status(401).json({
+      errCode: 1,
+      message: "Email and password must be not null!",
     });
   }
 
-  let userData = await userService.handleUserLogin(email, password);
-
-  return res.status(200).json({
-    errorCode: userData.errCode,
-    message: userData.errMessage,
-    user: userData.user ? userData.user : {},
-  });
+  await userService.handleUserLogin(req, res);
 };
 
 
@@ -56,6 +50,7 @@ let handleDeleteUser = async (req, res) => {
 
 let getRole = async (req, res) => {
   try {
+    console.log(req.query.id)
     let data = await userService.getRoleService(req.query.id);
     return res.status(200).json(data);
     

@@ -38,13 +38,13 @@ class Login extends Component {
     try {
       let data = await handleLoginApi(this.state.username, this.state.password);
 
-      if (data && data.errorCode !== 0) {
+      if (data && data.errCode !== 0) {
         this.setState({
           errMessage: data.message,
         });
       }
-      if (data && data.errorCode === 0) {
-        this.props.userLoginSuccess(data.user);
+      if (data && data.errCode === 0) {
+        this.props.userLoginSuccess(data);
       }
     } catch (error) {
       if (error.response) {
@@ -151,8 +151,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     navigate: (path) => dispatch(push(path)),
     userLoginFail: () => dispatch(actions.userLoginFail()),
-    userLoginSuccess: (userInfo) =>
-      dispatch(actions.userLoginSuccess(userInfo)),
+    userLoginSuccess: (data) =>
+      dispatch(actions.userLoginSuccess(data)),
   };
 };
 

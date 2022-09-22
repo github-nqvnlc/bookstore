@@ -6,6 +6,7 @@ import Navigator from "../../components/Navigator";
 import { adminMenu } from "./menuApp";
 import { LANGUAGES } from "../../utils/constant"
 import "./HeaderAdmin.scss";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   handleChangeLanguage = (language) => {
@@ -20,6 +21,8 @@ class Header extends Component {
           <Navigator menus={adminMenu} />
         </div>
         <div className="header-button">
+          <Link className="back_to_home" to="/">Back to Homepage</Link>
+
           <div className={language === LANGUAGES.VI ? "lang-vi active" : "lang-vi" }>
             <span onClick={()=>this.handleChangeLanguage(LANGUAGES.VI)}>VI</span>
           </div>

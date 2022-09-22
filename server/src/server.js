@@ -4,7 +4,6 @@ import viewEngine from "./config/viewEngine";
 import initWebRoutes from "./route/web";
 import connectDB from "./config/connectDB";
 import cors from "cors";
-import { creatJwt, verifyJwt } from "./middleware/JWTAction"
 require("dotenv").config();
 
 let app = express();
@@ -40,8 +39,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 viewEngine(app);
 initWebRoutes(app);
 
-creatJwt({ hello: 'xin chao' });
-verifyJwt('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoZWxsbyI6InhpbiBjaGFvIiwiaWF0IjoxNjYyOTc4Njk1fQ.ThAaCKbBbSvq0YcHuoDSKf0FaJtDULQqW0UCo6kHZLA')
+
 connectDB();
 
 let port = process.env.PORT;

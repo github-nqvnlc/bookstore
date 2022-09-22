@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import db from "../models/index";
+import { generateToken } from "../middleware/JWTAction"
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -14,42 +15,49 @@ let hashUserPassword = (password) => {
   });
 };
 
-let handleUserLogin = (email, password) => {
-  return new Promise(async (resolve, reject) => {
-    try {
+let handleUserLogin = async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
       let userData = {};
-      let isExist = await checkUserEmail(email);
+      let isExist = checkUserEmail(email);
       if (isExist) {
         let user = await db.User.findOne({
-          attributes: ["id","email", "roleId", "password", "lastName", ],
+          attributes: ["id", "email", "roleId", "password", "lastName"],
           where: { email: email },
           raw: true,
         });
+        console.log(user.email);
         if (user) {
           let check = await bcrypt.compareSync(password, user.password);
           if (check) {
-            userData.errCode = 0;
-            userData.errMessage = "Oke";
-
-            delete user.password;
-            userData.user = user;
+            let token = await generateToken(user?.id,user?.email, user?.roleId, user?.lastName)
+            res.status(200).json({
+              errCode: 0,
+              message: "Oke!",
+              token: `Bearer ${token}`,
+              userId: user.id,
+              email: user.email,
+              lastName: user.lastName,
+              roleId: user.roleId,
+            });
           } else {
-            userData.errCode = 3;
-            userData.errMessage = "Password wrong";
+            res.status(401).json({
+              errCode: 3,
+              message: "Wrong password!",
+            });
           }
         } else {
-          userData.errCode = 2;
-          userData.errMessage = `User not found!`;
+          res.status(401).json({
+            errCode: 2,
+            message: "User doesn't exist in the system!",
+          });
         }
       } else {
-        userData.errCode = 1;
-        userData.errMessage = `Your email isn't exist in system!`;
+        res.status(401).json({
+          errCode: 1,
+          message: "User doesn't exist in the system!",
+        });
       }
-      resolve(userData);
-    } catch (e) {
-      reject(e);
-    }
-  });
 };
 
 let checkUserEmail = (userEmail) => {
@@ -78,7 +86,10 @@ let getAllUsers = (userId) => {
           attributes: {
             exclude: ["password",  "createdAt", "updatedAt"],
           },
-          included: [db.Role],
+          included: [{
+            model: db.Role,
+            as: "roleData"
+          }],
           raw: true,
           nest: true,
         });
@@ -87,7 +98,7 @@ let getAllUsers = (userId) => {
         users = await db.User.findOne({
           where: { id: userId },
           attributes: {
-            exclude: ["password", "createdAt", "updatedAt"],
+            exclude: ["password", "image", "createdAt", "updatedAt"],
           },
           included: [
             {

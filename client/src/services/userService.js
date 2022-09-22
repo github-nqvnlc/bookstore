@@ -9,7 +9,7 @@ const userRegisterSevice = (data) => {
 }
 
 const getRoleService = (inputId) => {
-  return axios.get(`/api/getRole?id=${inputId}`)
+  return axios.get(`/api/get-role?id=${inputId}`)
 }
 
 const getUserImageService = (id) => {

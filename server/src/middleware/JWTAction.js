@@ -1,32 +1,36 @@
-require("dotenv").config()
+require("dotenv").config();
 import jwt from "jsonwebtoken";
 
-const creatJwt = (data) => {
-    let payload = data
-    let key = process.env.JWT_SECRET
-    let token = null
-    try {
-        token = jwt.sign(payload, key)
-        console.log(token)
-    } catch (err) {
-        console.log(err)
-    }
-    return token
-}
+const generateToken = (userId, email, roleId, lastName) => {
+  
+  try {
+    return jwt.sign(
+      { userId, email, roleId, lastName },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1800s",
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+  return null;
+};
 
-const verifyJwt = (token) => {
-    let key = process.env.JWT_SECRET
-    let data = null
-    try {
-        data = jwt.verify(token, key)
-    } catch (error) {
-        console.log(e)
-    }
-    console.log(data)
-    return data
+function validateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.sendStatus(403);
+    req.tokenData = decoded;
+    next();
+  });
 }
 
 module.exports = {
-    creatJwt,
-    verifyJwt
-}
+  generateToken,
+  validateToken,
+};

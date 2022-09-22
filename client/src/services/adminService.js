@@ -5,7 +5,8 @@ const createNewAccountSevice = (data) => {
     return axios.post('/api/create-new-user', data)
 }
 
-const getAllAccountSevice = (inputId) => {
+const getAllAccountSevice = (inputId, token) => {
+    console.log(token)
     return axios.get(`/api/get-all-users?id=${inputId}`);
 }
 

@@ -89,7 +89,7 @@ class ManageAccount extends Component {
 
             <div >
                 <div className='title'>
-                    Manage Customer
+                    Manage Account
                 </div>
                 <ModalAccount
                     isOpen={this.state.isOpenModal}
