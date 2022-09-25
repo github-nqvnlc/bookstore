@@ -1,10 +1,8 @@
 import axios from "../axios";
 
 const createNewBookSevice = (data) => {
-    return axios.post('/api/create-new-book', data);
-}
+  console.log(data);
+  return axios.post("/api/create-new-book", data);
+};
 
-export {
-    createNewBookSevice,
-}
- 
+export { createNewBookSevice };

@@ -125,6 +125,8 @@ class ModalEditAccount extends Component {
       roleId: this.state.role,
       image: this.state.image,
     });
+    this.props.userInfo.roleId = this.state.role;
+    console.log(this.props.userInfo.roleId);
     console.log(this.state.image);
   };
 
@@ -346,6 +348,7 @@ class ModalEditAccount extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    userInfo: state.user.userInfo,
     account: state.admin.account,
   };
 };

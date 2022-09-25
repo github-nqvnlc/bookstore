@@ -9,46 +9,62 @@ $color-red-bold: #b60000;
 $color-white: #fff;
 $color-grey: #b3b3b3;
 $color-darken: #7e7e7e;
+$color-blue-cold: #4088ff;
+$color-blue-detail: #1d7ce9;
 
 $box_shadow: 0 0 0 0.25rem;
 $box_shadow_input: 0 0 3px;
 
 .button_hover {
-    &:hover {
-        background-color: $color-focus;
-        color: $color-white;
-        border: none;
-        box-shadow: $box_shadow $color-shadow  !important;
-    }
+  &:hover {
+    background-color: $color-focus;
+    color: $color-white;
+    border: none;
+    box-shadow: $box_shadow $color-shadow !important;
+  }
 }
 
 .button_focus {
-    &:focus {
-        background-color: $color-focus;
-        color: $color-white;
-        border: none;
-        box-shadow: $box_shadow $color-shadow  !important;
-    }
+  &:focus {
+    background-color: $color-focus;
+    color: $color-white;
+    border: none;
+    box-shadow: $box_shadow $color-shadow !important;
+  }
 }
 
 .button_active {
-    &:active {
-        background-color: $color-focus;
-        color: $color-white;
-        border: none;
-        box-shadow: $box_shadow $color-shadow  !important;
-    }
+  &:active {
+    background-color: $color-focus;
+    color: $color-white;
+    border: none;
+    box-shadow: $box_shadow $color-shadow !important;
+  }
 }
 
 .input_hover {
-    &:hover {
-        box-shadow: $box_shadow $color-shadow  !important;
-    }
+  &:hover {
+    box-shadow: $box_shadow $color-shadow !important;
+  }
 }
 
 .input_focus {
-    &:focus {
-        outline: none;
-        box-shadow: $box_shadow_input $color-shadow  !important;
-    }
+  &:focus {
+    outline: none;
+    box-shadow: $box_shadow_input $color-shadow !important;
+  }
+}
+
+.input_focus_book {
+  &:focus {
+    outline: none;
+    border: 1px solid $color-focus;
+    box-shadow: $box_shadow_input $color-shadow !important;
+  }
+}
+.input_hover_book {
+  &:hover {
+    // border: 1px solid $color-focus;
+    box-shadow: $box_shadow $color-shadow !important;
+  }
 }

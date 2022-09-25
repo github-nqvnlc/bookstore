@@ -3,20 +3,15 @@ import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../../../utils/constant";
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
-import "./ManageBook.scss";
-import SideBar from "../Sidebar/SideBar";
-import SideContent from "../SideContent/SideContent";
 
-class ManageBook extends Component {
+import "./SideBar.scss";
+
+import {} from "reactstrap";
+
+class SideBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isOpenModal: false,
-      isOpenModalEdit: false,
-
-      isOpen: false,
-      previewImage: "",
-    };
+    this.state = {};
   }
   componentDidMount() {}
 
@@ -47,15 +42,15 @@ class ManageBook extends Component {
     // let arrRole = this.state.role;
     return (
       <div>
-        <div className="section">
-          <div className="body">
-            <div className="side_bar">
-              <SideBar />
-            </div>
-            <div className="side_content">
-              <SideContent />
-            </div>
-          </div>
+        <div className="sidebar">
+          <ul style={{ margin: 0, padding: 0 }}>
+            <li className="sidebar_header">Menu</li>
+            <li className="sidebar_menu">Manage Book</li>
+            <li className="sidebar_menu">Manage Author</li>
+            <li className="sidebar_menu">Manage Category</li>
+            <li className="sidebar_menu">Manage Type Book</li>
+            <li className="sidebar_footer">Manage Publisher</li>
+          </ul>
         </div>
       </div>
     );
@@ -65,17 +60,11 @@ class ManageBook extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
-    role: state.admin.role,
-    account: state.admin.account,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    getRoleStart: () => dispatch(actions.fetchRoleStart()),
-    getAllAccount: () => dispatch(actions.getAllAccount()),
-    deleteAccount: (id) => dispatch(actions.deleteAccount(id)),
-  };
+  return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageBook);
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
@@ -66,19 +67,32 @@ class Header extends Component {
     if (userInfo && userInfo !== null) {
       this.props.getUserImage(userInfo.userId);
     }
-
+    console.log(userInfo.roleId);
     window.addEventListener("scroll", this.checkSticky);
 
     return (
       <div className="header_container ">
         <div className="container">
-          
           <div className="language">
-            <div className="check_route">
-              {userInfo && userInfo.roleId === 1 ?
-                <Link to="/system/admin/manage-account">Go Admin</Link> :
-                <Link to="/system/admin/manage-account">Go Manager</Link>
+            <div
+              className="check_route"
+              style={
+                userInfo.roleId === "3"
+                  ? { display: "none" }
+                  : { display: "block", padding: "0 1em", margin: "o 1em" }
               }
+            >
+              {this.props.isLoggedIn ? (
+                <div>
+                  {userInfo && userInfo.roleId === "1" ? (
+                    <Link to="/system/admin/manage-account">Go Admin</Link>
+                  ) : (
+                    <Link to="/system/manager/manage-book">Go Manager</Link>
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             <div
               className={

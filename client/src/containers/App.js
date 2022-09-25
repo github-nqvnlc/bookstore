@@ -11,7 +11,7 @@ import {
 import { path } from "../utils";
 import Login from "./Auth/Login";
 import System from "../routes/System";
-import HomePage from "./HomePage/HomePage"
+import HomePage from "./HomePage/HomePage";
 import Register from "./Auth/Register";
 import CustomScrollbars from "./../components/CustomScrollbars";
 
@@ -55,13 +55,8 @@ class App extends Component {
                   path={path.SYSTEM}
                   component={userIsAuthenticated(System)}
                 />
-                <Route
-                  path={path.HOMEPAGE}
-                  component={HomePage}
-                />
-                
+                <Route path={path.HOMEPAGE} component={HomePage} />
               </Switch>
-              {/* </CustomScrollbars> */}
             </div>
 
             <ToastContainer
@@ -74,7 +69,7 @@ class App extends Component {
               pauseOnFocusLoss
               draggable
               pauseOnHover
-            // style={{paddingTop: "130px"}}
+              // style={{paddingTop: "130px"}}
             />
             {/* Same as */}
             <ToastContainer />

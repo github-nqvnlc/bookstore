@@ -25,7 +25,7 @@ const initWebRoutes = (app) => {
   router.delete("/api/delete-user", userController.handleDeleteUser);
   router.get("/api/get-role", userController.getRole);
   router.get("/api/get-user-image", userController.getUserImage);
-  
+
   // Handle Book
   router.post("/api/create-new-book", bookController.createNewBook);
   router.get("/api/get-book", bookController.getBook);
@@ -49,7 +49,7 @@ const initWebRoutes = (app) => {
   router.get("/api/get-publisher", bookController.getPublisher);
   router.put("/api/edit-publisher", bookController.editPublisher);
   router.delete("/api/delete-publisher", bookController.deletePublisher);
-  
+
   //Handle Type
   router.post("/api/create-type", bookController.createType);
   router.get("/api/get-type", bookController.getType);

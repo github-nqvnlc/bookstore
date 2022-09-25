@@ -110,6 +110,7 @@ class ModalAccount extends Component {
       roleId: this.state.role,
       image: this.state.image,
     });
+    
   };
 
   handleOnChangeImage = async (event) => {
@@ -144,6 +145,7 @@ class ModalAccount extends Component {
       role,
     } = this.state;
     let selectRole = this.props.role;
+
     return (
       <div>
         <Modal
