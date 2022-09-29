@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from 'react-router-dom';
-import ManageAccount from '../containers/System/Admin/Account/ManageAccount';
 import HeaderAdmin from '../containers/HeaderAdmin/HeaderAdmin';
-import ManageBook from '../containers/System/Manager/Book/ManageBook';
+import Admin from '../containers/System/Admin/Admin';
+import Manager from '../containers/System/Manager/Manager';
 
 class System extends Component {
     render() {
-        const {     systemMenuPath } = this.props;
+        const { systemMenuPath } = this.props;
         return (
             <React.Fragment>
                 {this.props.isLoggedIn && <HeaderAdmin />}
@@ -15,8 +15,8 @@ class System extends Component {
                     <div className="system-list">
                         <Switch>
                             {/* <Route path="/system/user-manage" component={UserManage} /> */}
-                            <Route path="/system/admin/manage-account" component={ManageAccount} />
-                            <Route path="/system/manager/manage-book" component={ManageBook} />
+                            <Route path="/system/admin" component={Admin} />
+                            <Route path="/system/manager" component={Manager} />
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>
                     </div>

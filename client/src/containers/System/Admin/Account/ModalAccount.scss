@@ -74,3 +74,10 @@
         box-shadow: $box_shadow $color-shadow_red  !important;
     }
 }
+
+.close {
+    border: none;
+    background-color: $color-main;
+    font-size: 20px;
+    color: $color-white;
+}

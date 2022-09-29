@@ -3,56 +3,64 @@ import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../../../utils/constant";
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
-
+import $ from "jquery";
 import "./SideBar.scss";
-
-import {} from "reactstrap";
+import { Link } from "react-router-dom";
 
 class SideBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isOpenMenu: false,
+    };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    // this.setState({ isOpenMenu: false })
+  }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {}
+  componentDidUpdate(prevProps, prevState, snapshot) { }
 
-  toggleModal = () => {
+  handleMenu = () => {
     this.setState({
-      isOpenModal: !this.state.isOpenModal,
-    });
-  };
-
-  toggleModalEdit = () => {
+      isOpenMenu: !this.state.isOpenMenu
+    })
+  }
+  handleMenuLink = () => {
     this.setState({
-      isOpenModalEdit: !this.state.isOpenModalEdit,
-    });
-  };
+      isOpenMenu: false
+    })
+  }
 
-  openPreviewImage = (image) => {
-    this.setState({
-      isOpen: true,
-      previewImage: image,
-    });
-  };
 
   render() {
-    let arrAccount = this.state.account;
-    console.log(arrAccount);
-    // let arrRole = this.state.role;
+
     return (
-      <div>
         <div className="sidebar">
-          <ul style={{ margin: 0, padding: 0 }}>
-            <li className="sidebar_header">Menu</li>
-            <li className="sidebar_menu">Manage Book</li>
-            <li className="sidebar_menu">Manage Author</li>
-            <li className="sidebar_menu">Manage Category</li>
-            <li className="sidebar_menu">Manage Type Book</li>
-            <li className="sidebar_footer">Manage Publisher</li>
-          </ul>
+          <div className="sidebar_container" >
+            <div className="toggle_menu" onClick={() => this.handleMenu()}>
+              {this.state.isOpenMenu === true ? <i class="fas fa-arrow-left"></i> : <i class="fas fa-arrow-right"></i>}
+
+            </div>
+            {/* <div className="input_group">
+              <input
+                className={this.state.isOpenMenu === true ? "" : "input_none"}
+                placeholder="Search..."
+              /><button className={this.state.isOpenMenu === true ? "button_display" : "button_none"}><i class="fas fa-search"></i></button>
+            </div> */}
+            <div className="sidebar_list">
+              <ul>
+                <Link onClick={() => this.handleMenuLink()} to="/system/manager/dashboard"><li><i class="fas fa-tachometer-alt"></i><div className={this.state.isOpenMenu === true ? "text_list" : "text_list_none"}>Dashboard</div></li></Link>
+                <Link onClick={() => this.handleMenuLink()} to="/system/manager/manage-customer"><li><i class="fas fa-users"></i><div className={this.state.isOpenMenu === true ? "text_list" : "text_list_none"}>Manage Customer</div></li></Link>
+                <Link onClick={() => this.handleMenuLink()} to="/system/manager/manage-book"><li><i class="fas fa-book"></i><div className={this.state.isOpenMenu === true ? "text_list" : "text_list_none"}>Manage Book</div></li></Link>
+                <Link onClick={() => this.handleMenuLink()} to="/system/manager/manage-author"><li><i class="fas fa-user-edit"></i><div className={this.state.isOpenMenu === true ? "text_list" : "text_list_none"}>Manage Author</div></li></Link>
+                <Link onClick={() => this.handleMenuLink()} to="/system/manager/manage-publisher"><li><i class="fas fa-truck-loading"></i><div className={this.state.isOpenMenu === true ? "text_list" : "text_list_none"}>Manage Publisher</div></li></Link>
+                <Link onClick={() => this.handleMenuLink()} to="/system/manager/manage-category"><li><i class="fas fa-tags"></i><div className={this.state.isOpenMenu === true ? "text_list" : "text_list_none"}>Manage Category</div></li></Link>
+                <Link onClick={() => this.handleMenuLink()} to="/system/manager/manage-type-book"><li><i class="fas fa-vials"></i><div className={this.state.isOpenMenu === true ? "text_list" : "text_list_none"}>Manage Type Book</div></li></Link>
+              </ul>
+            </div>
+          </div>
+
         </div>
-      </div>
     );
   }
 }

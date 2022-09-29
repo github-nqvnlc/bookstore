@@ -9,8 +9,10 @@
     background-color: $color-main;
     color: $color-white;
     height: 40px;
-    position: relative;
-
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    box-shadow: $box_shadow_input $color-shadow-grey  !important;
 
     .header-button {
         display: flex;
@@ -21,16 +23,6 @@
 
         // background-color: #d4d3d3;
 
-        .back_to_home {
-            color: white;
-            padding: 0 1em;
-            text-decoration: none;
-            margin: 0 1em;
-            border: 1px solid #fff;
-            height: 30px;
-            font-weight: 500;
-            font-size: 16px;
-        }
 
         .lang-vi {
             font-size: 16px;
@@ -74,5 +66,25 @@
         }
     }
 
+    .header-tabs-container {
+        display: flex;
+        align-content: center;
+        align-items: center;
 
+        &:hover {
+            background-color: $color-focus;
+        }
+
+        .back_to_home {
+            height: auto;
+            color: white;
+            padding: auto;
+            text-decoration: none;
+            margin: 0 1em;
+            font-weight: 500;
+            font-size: 17px;
+
+
+        }
+    }
 }

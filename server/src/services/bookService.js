@@ -31,18 +31,38 @@ let getBookService = (bookId) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (bookId === "ALL") {
+                // console.log(await db.Book.findAll({
+                //     attributes: {
+                //         exclude: ["image", "createdAt", "updatedAt"],
+                //     },
+                //     include: [{ model: db.Category, as: "categoryData" }],
+                //     raw: true,
+                //     nest: true,
+                // }))
                 let book = await db.Book.findAll({
-                    attributes: {
-                        exclude: ["createdAt", "updatedAt"],
-                    },
-                    // include: "categoryData"
+                    include: [
+                        { model: db.Author, as: "authorData" },
+                        { model: db.Publisher, as: "publisherData" },
+                        { model: db.Category, as: "categoryData" },
+                        { model: db.Type, as: "typeData" },
+                    ],
+                    raw: true,
+                    nest: true,
                 })
                 resolve(book);
 
             }
             if (bookId && bookId !== "ALL") {
                 let book = await db.Book.findOne({
-                    where: { id: bookId }
+                    where: { id: bookId },
+                    include: [
+                        { model: db.Author, as: "authorData" },
+                        { model: db.Publisher, as: "publisherData" },
+                        { model: db.Category, as: "categoryData" },
+                        { model: db.Type, as: "typeData" },
+                    ],
+                    raw: true,
+                    nest: true,
                 })
                 resolve(book);
 
@@ -140,12 +160,23 @@ let getAuthorService = (authorId) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (authorId === "ALL") {
-                let author = await db.Author.findAll()
+                let author = await db.Author.findAll({
+                    include: [
+                        { model: db.Book, as: "authorData" },
+                    ],
+                    raw: true,
+                    nest: true,
+                })
                 resolve(author)
             }
             if (authorId !== "ALL") {
                 let author = await db.Author.findOne({
-                    where: { id: authorId }
+                    where: { id: authorId },
+                    include: [
+                        { model: db.Book, as: "authorData" },
+                    ],
+                    raw: true,
+                    nest: true,
                 })
                 resolve(author)
             }
@@ -232,12 +263,23 @@ let getCategoryService = (categoryId) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (categoryId === "ALL") {
-                let category = await db.Category.findAll()
+                let category = await db.Category.findAll({
+                    include: [
+                        { model: db.Book, as: "categoryData" },
+                    ],
+                    raw: true,
+                    nest: true,
+                })
                 resolve(category)
             }
             if (categoryId !== "ALL") {
                 let category = await db.Category.findOne({
-                    where: { id: categoryId }
+                    where: { id: categoryId },
+                    include: [
+                        { model: db.Book, as: "categoryData" },
+                    ],
+                    raw: true,
+                    nest: true,
                 })
                 resolve(category)
             }
@@ -324,12 +366,23 @@ let getPublisherService = (publisherId) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (publisherId === "ALL") {
-                let publisher = await db.Publisher.findAll()
+                let publisher = await db.Publisher.findAll({
+                    include: [
+                        { model: db.Book, as: "publisherData" },
+                    ],
+                    raw: true,
+                    nest: true,
+                })
                 resolve(publisher)
             }
             if (publisherId !== "ALL") {
                 let publisher = await db.Publisher.findOne({
-                    where: { id: publisherId }
+                    where: { id: publisherId },
+                    include: [
+                        { model: db.Book, as: "publisherData" },
+                    ],
+                    raw: true,
+                    nest: true,
                 })
                 resolve(publisher)
             }
@@ -416,12 +469,23 @@ let getTypeService = (typeId) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (typeId === "ALL") {
-                let type = await db.Type.findAll()
+                let type = await db.Type.findAll({
+                    include: [
+                        { model: db.Book, as: "typeData" },
+                    ],
+                    raw: true,
+                    nest: true,
+                })
                 resolve(type)
             }
             if (typeId !== "ALL") {
                 let type = await db.Type.findOne({
-                    where: { id: typeId }
+                    where: { id: typeId },
+                    include: [
+                        { model: db.Book, as: "typeData" },
+                    ],
+                    raw: true,
+                    nest: true,
                 })
                 resolve(type)
             }
@@ -505,7 +569,7 @@ module.exports = {
     createCategoryService: createCategoryService,
     editCategoryService: editCategoryService,
     deleteCategoryService: deleteCategoryService,
-    
+
     //Publisher
     getPublisherService: getPublisherService,
     createPublisherService: createPublisherService,

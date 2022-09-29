@@ -1,0 +1,61 @@
+@import "../../../../styles/resposive.scss";
+@import "../../../../styles/color.scss";
+
+.preview_image_book {
+    width: 250px;
+    height: 250px;
+    padding: 0.2em;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.button_create {
+    margin: 1em 0;
+    background-color: $color-main;
+    color: white;
+    border: none;
+    padding: 0.5em;
+    border-radius: 5px;
+    width: 250px;
+    text-align: center;
+    cursor: pointer;
+    @extend .button_hover;
+    @extend .button_focus;
+    @extend .button_active;
+}
+
+.form_group_header {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    width: 100%;
+
+    @include Responsive(MS) {
+        flex-direction: column;
+    }
+
+    .form_group_image {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+.btn_create {
+    padding: 0 0.5em;
+    background-color: $color-main;
+    @extend .button_hover;
+    @extend .button_focus;
+}
+
+.btn_cancel {
+    padding: 0 0.5em;
+    background-color: $color-red-delete;
+
+    &:hover {
+        background-color: $color-red-delete-focus;
+        color: $color-white;
+        border: none;
+        box-shadow: $box_shadow $color-shadow-red-delete  !important;
+    }
+}

@@ -4,8 +4,11 @@ import { LANGUAGES } from "../../../../utils/constant";
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
 import "./ManageBook.scss";
-import SideBar from "../Sidebar/SideBar";
 import SideContent from "../SideContent/SideContent";
+import SideBar from "../SideBar/SideBar";
+import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
+import CurrencyFormat from 'react-currency-format';
+import ModalCreateBook from "./ModalCreateBook";
 
 class ManageBook extends Component {
   constructor(props) {
@@ -16,11 +19,20 @@ class ManageBook extends Component {
 
       isOpen: false,
       previewImage: "",
+      book: [],
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getBook("ALL")
+  }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {}
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.book !== this.props.book) {
+      this.setState({
+        book: this.props.book
+      })
+    }
+  }
 
   toggleModal = () => {
     this.setState({
@@ -41,21 +53,73 @@ class ManageBook extends Component {
     });
   };
 
+  handleCreateBook = () => {
+    this.setState({
+      isOpenModal: true,
+    })
+  }
+
+  handleDeleteBook = (book) => {
+    this.props.deleteBook(book.id)
+  }
+
   render() {
-    let arrAccount = this.state.account;
-    console.log(arrAccount);
-    // let arrRole = this.state.role;
+    let arrBook = this.state.book
+    console.log(arrBook)
     return (
       <div>
-        <div className="section">
-          <div className="body">
-            <div className="side_bar">
-              <SideBar />
-            </div>
-            <div className="side_content">
-              <SideContent />
-            </div>
+        <div className="title">
+          Manage Book
+        </div>
+        <div className="section_body container">
+          <ModalCreateBook
+            isOpen={this.state.isOpenModal}
+            toggleModal={this.toggleModal}
+          />
+          <div className="content_header">
+            <button
+              onClick={() => this.handleCreateBook()}
+              className="button_create"
+              style={{
+                marginBottom: "1rem",
+                fontSize: "14px"
+              }}
+            >
+              <i class="fas fa-plus"></i> Create new book
+            </button>
           </div>
+          <div className="center_body">
+            <div className="content_body ">
+              {arrBook && arrBook.length > 0 && arrBook.map((item, index) => {
+                let image64 = ''
+                if (item.image) {
+                  image64 = new Buffer(item.image, 'base64').toString('binary')
+                }
+                return (
+                  <Card key={index} className="card_container" style={{ width: "200px", }}>
+                    <img className="preview_image_book" style={{ width: "200px", height: "200px" }} src={image64 ? image64 : ''} />
+                    <CardBody className="card_body">
+                      <CardTitle className="card_title" tag="h4">{item.name}</CardTitle>
+                      <CardSubtitle className="card_price" tag="h5">
+                        <CurrencyFormat value={item.price} displayType={'text'} thousandSeparator={true} suffix={' VND'} renderText={value => <div>{value}</div>} />
+                      </CardSubtitle>
+                      <CardSubtitle className="card_subtitle" style={{ marginBottom: "0.5em" }} tag="h6"><i class="fas fa-user-edit"></i>{' - '}{item.authorData.name}</CardSubtitle>
+                      <CardSubtitle className="card_subtitle" style={{ marginBottom: "0.5em" }} tag="h6"><i class="fas fa-truck-loading"></i>{' - '}{item.publisherData.name}</CardSubtitle>
+                      <div className="group_button">
+                        <Button className="btn_detail" ><i class="fas fa-eye"></i></Button>
+                        <Button className="btn_edit" ><i class="far fa-edit"></i></Button>
+                        <Button onClick={()=>this.handleDeleteBook(item)} className="btn_delete" ><i class="fas fa-trash"></i></Button>
+                      </div>
+                    </CardBody>
+                  </Card>
+                )
+              })}
+
+
+            </div>
+
+          </div>
+
         </div>
       </div>
     );
@@ -65,16 +129,14 @@ class ManageBook extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
-    role: state.admin.role,
-    account: state.admin.account,
+    book: state.manager.book
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getRoleStart: () => dispatch(actions.fetchRoleStart()),
-    getAllAccount: () => dispatch(actions.getAllAccount()),
-    deleteAccount: (id) => dispatch(actions.deleteAccount(id)),
+    getBook: (id) => dispatch(actions.getBook(id)),
+    deleteBook: (id) => dispatch(actions.deleteBook(id))
   };
 };
 

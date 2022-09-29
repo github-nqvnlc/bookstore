@@ -13,7 +13,6 @@ import Login from "./Auth/Login";
 import System from "../routes/System";
 import HomePage from "./HomePage/HomePage";
 import Register from "./Auth/Register";
-import CustomScrollbars from "./../components/CustomScrollbars";
 
 import { CustomToastCloseButton } from "../components/CustomToast";
 
@@ -41,24 +40,23 @@ class App extends Component {
       <Fragment>
         <Router history={history}>
           <div className="main-container">
-            <div className="content-container">
-              <Switch>
-                <Route
-                  path={path.LOGIN}
-                  component={userIsNotAuthenticated(Login)}
-                />
-                <Route
-                  path={path.REGISTER}
-                  component={userIsNotAuthenticated(Register)}
-                />
-                <Route
-                  path={path.SYSTEM}
-                  component={userIsAuthenticated(System)}
-                />
-                <Route path={path.HOMEPAGE} component={HomePage} />
-              </Switch>
-            </div>
-
+              <div className="content-container">
+                <Switch>
+                  <Route
+                    path={path.LOGIN}
+                    component={userIsNotAuthenticated(Login)}
+                  />
+                  <Route
+                    path={path.REGISTER}
+                    component={userIsNotAuthenticated(Register)}
+                  />
+                  <Route
+                    path={path.SYSTEM}
+                    component={userIsAuthenticated(System)}
+                  />
+                  <Route path={path.HOMEPAGE} component={HomePage} />
+                </Switch>
+              </div>
             <ToastContainer
               position="top-right"
               autoClose={5000}
@@ -69,13 +67,14 @@ class App extends Component {
               pauseOnFocusLoss
               draggable
               pauseOnHover
-              // style={{paddingTop: "130px"}}
+            // style={{paddingTop: "130px"}}
             />
             {/* Same as */}
             <ToastContainer />
           </div>
+
         </Router>
-      </Fragment>
+      </Fragment >
     );
   }
 }

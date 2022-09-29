@@ -18,10 +18,10 @@ class Header extends Component {
     return (
       <div className="header-container">
         <div className="header-tabs-container">
-          <Navigator menus={adminMenu} />
+          {/* <Navigator menus={adminMenu} /> */}
+          <Link className="back_to_home" to="/"><i class="fas fa-home"></i></Link>
         </div>
         <div className="header-button">
-          <Link className="back_to_home" to="/">Back to Homepage</Link>
 
           <div className={language === LANGUAGES.VI ? "lang-vi active" : "lang-vi" }>
             <span onClick={()=>this.handleChangeLanguage(LANGUAGES.VI)}>VI</span>

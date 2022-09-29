@@ -6,7 +6,9 @@ import { LANGUAGES } from "../../../../utils/constant";
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
 
+import { toast } from "react-toastify";
 import "./SideContent.scss";
+import imageUpload from "../../../../assets/image_upload.png"
 
 import {
   Collapse,
@@ -41,11 +43,33 @@ class SideContent extends Component {
       image: "",
 
       previewUrlImage: "",
+
+      book: []
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getBook("ALL");
+  }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {}
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.book !== this.props.book) {
+      this.setState({
+        book: this.props.book,
+        name: "",
+        description: "",
+        author: "",
+        publisher: "",
+        category: "",
+        typeBook: "",
+        price: "",
+        discount: "",
+        quantity: "",
+        image: "",
+
+        previewUrlImage: "",
+      })
+    }
+  }
 
   handleOnChangeInput = (e, id) => {
     let copyState = { ...this.state };
@@ -58,6 +82,7 @@ class SideContent extends Component {
   checkValidInput = () => {
     let isValid = true;
     let arrInput = [
+      "image",
       "name",
       "author",
       "category",
@@ -70,7 +95,10 @@ class SideContent extends Component {
     for (let i = 0; i < arrInput.length; i++) {
       if (!this.state[arrInput[i]]) {
         isValid = false;
-        alert("Missing input: " + arrInput[i]);
+        toast.error(`Missing input: ${arrInput[i]}`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
         break;
       }
     }
@@ -95,6 +123,11 @@ class SideContent extends Component {
       image: this.state.image,
     });
   };
+
+  handleDeleteBook = (book) => {
+    this.props.deleteBook(book.id)
+  }
+
   handleOnChangeImage = async (event) => {
     let data = event.target.files;
     let file = data[0];
@@ -133,7 +166,9 @@ class SideContent extends Component {
       discount,
       quantity,
     } = this.state;
-    // let arrRole = this.state.role;
+
+    let arrBook = this.state.book;
+    console.log(arrBook)
     return (
       <div className="sidecontent">
         <div className="sidecontent_header">Manage Book</div>
@@ -156,7 +191,7 @@ class SideContent extends Component {
                       <FormGroup>
                         <img
                           style={{ width: "100%", height: "300px" }}
-                          src={this.state.previewUrlImage}
+                          src={this.state.previewUrlImage ? this.state.previewUrlImage : imageUpload}
                           className="preview_image"
                           onClick={() => this.openPreviewImage()}
                         />
@@ -275,14 +310,7 @@ class SideContent extends Component {
                               className="input_focus_book input_hover_book"
                             />
                           </FormGroup>
-                          <FormGroup>
-                            <Label>Number Like</Label>
-                            <Input
-                              disabled
-                              className="input_focus_book input_hover_book"
-                              value={3}
-                            />
-                          </FormGroup>
+                          
                         </Col>
                       </Row>
                     </Col>
@@ -304,71 +332,60 @@ class SideContent extends Component {
           </div>
           <div className="body_list_book">
             <Row>
-              <Col
-                xl={3}
-                lg={4}
-                md={6}
-                sm={6}
-                xs={6}
-                style={{ marginBottom: "2em" }}
-              >
-                <Card
-                  style={{
-                    border: "none",
-                    boxShadow: " 0 0 5px #b3b3b3",
-                  }}
-                >
-                  <Row>
-                    <Col xl={12} lg={12} md={5}>
-                      <div className="card_image">
-                        <img
-                          className="preview_image"
-                          src="https://nhasachphuongnam.com/images/thumbnails/213/213/detailed/234/harry-potter-va-dua-tre-bi-nguyen-rua-tb-2022.jpg"
-                        />
-                        <span className="type_book">Vietnamese Book</span>
-                        <span className="category">Novel</span>
-                      </div>
+              {arrBook && arrBook.length > 0 &&
+                arrBook.map((item, index) => {
+                  let image = '';
+                  if (item.image) { image = new Buffer(item.image, 'base64').toString('binary') }
+                  return (
+                    <Col
+                      key={index}
+                      // xl={2}
+                      // lg={4}
+                      // md={6}
+                      // sm={6}
+                      // xs={6}
+                      style={{ marginBottom: "2em" }}
+                    >
+                      <Card
+                        style={{
+                          border: "none",
+                          boxShadow: " 0 0 5px #b3b3b3",
+                        }}
+                        className="card_book"
+                      >
+                        <Row>
+                          <Col xl={12} lg={12} md={12}>
+                            <div className="card_image">
+                              <img
+                                className="preview_image"
+                                src={image ? image : imageUpload}
+                                onClick={() => this.openPreviewImage(image)}
+                              />
+                              <span className="type_book">{item.typeId}</span>
+                              <span className="category">{item.categoryData.name}</span>
+                            </div>
+                          </Col>
+                          <Col>
+                            <div className="card_content">
+                              <div className="card_header">{item.name}álkdaskldjlsakdjaslkdjaskld</div>
+                              <div className="card_body">
+                                <p className="card_text"><span className="card_text_bold">Author: </span>{item.authorId}</p>
+                                <p className="card_text"><span className="card_text_bold">Publisher: </span>{item.publisherId} </p>
+                                <p className="card_text"><span className="card_text_bold">Price: </span>{item.price} </p>
+                                
+                              </div>
+                              <div className="card_footer">
+                                <button className="card_edit">Edit book</button>
+                                <button className="card_detail">View detail</button>
+                                <button onClick={() => this.handleDeleteBook(item)} className="card_delete">Delete book</button>
+                              </div>
+                            </div>
+                          </Col>
+                        </Row>
+                      </Card>
                     </Col>
-                    <Col>
-                      <div className="card_content">
-                        <div className="card_header">Harry Potter</div>
-                        <div className="card_body">
-                          <Row style={{ width: "100%" }}>
-                            <div className="card_text_bold col-xl-4 col-lg-4 col-md-5 col-sm-4  ">
-                              Author
-                            </div>
-                            <div className="card_text col-xl-8 col-lg-8 col-md-7 col-sm-8 col-sm-8 ">
-                              J.K Rowling{" "}
-                            </div>
-                          </Row>
-                          <Row style={{ width: "100%" }}>
-                            <div className="card_text_bold col-xl-4 col-lg-4 col-md-5 col-sm-4 ">
-                              Publisher:{" "}
-                            </div>
-                            <div className="card_text col-xl-8 col-lg-8 col-md-7 col-sm-8 col-sm-8 ">
-                              laskdjakldjaldjaksdjaljd
-                            </div>
-                          </Row>
-
-                          <Row style={{ width: "100%" }}>
-                            <div className="card_text_bold col-xl-4 col-lg-4 col-md-5 col-sm-4 ">
-                              Price:{" "}
-                            </div>
-                            <div className="card_text col-xl-8 col-lg-8 col-md-7 col-sm-8 col-sm-8 ">
-                              200000
-                            </div>
-                          </Row>
-                        </div>
-                        <div className="card_footer">
-                          <button className="card_edit">Edit book</button>
-                          <button className="card_detail">View detail</button>
-                          <button className="card_delete">Delete book</button>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card>
-              </Col>
+                  )
+                })}
             </Row>
           </div>
         </div>
@@ -390,12 +407,15 @@ class SideContent extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
+    book: state.manager.book,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createNewBook: (data) => dispatch(actions.createNewBook(data)),
+    getBook: (id) => dispatch(actions.getBook(id)),
+    deleteBook: (id) => dispatch(actions.deleteBook(id)),
   };
 };
 

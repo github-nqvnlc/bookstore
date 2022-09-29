@@ -18,6 +18,7 @@ import {
 import "./ModalAccount.scss";
 import { emitter } from "../../../../utils/emitter";
 import CommonUtils from "../../../../utils/CommonUtils";
+import { toast } from "react-toastify";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import * as actions from "../../../../store/actions";
@@ -42,7 +43,7 @@ class ModalAccount extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.account !== this.props.account) {
@@ -87,7 +88,10 @@ class ModalAccount extends Component {
     for (let i = 0; i < arrInput.length; i++) {
       if (!this.state[arrInput[i]]) {
         isValid = false;
-        alert("Missing input: " + arrInput[i]);
+        toast.error(`Missing input: ${arrInput[i]}`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
         break;
       }
     }
@@ -110,7 +114,7 @@ class ModalAccount extends Component {
       roleId: this.state.role,
       image: this.state.image,
     });
-    
+
   };
 
   handleOnChangeImage = async (event) => {
@@ -133,6 +137,7 @@ class ModalAccount extends Component {
     this.toggle();
   };
 
+  
   render() {
     let {
       email,
@@ -154,7 +159,7 @@ class ModalAccount extends Component {
           size="lg"
           centered
         >
-          <ModalHeader toggle={() => this.toggle()}>
+          <ModalHeader toggle={() => this.toggle()} >
             Create a new user
           </ModalHeader>
           <ModalBody>
@@ -251,14 +256,14 @@ class ModalAccount extends Component {
                     >
                       {
                         selectRole &&
-                          selectRole.length > 0 &&
-                          selectRole.map((item, index) => {
-                            return (
-                              <option key={index} value={item.id}>
-                                {item.name}
-                              </option>
-                            );
-                          })
+                        selectRole.length > 0 &&
+                        selectRole.map((item, index) => {
+                          return (
+                            <option key={index} value={item.id}>
+                              {item.name}
+                            </option>
+                          );
+                        })
                         /* <option value={0}>Admin</option>
                                         <option value={1}>Manager</option>
                                         <option value={2}>User</option> */

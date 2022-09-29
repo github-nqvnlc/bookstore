@@ -1,26 +1,124 @@
 @import "../../../../styles/resposive.scss";
 @import "../../../../styles/color.scss";
 
-.section {
-  width: 100vw;
-  .body {
+.section_body {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    margin: 1em auto;
-    .side_bar {
-      width: 15%;
-      padding: 1em;
-      @include Responsive(MD) {
-        display: none;
-      }
+
+    .button_create {
+        background-color: $color-main;
+        color: white;
+        border: none;
+        padding: 0.5em;
+        border-radius: 5px;
+        cursor: pointer;
+        @extend .button_hover;
+
+        i {
+            padding-right: 0.5em;
+        }
     }
-    .side_content {
-      width: 85%;
-      padding: 1em;
-      @include Responsive(MD) {
-        width: 100%;
-      }
+
+    .center_body {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        .content_body {
+            width: auto;
+            min-width: 200px;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            gap: 1em;
+            flex-wrap: wrap;
+
+
+            .card_container {
+                width: 250px;
+                transition: 0.3s;
+
+                &:hover {
+                    transform: translateY(-10px);
+                }
+
+                .preview_image_book {
+                    width: 250px;
+                    height: 250px;
+                    padding: 0.2em;
+                    object-fit: cover;
+                    object-position: 50% 50%;
+                }
+
+                .card_body {
+                    border-top: 1px solid $color-grey;
+                }
+
+                .card_title {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    margin: 0;
+                }
+
+                .card_price {
+                    color: $color-red;
+                    padding: 0.5em 0;
+                }
+
+                .card_subtitle {
+                    @extend .card_title;
+                    font-weight: 400;
+                }
+
+                .group_button {
+                    display: flex;
+                    justify-content: flex-end;
+                    border-top: 1px solid $color-grey;
+                    padding-top: 0.5em;
+
+                    .card_button {
+                        width: 2em;
+                        padding: 0 0.5em;
+                        margin: 0 0.25em;
+                    }
+
+                    .btn_detail {
+                        @extend .card_button;
+                        background-color: $color-blue-detail;
+                        border: none;
+
+                        &:hover {
+                            background-color: $color-blue-detail-focus;
+                            color: $color-white;
+                            border: none;
+                            box-shadow: $box_shadow $color-shadow-blue-detail  !important;
+                        }
+                    }
+
+                    .btn_edit {
+                        @extend .card_button;
+                        background-color: $color-main;
+                        border: none;
+                        @extend .button_hover;
+                    }
+
+                    .btn_delete {
+                        @extend .card_button;
+                        background-color: $color-red-delete;
+                        border: none;
+
+                        &:hover {
+                            background-color: $color-red-delete-focus;
+                            color: $color-white;
+                            border: none;
+                            box-shadow: $box_shadow $color-shadow-red-delete  !important;
+                        }
+                    }
+                }
+            }
+
+        }
     }
-  }
 }
