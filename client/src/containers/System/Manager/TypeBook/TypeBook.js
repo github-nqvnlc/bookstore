@@ -4,8 +4,6 @@ import { LANGUAGES } from "../../../../utils/constant";
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
 import "./TypeBook.scss";
-import SideContent from "../SideContent/SideContent";
-import SideBar from "../SideBar/SideBar";
 import { Button, Table } from "reactstrap";
 import CurrencyFormat from 'react-currency-format';
 import ModalCreateTypeBook from "./ModalCreateTypeBook";

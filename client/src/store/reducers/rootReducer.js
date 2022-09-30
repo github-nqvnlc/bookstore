@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 
@@ -26,11 +27,22 @@ const appPersistConfig = {
   whitelist: ["language"],
 };
 
+const managerPersistConfig = {
+  ...persistCommonConfig,
+  key: "manager",
+  whitelist: [
+    "authorCountCreated",
+    "publisherCountCreated",
+    "categoryCountCreated",
+    "typeCountCreated",
+  ],
+};
+
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
     user: persistReducer(userPersistConfig, userReducer),
     app: persistReducer(appPersistConfig, appReducer),
+    manager: persistReducer(managerPersistConfig, managerReducer),
     admin: adminReducer,
-    manager: managerReducer,
   });
