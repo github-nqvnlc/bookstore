@@ -3,13 +3,15 @@ import actionTypes from "../actions/actionTypes";
 const initialState = {
   book: [],
   author: [],
-  authorCountCreated: 15,
   publisher: [],
-  publisherCountCreated: 16,
   category: [],
-  categoryCountCreated: 3,
   type: [],
-  typeCountCreated: 0,
+
+  authorByName: [],
+  publisherByName: [],
+  categoryByName: [],
+  typeByName: [],
+
 };
 
 const managerReducer = (state = initialState, action) => {
@@ -28,7 +30,6 @@ const managerReducer = (state = initialState, action) => {
 
     //createAuthor
     case actionTypes.CREATE_AUTHOR_SUCCESS:
-      state.authorCountCreated = state.authorCountCreated + 1;
       return {
         ...state,
       };
@@ -44,10 +45,11 @@ const managerReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    
+    
 
     //createPublisher
     case actionTypes.CREATE_PUBLISHER_SUCCESS:
-      state.publisherCountCreated = state.publisherCountCreated + 1;
       return {
         ...state,
       };
@@ -83,7 +85,6 @@ const managerReducer = (state = initialState, action) => {
 
     //create type
     case actionTypes.CREATE_TYPE_SUCCESS:
-      state.typeCountCreated = state.typeCountCreated + 1;
       return {
         ...state,
       };
@@ -100,6 +101,55 @@ const managerReducer = (state = initialState, action) => {
         ...state,
       };
 
+    
+    //get by name
+    case actionTypes.GET_AUTHOR_BY_NAME_SUCCESS:
+      state.authorByName = action.data;
+      return {
+        ...state,
+      };
+    case actionTypes.GET_AUTHOR_BY_NAME_FAILED:
+      state.authorByName = null;
+      return {
+        ...state,
+      };
+    
+    case actionTypes.GET_PUBLISHER_BY_NAME_SUCCESS:
+      state.publisherByName = action.data;
+      return {
+        ...state,
+      };
+    case actionTypes.GET_PUBLISHER_BY_NAME_FAILED:
+      state.publisherByName = null;
+      return {
+        ...state,
+      };
+    
+    case actionTypes.GET_CATEGORY_BY_NAME_SUCCESS:
+      state.categoryByName = action.data;
+
+      return {
+        ...state,
+      };
+    case actionTypes.GET_CATEGORY_BY_NAME_FAILED:
+      state.categoryByName = null;
+      return {
+        ...state,
+      };
+    
+    case actionTypes.GET_TYPE_BY_NAME_SUCCESS:
+      state.typeByName = action.data;
+
+      return {
+        ...state,
+      };
+    case actionTypes.GET_TYPE_BY_NAME_FAILED:
+      state.typeByName = null;
+      return {
+        ...state,
+      };
+    
+    
     default:
       return state;
   }

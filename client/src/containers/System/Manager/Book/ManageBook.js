@@ -70,7 +70,6 @@ class ManageBook extends Component {
 
   render() {
     let arrBook = this.state.book;
-    console.log(arrBook);
     return (
       <div>
         <div className="title">Manage Book</div>

@@ -46,6 +46,7 @@ let getAuthor = async (req, res) => {
     author,
   });
 };
+
 let editAuthor = async (req, res) => {
   let data = req.body;
   let message = await bookService.editAuthorService(data);
@@ -153,6 +154,45 @@ let deleteType = async (req, res) => {
   return res.status(200).json(message);
 };
 
+//get by name
+let getAuthorByName = async (req, res) => {
+  let name = req.query.name;
+  let author = await bookService.getAuthorByNameService(name);
+  return res.status(200).json({
+    errCode: 0,
+    errMessage: "oke",
+    author,
+  });
+};
+
+let getPublisherByName = async (req, res) => {
+  let name = req.query.name;
+  let publisher = await bookService.getPublisherByNameService(name);
+  return res.status(200).json({
+    errCode: 0,
+    errMessage: "oke",
+    publisher,
+  });
+};
+let getCategoryByName = async (req, res) => {
+  let name = req.query.name;
+  let category = await bookService.getCategoryByNameService(name);
+  return res.status(200).json({
+    errCode: 0,
+    errMessage: "oke",
+    category,
+  });
+};
+let getTypeByName = async (req, res) => {
+  let name = req.query.name;
+  let type = await bookService.getTypeByNameService(name);
+  return res.status(200).json({
+    errCode: 0,
+    errMessage: "oke",
+    type,
+  });
+};
+
 module.exports = {
   //Book
   createNewBook: createNewBook,
@@ -183,4 +223,10 @@ module.exports = {
   getType: getType,
   editType: editType,
   deleteType: deleteType,
+
+  //get by name
+  getAuthorByName: getAuthorByName,
+  getPublisherByName: getPublisherByName,
+  getCategoryByName: getCategoryByName,
+  getTypeByName: getTypeByName,
 };

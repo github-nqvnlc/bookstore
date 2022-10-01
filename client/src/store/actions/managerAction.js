@@ -30,6 +30,13 @@ import {
   deleteTypeService,
   editTypeService,
   getTypeService,
+
+  //get by name
+  getAuthorByNameService,
+  getPublisherByNameService,
+  getCategoryByNameService,
+  getTypeByNameService,
+
 } from "../../services/bookService";
 
 //===============================================================//
@@ -175,6 +182,7 @@ export const createAuthor = (data) => {
         });
         dispatch(createAuthorSuccess());
         dispatch(getAuthor("ALL"))
+        dispatch(getAuthorByName(data.name))
       } else {
         toast.error(`Create author failed ${res.errMessage}`, {
           position: "bottom-right",
@@ -216,6 +224,8 @@ export const getAuthorFailed = (data) => ({
   type: actionTypes.GET_AUTHOR_FAILED,
   data: data
 })
+
+
 //delete author
 export const deleteAuthor = (id) => {
   return async (dispatch, getState) => {
@@ -299,6 +309,7 @@ export const createPublisher = (data) => {
         });
         dispatch(createPublisherSuccess());
         dispatch(getPublisher("ALL"))
+        dispatch(getPublisherByName(data.name))
       } else {
         toast.error(`Create publisher failed ${res.errMessage}`, {
           position: "bottom-right",
@@ -423,6 +434,7 @@ export const createCategory = (data) => {
         });
         dispatch(createCategorySuccess());
         dispatch(getCategory("ALL"))
+        dispatch(getCategoryByName(data.name))
       } else {
         toast.error(`Create category failed ${res.errMessage}`, {
           position: "bottom-right",
@@ -547,6 +559,7 @@ export const createType = (data) => {
         });
         dispatch(createTypeSuccess());
         dispatch(getType("ALL"))
+        dispatch(getTypeByName(data.name))
       } else {
         toast.error(`Create type failed ${res.errMessage}`, {
           position: "bottom-right",
@@ -651,4 +664,97 @@ export const editTypeSuccess = () => ({
 })
 export const editTypeFailed = () => ({
   type: actionTypes.EDIT_TYPE_FAILED
+})
+
+//get by name
+export const getAuthorByName = (name) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAuthorByNameService(name)
+      if (res && res.errCode === 0) {
+        dispatch(getAuthorByNameSuccess(res.author))
+      } else {
+        dispatch(getAuthorByNameFailed())
+      }
+    } catch (error) {
+      dispatch(getAuthorByNameFailed())
+    }
+  }
+}
+export const getAuthorByNameSuccess = (data) => ({
+  type: actionTypes.GET_AUTHOR_BY_NAME_SUCCESS,
+  data: data
+})
+export const getAuthorByNameFailed = (data) => ({
+  type: actionTypes.GET_AUTHOR_BY_NAME_FAILED,
+  data: data
+})
+
+export const getPublisherByName = (name) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getPublisherByNameService(name)
+      if (res && res.errCode === 0) {
+        dispatch(getPublisherByNameSuccess(res.publisher))
+      } else {
+        dispatch(getPublisherByNameFailed())
+      }
+    } catch (error) {
+      dispatch(getPublisherByNameFailed())
+    }
+  }
+}
+export const getPublisherByNameSuccess = (data) => ({
+  type: actionTypes.GET_PUBLISHER_BY_NAME_SUCCESS,
+  data: data
+})
+export const getPublisherByNameFailed = (data) => ({
+  type: actionTypes.GET_PUBLISHER_BY_NAME_FAILED,
+  data: data
+})
+
+export const getCategoryByName = (name) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getCategoryByNameService(name)
+      if (res && res.errCode === 0) {
+        dispatch(getCategoryByNameSuccess(res.category))
+      } else {
+        dispatch(getCategoryByNameFailed())
+      }
+    } catch (error) {
+      dispatch(getCategoryByNameFailed())
+    }
+  }
+}
+export const getCategoryByNameSuccess = (data) => ({
+  type: actionTypes.GET_CATEGORY_BY_NAME_SUCCESS,
+  data: data
+})
+export const getCategoryByNameFailed = (data) => ({
+  type: actionTypes.GET_CATEGORY_BY_NAME_FAILED,
+  data: data
+})
+
+export const getTypeByName = (name) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getTypeByNameService(name)
+      if (res && res.errCode === 0) {
+        dispatch(getTypeByNameSuccess(res.type))
+      } else {
+        dispatch(getTypeByNameFailed())
+      }
+    } catch (error) {
+      dispatch(getTypeByNameFailed())
+    }
+  }
+}
+export const getTypeByNameSuccess = (data) => ({
+  type: actionTypes.GET_TYPE_BY_NAME_SUCCESS,
+  data: data
+})
+export const getTypeByNameFailed = (data) => ({
+  type: actionTypes.GET_TYPE_BY_NAME_FAILED,
+  data: data
 })

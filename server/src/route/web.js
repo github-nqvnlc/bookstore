@@ -56,6 +56,14 @@ const initWebRoutes = (app) => {
   router.put("/api/edit-type", bookController.editType);
   router.delete("/api/delete-type", bookController.deleteType);
 
+  //get by name
+  router.get("/api/get-author-by-name", bookController.getAuthorByName);
+  router.get("/api/get-publisher-by-name", bookController.getPublisherByName);
+  router.get("/api/get-category-by-name", bookController.getCategoryByName);
+  router.get("/api/get-type-by-name", bookController.getTypeByName);
+
+
+
   return app.use("/", router);
 };
 

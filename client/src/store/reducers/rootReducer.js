@@ -30,12 +30,7 @@ const appPersistConfig = {
 const managerPersistConfig = {
   ...persistCommonConfig,
   key: "manager",
-  whitelist: [
-    "authorCountCreated",
-    "publisherCountCreated",
-    "categoryCountCreated",
-    "typeCountCreated",
-  ],
+  whitelist: [],
 };
 
 export default (history) =>

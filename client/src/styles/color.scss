@@ -90,6 +90,7 @@ $box_shadow_input: 0 0 3px;
 
 .input_hover {
   &:hover {
+    outline: none;
     box-shadow: $box_shadow $color-shadow  !important;
   }
 }
@@ -104,6 +105,7 @@ $box_shadow_input: 0 0 3px;
 .input_focus_book {
   &:focus {
     outline: none;
+    border-radius: 4px;
     border: 1px solid $color-focus;
     box-shadow: $box_shadow_input $color-shadow  !important;
   }
@@ -111,7 +113,9 @@ $box_shadow_input: 0 0 3px;
 
 .input_hover_book {
   &:hover {
+    outline: none;
     // border: 1px solid $color-focus;
+    border-radius: 4px;
     box-shadow: $box_shadow $color-shadow  !important;
   }
 }

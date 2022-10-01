@@ -12,53 +12,28 @@ import Category from "./Category/Category";
 import Author from "./Author/Author";
 import TypeBook from "./TypeBook/TypeBook";
 import Publisher from "./Publisher/Publisher";
-import Bar from "./Sidebar/Bar.js";
+import SideBar from "./SideBar/SideBar";
 
 class Manager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpenModal: false,
-      isOpenModalEdit: false,
-
-      isOpen: false,
-      previewImage: "",
+      
     };
   }
   componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState, snapshot) {}
 
-  toggleModal = () => {
-    this.setState({
-      isOpenModal: !this.state.isOpenModal,
-    });
-  };
 
-  toggleModalEdit = () => {
-    this.setState({
-      isOpenModalEdit: !this.state.isOpenModalEdit,
-    });
-  };
-
-  openPreviewImage = (image) => {
-    this.setState({
-      isOpen: true,
-      previewImage: image,
-    });
-  };
 
   render() {
-    let arrAccount = this.state.account;
-    console.log(arrAccount);
-    // let arrRole = this.state.role;
-
     return (
       <div>
         <div className="section">
           <div className="body">
             <div className="side_bar">
-              <Bar />
+              <SideBar />
             </div>
             <div className="side_content">
               <Switch>
@@ -102,16 +77,13 @@ class Manager extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
-    role: state.admin.role,
-    account: state.admin.account,
+    
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getRoleStart: () => dispatch(actions.fetchRoleStart()),
-    getAllAccount: () => dispatch(actions.getAllAccount()),
-    deleteAccount: (id) => dispatch(actions.deleteAccount(id)),
+    
   };
 };
 

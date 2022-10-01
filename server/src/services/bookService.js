@@ -147,6 +147,12 @@ let createAuthorService = (data) => {
                 name: data.name,
                 description: data.description
             })
+            let count = await db.Count.findAll()
+            // let countAuthor = count[count.length].countAuthorCreated + 1;
+            console.log(count[count.length])
+            // await db.Count.create({
+            //     countAuthorCreated: countAuthorCreated + 1
+            // })
             resolve({
                 errCode: 0,
                 errMessage: "oke",
@@ -189,6 +195,8 @@ let getAuthorService = (authorId) => {
         }
     })
 }
+
+
 let editAuthorService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -551,6 +559,104 @@ let deleteTypeService = (id) => {
     })
 }
 
+//get by name
+let getAuthorByNameService = (name) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (name) {
+                let author = await db.Author.findOne({
+                    where: { name: name },
+                    include: [
+                        { model: db.Book, as: "authorData" },
+                    ],
+                    raw: true,
+                    nest: true,
+                })
+                resolve(author)
+            }
+            resolve({
+                errCode: 2,
+                errMessage: "Get author faild!"
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let getPublisherByNameService = (name) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (name) {
+                let publisher = await db.Publisher.findOne({
+                    where: { name: name },
+                    include: [
+                        { model: db.Book, as: "publisherData" },
+                    ],
+                    raw: true,
+                    nest: true,
+                })
+                resolve(publisher)
+            }
+            resolve({
+                errCode: 2,
+                errMessage: "Get publisher faild!"
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let getTypeByNameService = (name) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (name) {
+                let type = await db.Type.findOne({
+                    where: { name: name },
+                    include: [
+                        { model: db.Book, as: "typeData" },
+                    ],
+                    raw: true,
+                    nest: true,
+                })
+                resolve(type)
+            }
+            resolve({
+                errCode: 2,
+                errMessage: "Get type faild!"
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+let getCategoryByNameService = (name) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (name) {
+                let category = await db.Category.findOne({
+                    where: { name: name },
+                    include: [
+                        { model: db.Book, as: "categoryData" },
+                    ],
+                    raw: true,
+                    nest: true,
+                })
+                resolve(category)
+            }
+            resolve({
+                errCode: 2,
+                errMessage: "Get category faild!"
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+
+
 module.exports = {
     //Book
     getBookService: getBookService,
@@ -582,5 +688,9 @@ module.exports = {
     editTypeService: editTypeService,
     deleteTypeService: deleteTypeService,
 
-
+    //get by name
+    getAuthorByNameService: getAuthorByNameService,
+    getPublisherByNameService: getPublisherByNameService,
+    getCategoryByNameService: getCategoryByNameService,
+    getTypeByNameService: getTypeByNameService,
 }

@@ -29,6 +29,8 @@ const getAuthorService = (id) => {
   return axios.get(`/api/get-author?id=${id}`);
 }
 
+
+
 const deleteAuthorService = (id) => {
   return axios.delete("/api/delete-author", { data: { id: id } })
 }
@@ -94,6 +96,22 @@ const editTypeService = (type) => {
   return axios.put("/api/edit-type", type)
 }
 
+// get by name
+const getAuthorByNameService = (name) => {
+  return axios.get(`/api/get-author-by-name?name=${name}`);
+}
+
+const getPublisherByNameService = (name) => {
+  return axios.get(`/api/get-publisher-by-name?name=${name}`);
+}
+
+const getCategoryByNameService = (name) => {
+  return axios.get(`/api/get-category-by-name?name=${name}`);
+}
+
+const getTypeByNameService = (name) => {
+  return axios.get(`/api/get-type-by-name?name=${name}`);
+}
 
 export {
 
@@ -126,4 +144,11 @@ export {
   getTypeService,
   deleteTypeService,
   editTypeService,
+
+  //get by name
+  getAuthorByNameService,
+  getPublisherByNameService,
+  getCategoryByNameService,
+  getTypeByNameService,
+
 };

@@ -9873,6 +9873,11 @@ react-currency-format@^1.1.0:
   dependencies:
     prop-types "^15.6.0"
 
+react-currency-input-field@^3.6.5:
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/react-currency-input-field/-/react-currency-input-field-3.6.5.tgz#67ed7005a2f1402cb70a23050f6b997e6d1452b6"
+  integrity sha512-tP62WFAhkVv0RGOQVGEPE3MfgciQ4gkiASlmLBDu6tdfMC3jFhIkLU1uqUy3glUvRHyT4avnX/YVVbbXKHLtnA==
+
 react-custom-scrollbars@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/react-custom-scrollbars/-/react-custom-scrollbars-4.2.1.tgz#830fd9502927e97e8a78c2086813899b2a8b66db"
