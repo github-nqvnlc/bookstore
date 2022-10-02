@@ -4,6 +4,8 @@ import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../../../utils/constant";
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
+import { withRouter } from "react-router";
+
 import "./ManageBook.scss";
 import {
   Button,
@@ -76,6 +78,10 @@ class ManageBook extends Component {
 
   handleDeleteBook = (book) => {
     this.props.deleteBook(book.id);
+  };
+
+  handleDetailBook = (book) => {
+    this.props.history.push(`/system/manager/book/${book.id}`);
   };
 
   render() {
@@ -173,7 +179,10 @@ class ManageBook extends Component {
                           {item.publisherData.name}
                         </CardSubtitle>
                         <div className="group_button">
-                          <Button className="btn_detail">
+                          <Button
+                            onClick={() => this.handleDetailBook(item)}
+                            className="btn_detail"
+                          >
                             <i class="fas fa-eye"></i>
                           </Button>
                           <Button
@@ -215,4 +224,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageBook);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ManageBook)
+);

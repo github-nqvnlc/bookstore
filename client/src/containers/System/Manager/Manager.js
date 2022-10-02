@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../utils/constant";
+import { LANGUAGES, path } from "../../../utils/constant";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions";
@@ -14,6 +14,7 @@ import Author from "./Author/Author";
 import TypeBook from "./TypeBook/TypeBook";
 import Publisher from "./Publisher/Publisher";
 import SideBar from "./Sidebar/SideBar";
+import DetailBook from "./Book/DetailBook";
 
 class Manager extends Component {
   constructor(props) {
@@ -35,34 +36,14 @@ class Manager extends Component {
             <CustomScrollbars>
               <div className="side_content">
                 <Switch>
-                  <Route
-                    path="/system/manager/dashboard"
-                    component={SideContent}
-                  />
-                  <Route
-                    path="/system/manager/manage-customer"
-                    component={SideContent}
-                  />
-                  <Route
-                    path="/system/manager/manage-book"
-                    component={ManageBook}
-                  />
-                  <Route
-                    path="/system/manager/manage-author"
-                    component={Author}
-                  />
-                  <Route
-                    path="/system/manager/manage-publisher"
-                    component={Publisher}
-                  />
-                  <Route
-                    path="/system/manager/manage-category"
-                    component={Category}
-                  />
-                  <Route
-                    path="/system/manager/manage-type-book"
-                    component={TypeBook}
-                  />
+                  <Route path={path.DASHBOARD} component={SideContent} />
+                  <Route path={path.MANAGER_CUSTOMER} component={SideContent} />
+                  <Route path={path.MANAGER_BOOK} component={ManageBook} />
+                  <Route path={path.MANAGER_AUTHOR} component={Author} />
+                  <Route path={path.MANAGER_PUBLISHER} component={Publisher} />
+                  <Route path={path.MANAGER_CATEGORY} component={Category} />
+                  <Route path={path.MANAGER_TYPE} component={TypeBook} />
+                  <Route path={path.DETAIL_BOOK} component={DetailBook} />
                 </Switch>
               </div>
             </CustomScrollbars>
