@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../../../utils/constant";
@@ -14,6 +15,7 @@ import {
 } from "reactstrap";
 import CurrencyFormat from "react-currency-format";
 import ModalCreateBook from "./ModalCreateBook";
+import ModalEditBook from "./ModalEditBook";
 
 class ManageBook extends Component {
   constructor(props) {
@@ -25,6 +27,7 @@ class ManageBook extends Component {
       isOpen: false,
       previewImage: "",
       book: [],
+      bookEdit: {},
     };
   }
   componentDidMount() {
@@ -64,6 +67,13 @@ class ManageBook extends Component {
     });
   };
 
+  handleEditBook = (book) => {
+    this.setState({
+      isOpenModalEdit: true,
+      bookEdit: book,
+    });
+  };
+
   handleDeleteBook = (book) => {
     this.props.deleteBook(book.id);
   };
@@ -77,6 +87,12 @@ class ManageBook extends Component {
           <ModalCreateBook
             isOpen={this.state.isOpenModal}
             toggleModal={this.toggleModal}
+          />
+          <ModalEditBook
+            isOpen={this.state.isOpenModalEdit}
+            toggleModal={this.toggleModalEdit}
+            bookEdit={this.state.bookEdit}
+            previewImage={this.previewImage}
           />
           <div className="content_header">
             <button
@@ -107,18 +123,31 @@ class ManageBook extends Component {
                       className="card_container"
                       style={{ width: "200px" }}
                     >
-                      <img
-                        className="preview_image_book"
-                        style={{ width: "200px", height: "200px" }}
-                        src={image64 ? image64 : ""}
-                      />
+                      <div
+                        className="card_image"
+                        style={{ width: "100%", height: "200px" }}
+                      >
+                        <img
+                          className="preview_image_book"
+                          style={{ width: "100%", height: "200px" }}
+                          src={image64 ? image64 : ""}
+                        />
+                        <div className="card_tag">
+                          <div className="tag_type">{item.typeData.name}</div>
+                          <div className="tag_category">
+                            {item.categoryData.name}
+                          </div>
+                        </div>
+                      </div>
+
                       <CardBody className="card_body">
-                        <CardTitle className="card_title" tag="h4">
+                        <CardTitle className="card_title" tag="h6">
                           {item.name}
                         </CardTitle>
                         <CardSubtitle className="card_price" tag="h5">
                           <CurrencyFormat
                             value={item.price}
+                            placeholder="xxx.xxx VND"
                             displayType={"text"}
                             thousandSeparator={true}
                             suffix={" VND"}
@@ -147,7 +176,10 @@ class ManageBook extends Component {
                           <Button className="btn_detail">
                             <i class="fas fa-eye"></i>
                           </Button>
-                          <Button className="btn_edit">
+                          <Button
+                            onClick={() => this.handleEditBook(item)}
+                            className="btn_edit"
+                          >
                             <i class="far fa-edit"></i>
                           </Button>
                           <Button

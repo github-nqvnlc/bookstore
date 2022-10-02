@@ -36,7 +36,6 @@ import {
   getPublisherByNameService,
   getCategoryByNameService,
   getTypeByNameService,
-
 } from "../../services/bookService";
 
 //===============================================================//
@@ -56,7 +55,7 @@ export const createNewBook = (data) => {
           progress: undefined,
         });
         dispatch(createNewBookSuccess());
-        dispatch(getBook("ALL"))
+        dispatch(getBook("ALL"));
       } else {
         toast.error(`Create book failed ${res.errMessage}`, {
           position: "bottom-right",
@@ -79,90 +78,89 @@ export const createNewBookFailed = () => ({
 export const getBook = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getBookService(id)
+      let res = await getBookService(id);
       if (res && res.errCode === 0) {
-        dispatch(getBookSuccess(res.book.reverse()))
+        dispatch(getBookSuccess(res.book.reverse()));
       } else {
-        dispatch(getBookFailed())
+        dispatch(getBookFailed());
       }
     } catch (error) {
-      dispatch(getBookFailed())
+      dispatch(getBookFailed());
     }
-  }
-}
+  };
+};
 export const getBookSuccess = (data) => ({
   type: actionTypes.GET_BOOK_SUCCESS,
-  data: data
-})
+  data: data,
+});
 export const getBookFailed = (data) => ({
   type: actionTypes.GET_BOOK_FAILED,
-  data: data
-})
+  data: data,
+});
 //delete book
 export const deleteBook = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await deleteBookService(id)
+      let res = await deleteBookService(id);
       if (res && res.errCode === 0) {
         toast.success(`Delete book successful!`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(deleteBookSuccess())
-        dispatch(getBook("ALL"))
+        });
+        dispatch(deleteBookSuccess());
+        dispatch(getBook("ALL"));
       } else {
         toast.error("Delete book failed!", {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(deleteBookFailed())
+        });
+        dispatch(deleteBookFailed());
       }
     } catch (error) {
-      dispatch(deleteBookFailed())
+      dispatch(deleteBookFailed());
     }
-  }
-}
+  };
+};
 export const deleteBookSuccess = () => ({
   type: actionTypes.DELETE_BOOK_SUCCESS,
-})
+});
 export const deleteBookFailed = () => ({
   type: actionTypes.DELETE_BOOK_FAILED,
-})
+});
 //edit book
 export const editBook = (book) => {
   return async (dispatch, getState) => {
     try {
-      let res = await editBookService(book)
+      let res = await editBookService(book);
       if (res && res.errCode === 0) {
         toast.success(`Edit book successful!`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(editBookSuccess())
-        dispatch(getBook())
+        });
+        dispatch(editBookSuccess());
+        dispatch(getBook("ALL"));
       } else {
         toast.error(`Edit book failed`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
+        });
         dispatch(editBookFailed());
       }
     } catch (error) {
       toast.error(`Edit book error! ${error}`, {
         position: "bottom-right",
         autoClose: 3000,
-      })
+      });
       dispatch(editBookFailed());
     }
-  }
-}
+  };
+};
 export const editBookSuccess = () => ({
-  type: actionTypes.EDIT_BOOK_SUCCESS
-})
+  type: actionTypes.EDIT_BOOK_SUCCESS,
+});
 export const editBookFailed = () => ({
-  type: actionTypes.EDIT_BOOK_FAILED
-})
-
+  type: actionTypes.EDIT_BOOK_FAILED,
+});
 
 //===============================================================//
 //create author
@@ -181,8 +179,8 @@ export const createAuthor = (data) => {
           progress: undefined,
         });
         dispatch(createAuthorSuccess());
-        dispatch(getAuthor("ALL"))
-        dispatch(getAuthorByName(data.name))
+        dispatch(getAuthor("ALL"));
+        dispatch(getAuthorByName(data.name));
       } else {
         toast.error(`Create author failed ${res.errMessage}`, {
           position: "bottom-right",
@@ -205,91 +203,90 @@ export const createAuthorFailed = () => ({
 export const getAuthor = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getAuthorService(id)
+      let res = await getAuthorService(id);
       if (res && res.errCode === 0) {
-        dispatch(getAuthorSuccess(res.author.reverse()))
+        dispatch(getAuthorSuccess(res.author.reverse()));
       } else {
-        dispatch(getAuthorFailed())
+        dispatch(getAuthorFailed());
       }
     } catch (error) {
-      dispatch(getAuthorFailed())
+      dispatch(getAuthorFailed());
     }
-  }
-}
+  };
+};
 export const getAuthorSuccess = (data) => ({
   type: actionTypes.GET_AUTHOR_SUCCESS,
-  data: data
-})
+  data: data,
+});
 export const getAuthorFailed = (data) => ({
   type: actionTypes.GET_AUTHOR_FAILED,
-  data: data
-})
-
+  data: data,
+});
 
 //delete author
 export const deleteAuthor = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await deleteAuthorService(id)
+      let res = await deleteAuthorService(id);
       if (res && res.errCode === 0) {
         toast.success(`Delete author successful!`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(deleteAuthorSuccess())
-        dispatch(getAuthor("ALL"))
+        });
+        dispatch(deleteAuthorSuccess());
+        dispatch(getAuthor("ALL"));
       } else {
         toast.error("Delete author failed!", {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(deleteAuthorFailed())
+        });
+        dispatch(deleteAuthorFailed());
       }
     } catch (error) {
-      dispatch(deleteAuthorFailed())
+      dispatch(deleteAuthorFailed());
     }
-  }
-}
+  };
+};
 export const deleteAuthorSuccess = () => ({
   type: actionTypes.DELETE_AUTHOR_SUCCESS,
-})
+});
 export const deleteAuthorFailed = () => ({
   type: actionTypes.DELETE_AUTHOR_FAILED,
-})
+});
 //edit author
 export const editAuthor = (author) => {
   return async (dispatch, getState) => {
     try {
-      let res = await editAuthorService(author)
+      let res = await editAuthorService(author);
       if (res && res.errCode === 0) {
         toast.success(`Edit author successful!`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(editAuthorSuccess())
-        dispatch(getAuthor("ALL"))
+        });
+        dispatch(editAuthorSuccess());
+        dispatch(getAuthor("ALL"));
       } else {
         toast.error(`Edit author failed`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
+        });
         dispatch(editAuthorFailed());
       }
     } catch (error) {
       toast.error(`Edit author error! ${error}`, {
         position: "bottom-right",
         autoClose: 3000,
-      })
+      });
       dispatch(editAuthorFailed());
     }
-  }
-}
+  };
+};
 export const editAuthorSuccess = () => ({
-  type: actionTypes.EDIT_AUTHOR_SUCCESS
-})
+  type: actionTypes.EDIT_AUTHOR_SUCCESS,
+});
 export const editAuthorFailed = () => ({
-  type: actionTypes.EDIT_AUTHOR_FAILED
-})
+  type: actionTypes.EDIT_AUTHOR_FAILED,
+});
 
 //===============================================================//
 //create publisher
@@ -308,8 +305,8 @@ export const createPublisher = (data) => {
           progress: undefined,
         });
         dispatch(createPublisherSuccess());
-        dispatch(getPublisher("ALL"))
-        dispatch(getPublisherByName(data.name))
+        dispatch(getPublisher("ALL"));
+        dispatch(getPublisherByName(data.name));
       } else {
         toast.error(`Create publisher failed ${res.errMessage}`, {
           position: "bottom-right",
@@ -332,89 +329,89 @@ export const createPublisherFailed = () => ({
 export const getPublisher = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getPublisherService(id)
+      let res = await getPublisherService(id);
       if (res && res.errCode === 0) {
-        dispatch(getPublisherSuccess(res.publisher.reverse()))
+        dispatch(getPublisherSuccess(res.publisher.reverse()));
       } else {
-        dispatch(getPublisherFailed())
+        dispatch(getPublisherFailed());
       }
     } catch (error) {
-      dispatch(getPublisherFailed())
+      dispatch(getPublisherFailed());
     }
-  }
-}
+  };
+};
 export const getPublisherSuccess = (data) => ({
   type: actionTypes.GET_PUBLISHER_SUCCESS,
-  data: data
-})
+  data: data,
+});
 export const getPublisherFailed = (data) => ({
   type: actionTypes.GET_PUBLISHER_FAILED,
-  data: data
-})
+  data: data,
+});
 //delete publisher
 export const deletePublisher = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await deletePublisherService(id)
+      let res = await deletePublisherService(id);
       if (res && res.errCode === 0) {
         toast.success(`Delete publisher successful!`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(deletePublisherSuccess())
-        dispatch(getPublisher("ALL"))
+        });
+        dispatch(deletePublisherSuccess());
+        dispatch(getPublisher("ALL"));
       } else {
         toast.error("Delete publisher failed!", {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(deletePublisherFailed())
+        });
+        dispatch(deletePublisherFailed());
       }
     } catch (error) {
-      dispatch(deletePublisherFailed())
+      dispatch(deletePublisherFailed());
     }
-  }
-}
+  };
+};
 export const deletePublisherSuccess = () => ({
   type: actionTypes.DELETE_PUBLISHER_SUCCESS,
-})
+});
 export const deletePublisherFailed = () => ({
   type: actionTypes.DELETE_PUBLISHER_FAILED,
-})
+});
 //edit publisher
 export const editPublisher = (publisher) => {
   return async (dispatch, getState) => {
     try {
-      let res = await editPublisherService(publisher)
+      let res = await editPublisherService(publisher);
       if (res && res.errCode === 0) {
         toast.success(`Edit publisher successful!`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(editPublisherSuccess())
-        dispatch(getPublisher("ALL"))
+        });
+        dispatch(editPublisherSuccess());
+        dispatch(getPublisher("ALL"));
       } else {
         toast.error(`Edit publisher failed`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
+        });
         dispatch(editPublisherFailed());
       }
     } catch (error) {
       toast.error(`Edit publisher error! ${error}`, {
         position: "bottom-right",
         autoClose: 3000,
-      })
+      });
       dispatch(editPublisherFailed());
     }
-  }
-}
+  };
+};
 export const editPublisherSuccess = () => ({
-  type: actionTypes.EDIT_PUBLISHER_SUCCESS
-})
+  type: actionTypes.EDIT_PUBLISHER_SUCCESS,
+});
 export const editPublisherFailed = () => ({
-  type: actionTypes.EDIT_PUBLISHER_FAILED
-})
+  type: actionTypes.EDIT_PUBLISHER_FAILED,
+});
 
 //===============================================================//
 //create category
@@ -433,8 +430,8 @@ export const createCategory = (data) => {
           progress: undefined,
         });
         dispatch(createCategorySuccess());
-        dispatch(getCategory("ALL"))
-        dispatch(getCategoryByName(data.name))
+        dispatch(getCategory("ALL"));
+        dispatch(getCategoryByName(data.name));
       } else {
         toast.error(`Create category failed ${res.errMessage}`, {
           position: "bottom-right",
@@ -457,89 +454,89 @@ export const createCategoryFailed = () => ({
 export const getCategory = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getCategoryService(id)
+      let res = await getCategoryService(id);
       if (res && res.errCode === 0) {
-        dispatch(getCategorySuccess(res.category.reverse()))
+        dispatch(getCategorySuccess(res.category.reverse()));
       } else {
-        dispatch(getCategoryFailed())
+        dispatch(getCategoryFailed());
       }
     } catch (error) {
-      dispatch(getCategoryFailed())
+      dispatch(getCategoryFailed());
     }
-  }
-}
+  };
+};
 export const getCategorySuccess = (data) => ({
   type: actionTypes.GET_CATEGORY_SUCCESS,
-  data: data
-})
+  data: data,
+});
 export const getCategoryFailed = (data) => ({
   type: actionTypes.GET_CATEGORY_FAILED,
-  data: data
-})
+  data: data,
+});
 //delete category
 export const deleteCategory = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await deleteCategoryService(id)
+      let res = await deleteCategoryService(id);
       if (res && res.errCode === 0) {
         toast.success(`Delete category successful!`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(deleteCategorySuccess())
-        dispatch(getCategory("ALL"))
+        });
+        dispatch(deleteCategorySuccess());
+        dispatch(getCategory("ALL"));
       } else {
         toast.error("Delete category failed!", {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(deleteCategoryFailed())
+        });
+        dispatch(deleteCategoryFailed());
       }
     } catch (error) {
-      dispatch(deleteCategoryFailed())
+      dispatch(deleteCategoryFailed());
     }
-  }
-}
+  };
+};
 export const deleteCategorySuccess = () => ({
   type: actionTypes.DELETE_CATEGORY_SUCCESS,
-})
+});
 export const deleteCategoryFailed = () => ({
   type: actionTypes.DELETE_CATEGORY_FAILED,
-})
+});
 //edit category
 export const editCategory = (category) => {
   return async (dispatch, getState) => {
     try {
-      let res = await editCategoryService(category)
+      let res = await editCategoryService(category);
       if (res && res.errCode === 0) {
         toast.success(`Edit category successful!`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(editCategorySuccess())
-        dispatch(getCategory("ALL"))
+        });
+        dispatch(editCategorySuccess());
+        dispatch(getCategory("ALL"));
       } else {
         toast.error(`Edit category failed`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
+        });
         dispatch(editCategoryFailed());
       }
     } catch (error) {
       toast.error(`Edit category error! ${error}`, {
         position: "bottom-right",
         autoClose: 3000,
-      })
+      });
       dispatch(editCategoryFailed());
     }
-  }
-}
+  };
+};
 export const editCategorySuccess = () => ({
-  type: actionTypes.EDIT_CATEGORY_SUCCESS
-})
+  type: actionTypes.EDIT_CATEGORY_SUCCESS,
+});
 export const editCategoryFailed = () => ({
-  type: actionTypes.EDIT_CATEGORY_FAILED
-})
+  type: actionTypes.EDIT_CATEGORY_FAILED,
+});
 
 //===============================================================//
 //create type
@@ -558,8 +555,8 @@ export const createType = (data) => {
           progress: undefined,
         });
         dispatch(createTypeSuccess());
-        dispatch(getType("ALL"))
-        dispatch(getTypeByName(data.name))
+        dispatch(getType("ALL"));
+        dispatch(getTypeByName(data.name));
       } else {
         toast.error(`Create type failed ${res.errMessage}`, {
           position: "bottom-right",
@@ -582,179 +579,179 @@ export const createTypeFailed = () => ({
 export const getType = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getTypeService(id)
+      let res = await getTypeService(id);
       if (res && res.errCode === 0) {
-        dispatch(getTypeSuccess(res.type.reverse()))
+        dispatch(getTypeSuccess(res.type.reverse()));
       } else {
-        dispatch(getTypeFailed())
+        dispatch(getTypeFailed());
       }
     } catch (error) {
-      dispatch(getTypeFailed())
+      dispatch(getTypeFailed());
     }
-  }
-}
+  };
+};
 export const getTypeSuccess = (data) => ({
   type: actionTypes.GET_TYPE_SUCCESS,
-  data: data
-})
+  data: data,
+});
 export const getTypeFailed = (data) => ({
   type: actionTypes.GET_TYPE_FAILED,
-  data: data
-})
+  data: data,
+});
 //delete type
 export const deleteType = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await deleteTypeService(id)
+      let res = await deleteTypeService(id);
       if (res && res.errCode === 0) {
         toast.success(`Delete type successful!`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(deleteTypeSuccess())
-        dispatch(getType("ALL"))
+        });
+        dispatch(deleteTypeSuccess());
+        dispatch(getType("ALL"));
       } else {
         toast.error("Delete type failed!", {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(deleteTypeFailed())
+        });
+        dispatch(deleteTypeFailed());
       }
     } catch (error) {
-      dispatch(deleteTypeFailed())
+      dispatch(deleteTypeFailed());
     }
-  }
-}
+  };
+};
 export const deleteTypeSuccess = () => ({
   type: actionTypes.DELETE_TYPE_SUCCESS,
-})
+});
 export const deleteTypeFailed = () => ({
   type: actionTypes.DELETE_TYPE_FAILED,
-})
+});
 //edit type
 export const editType = (type) => {
   return async (dispatch, getState) => {
     try {
-      let res = await editTypeService(type)
+      let res = await editTypeService(type);
       if (res && res.errCode === 0) {
         toast.success(`Edit type successful!`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
-        dispatch(editTypeSuccess())
-        dispatch(getType("ALL"))
+        });
+        dispatch(editTypeSuccess());
+        dispatch(getType("ALL"));
       } else {
         toast.error(`Edit type failed`, {
           position: "bottom-right",
           autoClose: 3000,
-        })
+        });
         dispatch(editTypeFailed());
       }
     } catch (error) {
       toast.error(`Edit type error! ${error}`, {
         position: "bottom-right",
         autoClose: 3000,
-      })
+      });
       dispatch(editTypeFailed());
     }
-  }
-}
+  };
+};
 export const editTypeSuccess = () => ({
-  type: actionTypes.EDIT_TYPE_SUCCESS
-})
+  type: actionTypes.EDIT_TYPE_SUCCESS,
+});
 export const editTypeFailed = () => ({
-  type: actionTypes.EDIT_TYPE_FAILED
-})
+  type: actionTypes.EDIT_TYPE_FAILED,
+});
 
 //get by name
 export const getAuthorByName = (name) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getAuthorByNameService(name)
+      let res = await getAuthorByNameService(name);
       if (res && res.errCode === 0) {
-        dispatch(getAuthorByNameSuccess(res.author))
+        dispatch(getAuthorByNameSuccess(res.author));
       } else {
-        dispatch(getAuthorByNameFailed())
+        dispatch(getAuthorByNameFailed());
       }
     } catch (error) {
-      dispatch(getAuthorByNameFailed())
+      dispatch(getAuthorByNameFailed());
     }
-  }
-}
+  };
+};
 export const getAuthorByNameSuccess = (data) => ({
   type: actionTypes.GET_AUTHOR_BY_NAME_SUCCESS,
-  data: data
-})
+  data: data,
+});
 export const getAuthorByNameFailed = (data) => ({
   type: actionTypes.GET_AUTHOR_BY_NAME_FAILED,
-  data: data
-})
+  data: data,
+});
 
 export const getPublisherByName = (name) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getPublisherByNameService(name)
+      let res = await getPublisherByNameService(name);
       if (res && res.errCode === 0) {
-        dispatch(getPublisherByNameSuccess(res.publisher))
+        dispatch(getPublisherByNameSuccess(res.publisher));
       } else {
-        dispatch(getPublisherByNameFailed())
+        dispatch(getPublisherByNameFailed());
       }
     } catch (error) {
-      dispatch(getPublisherByNameFailed())
+      dispatch(getPublisherByNameFailed());
     }
-  }
-}
+  };
+};
 export const getPublisherByNameSuccess = (data) => ({
   type: actionTypes.GET_PUBLISHER_BY_NAME_SUCCESS,
-  data: data
-})
+  data: data,
+});
 export const getPublisherByNameFailed = (data) => ({
   type: actionTypes.GET_PUBLISHER_BY_NAME_FAILED,
-  data: data
-})
+  data: data,
+});
 
 export const getCategoryByName = (name) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getCategoryByNameService(name)
+      let res = await getCategoryByNameService(name);
       if (res && res.errCode === 0) {
-        dispatch(getCategoryByNameSuccess(res.category))
+        dispatch(getCategoryByNameSuccess(res.category));
       } else {
-        dispatch(getCategoryByNameFailed())
+        dispatch(getCategoryByNameFailed());
       }
     } catch (error) {
-      dispatch(getCategoryByNameFailed())
+      dispatch(getCategoryByNameFailed());
     }
-  }
-}
+  };
+};
 export const getCategoryByNameSuccess = (data) => ({
   type: actionTypes.GET_CATEGORY_BY_NAME_SUCCESS,
-  data: data
-})
+  data: data,
+});
 export const getCategoryByNameFailed = (data) => ({
   type: actionTypes.GET_CATEGORY_BY_NAME_FAILED,
-  data: data
-})
+  data: data,
+});
 
 export const getTypeByName = (name) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getTypeByNameService(name)
+      let res = await getTypeByNameService(name);
       if (res && res.errCode === 0) {
-        dispatch(getTypeByNameSuccess(res.type))
+        dispatch(getTypeByNameSuccess(res.type));
       } else {
-        dispatch(getTypeByNameFailed())
+        dispatch(getTypeByNameFailed());
       }
     } catch (error) {
-      dispatch(getTypeByNameFailed())
+      dispatch(getTypeByNameFailed());
     }
-  }
-}
+  };
+};
 export const getTypeByNameSuccess = (data) => ({
   type: actionTypes.GET_TYPE_BY_NAME_SUCCESS,
-  data: data
-})
+  data: data,
+});
 export const getTypeByNameFailed = (data) => ({
   type: actionTypes.GET_TYPE_BY_NAME_FAILED,
-  data: data
-})
+  data: data,
+});

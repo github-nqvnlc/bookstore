@@ -6,26 +6,23 @@ import { connect } from "react-redux";
 import * as actions from "../../../store/actions";
 
 import "./Manager.scss";
+import CustomScrollbars from "../../../components/CustomScrollbars";
 import SideContent from "./SideContent/SideContent";
 import ManageBook from "./Book/ManageBook";
 import Category from "./Category/Category";
 import Author from "./Author/Author";
 import TypeBook from "./TypeBook/TypeBook";
 import Publisher from "./Publisher/Publisher";
-import SideBar from "./SideBar/SideBar";
+import SideBar from "./Sidebar/SideBar";
 
 class Manager extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      
-    };
+    this.state = {};
   }
   componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState, snapshot) {}
-
-
 
   render() {
     return (
@@ -35,38 +32,40 @@ class Manager extends Component {
             <div className="side_bar">
               <SideBar />
             </div>
-            <div className="side_content">
-              <Switch>
-                <Route
-                  path="/system/manager/dashboard"
-                  component={SideContent}
-                />
-                <Route
-                  path="/system/manager/manage-customer"
-                  component={SideContent}
-                />
-                <Route
-                  path="/system/manager/manage-book"
-                  component={ManageBook}
-                />
-                <Route
-                  path="/system/manager/manage-author"
-                  component={Author}
-                />
-                <Route
-                  path="/system/manager/manage-publisher"
-                  component={Publisher}
-                />
-                <Route
-                  path="/system/manager/manage-category"
-                  component={Category}
-                />
-                <Route
-                  path="/system/manager/manage-type-book"
-                  component={TypeBook}
-                />
-              </Switch>
-            </div>
+            <CustomScrollbars>
+              <div className="side_content">
+                <Switch>
+                  <Route
+                    path="/system/manager/dashboard"
+                    component={SideContent}
+                  />
+                  <Route
+                    path="/system/manager/manage-customer"
+                    component={SideContent}
+                  />
+                  <Route
+                    path="/system/manager/manage-book"
+                    component={ManageBook}
+                  />
+                  <Route
+                    path="/system/manager/manage-author"
+                    component={Author}
+                  />
+                  <Route
+                    path="/system/manager/manage-publisher"
+                    component={Publisher}
+                  />
+                  <Route
+                    path="/system/manager/manage-category"
+                    component={Category}
+                  />
+                  <Route
+                    path="/system/manager/manage-type-book"
+                    component={TypeBook}
+                  />
+                </Switch>
+              </div>
+            </CustomScrollbars>
           </div>
         </div>
       </div>
@@ -77,14 +76,11 @@ class Manager extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
-    
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Manager);

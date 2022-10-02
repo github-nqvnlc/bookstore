@@ -13,7 +13,8 @@ import {
     Row,
     Col,
 } from "reactstrap";
-import CurrencyFormat from 'react-currency-format';
+
+
 
 class ModalCreateTypeBook extends Component {
     constructor(props) {

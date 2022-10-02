@@ -10,6 +10,10 @@ html {
   font-size: $base-size - 2px;
   height: 100vh;
   overflow-x: hidden;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .btn {

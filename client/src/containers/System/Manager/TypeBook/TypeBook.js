@@ -56,6 +56,7 @@ class TypeBook extends Component {
             typeBookEdit: typeBook
         })
     }
+    
     handleDeleteTypeBook = (typeBook) => {
         this.props.deleteTypeBook(typeBook.id)
     }
