@@ -51,8 +51,6 @@ class ModalEditAccount extends Component {
       let account = this.props.editAccount;
       if (account.image) {
         image64 = new Buffer(account.image, "base64").toString("binary");
-        console.log("Check state image", this.state.roleId);
-        console.log("Check props role", account.roleId);
       }
       this.setState(
         {

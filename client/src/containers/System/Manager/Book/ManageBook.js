@@ -25,7 +25,7 @@ class ManageBook extends Component {
     this.state = {
       isOpenModal: false,
       isOpenModalEdit: false,
-
+      isLoading: false,
       isOpen: false,
       previewImage: "",
       book: [],
@@ -33,7 +33,7 @@ class ManageBook extends Component {
     };
   }
   componentDidMount() {
-    this.props.getBook("ALL");
+      this.props.getBook("ALL");
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -86,6 +86,7 @@ class ManageBook extends Component {
 
   render() {
     let arrBook = this.state.book;
+    console.log(this.props.book)
     return (
       <div>
         <div className="title">Manage Book</div>
@@ -122,6 +123,7 @@ class ManageBook extends Component {
                     image64 = new Buffer(item.image, "base64").toString(
                       "binary"
                     );
+
                   }
                   return (
                     <Card

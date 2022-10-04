@@ -30,14 +30,7 @@ let getBookService = (bookId) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (bookId === "ALL") {
-        // console.log(await db.Book.findAll({
-        //     attributes: {
-        //         exclude: ["image", "createdAt", "updatedAt"],
-        //     },
-        //     include: [{ model: db.Category, as: "categoryData" }],
-        //     raw: true,
-        //     nest: true,
-        // }))
+        
         let book = await db.Book.findAll({
           include: [
             { model: db.Author, as: "authorData" },
@@ -159,7 +152,7 @@ let getAuthorService = (authorId) => {
     try {
       if (authorId === "ALL") {
         let author = await db.Author.findAll({
-          include: [{ model: db.Book, as: "authorData" }],
+          // include: [{ model: db.Book, as: "authorData" }],
           raw: true,
           nest: true,
         });
@@ -259,7 +252,7 @@ let getCategoryService = (categoryId) => {
     try {
       if (categoryId === "ALL") {
         let category = await db.Category.findAll({
-          include: [{ model: db.Book, as: "categoryData" }],
+          // include: [{ model: db.Book, as: "categoryData" }],
           raw: true,
           nest: true,
         });
@@ -358,7 +351,7 @@ let getPublisherService = (publisherId) => {
     try {
       if (publisherId === "ALL") {
         let publisher = await db.Publisher.findAll({
-          include: [{ model: db.Book, as: "publisherData" }],
+          // include: [{ model: db.Book, as: "publisherData" }],
           raw: true,
           nest: true,
         });
@@ -457,7 +450,7 @@ let getTypeService = (typeId) => {
     try {
       if (typeId === "ALL") {
         let type = await db.Type.findAll({
-          include: [{ model: db.Book, as: "typeData" }],
+          // include: [{ model: db.Book, as: "typeData" }],
           raw: true,
           nest: true,
         });

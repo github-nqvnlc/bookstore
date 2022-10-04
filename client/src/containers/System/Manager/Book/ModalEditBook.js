@@ -25,12 +25,24 @@ import {
 import Lightbox from "react-image-lightbox";
 import { NumericFormat } from "react-number-format";
 import CustomScrollbars from "../../../../components/CustomScrollbars";
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+// import style manually
+import 'react-markdown-editor-lite/lib/index.css';
+
+// Register plugins if required
+// MdEditor.use(YOUR_PLUGINS_HERE);
+
+// Initialize a markdown parser
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
 
 class ModalEditBook extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isOpenModal: false,
+      isLoading: false,
       //book
       id: "",
       name: "",
@@ -65,7 +77,6 @@ class ModalEditBook extends Component {
       arrCategory: [],
       arrType: [],
 
-      isLoading: false,
       //handle image
       isOpen: false,
       isOpenPreview: false,
@@ -129,9 +140,12 @@ class ModalEditBook extends Component {
     }
 
     //copy parents state
+    let image64 = "";
     if (prevProps.bookEdit !== this.props.bookEdit) {
       let book = this.props.bookEdit;
-      console.log(book);
+      if (book.image) {
+        image64 = new Buffer(book.image, "base64").toString("binary");
+      }
       this.setState({
         id: book.id,
         name: book.name,
@@ -143,11 +157,9 @@ class ModalEditBook extends Component {
         price: book.price,
         discount: book.discount,
         quantity: book.quantity,
-        image: book.image,
+        image: image64,
 
-        previewUrlImage: new Buffer(this.state.image, "base64").toString(
-          "binary"
-        ),
+        previewUrlImage: image64,
         authorData: book.authorData,
         publisherData: book.publisherData,
         categoryData: book.categoryData,
@@ -210,22 +222,21 @@ class ModalEditBook extends Component {
   handleEditBook = () => {
     let isValid = this.checkValidInput();
     if (isValid === false) return;
-    console.log(this.state);
-    this.props.editBook({
-      id: this.state.id,
-      name: this.state.name,
-      description: this.state.description,
-      authorId: this.state.author,
-      publisherId: this.state.publisher,
-      categoryId: this.state.category,
-      typeId: this.state.typeBook,
-      price: this.state.price,
-      discount: this.state.discount,
-      quantity: this.state.quantity,
-      image: this.state.image,
-    });
-
+    console.log(this.state.image)
     this.toggle();
+      this.props.editBook({
+        id: this.state.id,
+        name: this.state.name,
+        description: this.state.description,
+        authorId: this.state.author,
+        publisherId: this.state.publisher,
+        categoryId: this.state.category,
+        typeId: this.state.typeBook,
+        price: this.state.price,
+        discount: this.state.discount,
+        quantity: this.state.quantity,
+        image: this.state.image,
+      });
   };
 
   openPreviewImage = (image) => {
@@ -345,21 +356,18 @@ class ModalEditBook extends Component {
           <ModalBody>
             <FormGroup className="form_group_header">
               <FormGroup className="form_group_image">
-                <img
-                  src={
-                    this.state.previewUrlImage
-                      ? this.state.previewUrlImage
-                      : new Buffer(this.state.image, "base64").toString(
-                          "binary"
-                        )
-                  }
-                  className="preview_image_book"
-                  onClick={() =>
-                    this.openPreviewImage(
-                      this.state.previewUrlImage && this.state.previewUrlImage
-                    )
-                  }
-                />
+                {
+                  this.state.previewUrlImage && (<img
+                    src={
+                      this.state.previewUrlImage
+                    }
+                    className="preview_image_book"
+                    onClick={() =>
+                      this.openPreviewImage(this.state.previewUrlImage)
+                    }
+                  />)
+                }
+
                 <Label className="button_create" htmlFor="imageUpload">
                   Change Image
                 </Label>
@@ -377,116 +385,95 @@ class ModalEditBook extends Component {
                   value={name}
                   className="input_focus_book input_hover_book"
                 />
-
-                <Label>Description</Label>
-                <Input
-                  onChange={(e) => this.handleOnChangeInput(e, "description")}
-                  value={description}
+                <Label>Author</Label>
+                <CreatableSelect
+                  isClearable
+                  defaultValue={{
+                    value: this.state.author,
+                    label: this.state.authorData.name,
+                  }}
+                  isDisabled={this.state.isLoading}
+                  isLoading={this.state.isLoading}
+                  onChange={this.handleChangeAuthor}
+                  options={
+                    arrAuthor &&
+                    arrAuthor.map((item, index) => {
+                      return { value: item.id, label: item.name };
+                    })
+                  }
                   className="input_focus_book input_hover_book"
-                  style={{ height: "225px" }}
-                  type="textarea"
                 />
+                <Label>Publisher</Label>
+                <CreatableSelect
+                  isClearable
+                  defaultValue={{
+                    value: this.state.publisher,
+                    label: this.state.publisherData.name,
+                  }}
+                  isDisabled={this.state.isLoading}
+                  isLoading={this.state.isLoading}
+                  onChange={this.handleChangePublisher}
+                  options={
+                    arrPublisher &&
+                    arrPublisher.map((item, index) => {
+                      return { value: item.id, label: item.name };
+                    })
+                  }
+                  className="input_focus_book input_hover_book"
+                />
+                <Label>Price</Label>
+                <NumericFormat
+                  className="form-control input_focus_book input_hover_book"
+                  value={formatPrice === "" ? this.state.price : formatPrice}
+                  thousandsGroupStyle="thousands"
+                  thousandSeparator=","
+                  suffix={" VND"}
+                  displayType="Input"
+                  isAllowed={(values, sourceInfo) => {
+                    values.value > 100000000 &&
+                      toast.error("Price is not more than 100.000.000 VND", {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                      });
+                    return values.value < 100000000;
+                  }}
+                  onValueChange={(values, sourceInfo) => {
+                    this.setState({
+                      price: values.value,
+                      formatPrice: values.formattedValue,
+                    });
+                  }}
+                  renderText={(value) => <b>{value}</b>}
+                />
+                <Label>Discount</Label>
+                <NumericFormat
+                  className="form-control input_focus_book input_hover_book"
+                  value={formatDiscount === "" ? this.state.discount : formatDiscount}
+                  thousandsGroupStyle="thousands"
+                  thousandSeparator=","
+                  suffix={" %"}
+                  displayType="Input"
+                  isAllowed={(values, sourceInfo) => {
+                    values.value > 100 &&
+                      toast.error("Discount is not more than 100%", {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                      });
+                    return values.value <= 100;
+                  }}
+                  onValueChange={(values, sourceInfo) => {
+                    let discounted = values.value / 100;
+                    this.setState({
+                      discount: discounted,
+                      formatDiscount: values.formattedValue,
+                    });
+                  }}
+                  renderText={(value) => <b>{value}</b>}
+                />
+                
               </FormGroup>
             </FormGroup>
-            <FormGroup>
-              <Label>Author</Label>
-
-              <CreatableSelect
-                isClearable
-                defaultValue={{
-                  value: this.state.author,
-                  label: this.state.authorData.name,
-                }}
-                isDisabled={this.state.isLoading}
-                isLoading={this.state.isLoading}
-                onChange={this.handleChangeAuthor}
-                options={
-                  arrAuthor &&
-                  arrAuthor.map((item, index) => {
-                    return { value: item.id, label: item.name };
-                  })
-                }
-                className="input_focus_book input_hover_book"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label>Publisher</Label>
-              <CreatableSelect
-                isClearable
-                defaultValue={{
-                  value: this.state.publisher,
-                  label: this.state.publisherData.name,
-                }}
-                isDisabled={this.state.isLoading}
-                isLoading={this.state.isLoading}
-                onChange={this.handleChangePublisher}
-                options={
-                  arrPublisher &&
-                  arrPublisher.map((item, index) => {
-                    return { value: item.id, label: item.name };
-                  })
-                }
-                className="input_focus_book input_hover_book"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label>Price</Label>
-              <NumericFormat
-                className="form-control input_focus_book input_hover_book"
-                value={formatPrice}
-                thousandsGroupStyle="thousands"
-                thousandSeparator=","
-                suffix={" VND"}
-                displayType="Input"
-                isAllowed={(values, sourceInfo) => {
-                  values.value > 100000000 &&
-                    toast.error("Price is not more than 100.000.000 VND", {
-                      position: "bottom-right",
-                      autoClose: 3000,
-                    });
-                  return values.value < 100000000;
-                }}
-                onValueChange={(values, sourceInfo) => {
-                  this.setState({
-                    price: values.value,
-                    formatPrice: values.formattedValue,
-                  });
-                }}
-                renderText={(value) => <b>{value}</b>}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label>Discount</Label>
-              {/* <Input
-                onChange={(e) => this.handleOnChangeInput(e, "discount")}
-                value={discount}
-                className="input_focus_book input_hover_book"
-              /> */}
-              <NumericFormat
-                className="form-control input_focus_book input_hover_book"
-                value={formatDiscount}
-                thousandsGroupStyle="thousands"
-                thousandSeparator=","
-                suffix={" %"}
-                displayType="Input"
-                isAllowed={(values, sourceInfo) => {
-                  values.value > 100 &&
-                    toast.error("Discount is not more than 100%", {
-                      position: "bottom-right",
-                      autoClose: 3000,
-                    });
-                  return values.value <= 100;
-                }}
-                onValueChange={(values, sourceInfo) => {
-                  let discounted = values.value / 100;
-                  this.setState({
-                    discount: discounted,
-                    formatDiscount: values.formattedValue,
-                  });
-                }}
-                renderText={(value) => <b>{value}</b>}
-              />
-            </FormGroup>
+          
             <FormGroup>
               <Label>Category</Label>
               <CreatableSelect
@@ -534,6 +521,20 @@ class ModalEditBook extends Component {
                 onChange={(e) => this.handleOnChangeInput(e, "quantity")}
                 value={quantity}
                 className="input_focus_book input_hover_book"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Description</Label>
+              <MdEditor
+                className="form-control input_focus_book input_hover_book"
+                style={{ height: '500px', width: "100%" }}
+                value={description}
+                renderHTML={text => mdParser.render(text)}
+                onChange={({ html, text }) => {
+                  this.setState({
+                    description: text
+                  }, () => console.log(this.state.description))
+                }}
               />
             </FormGroup>
           </ModalBody>

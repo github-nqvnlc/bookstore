@@ -13,7 +13,7 @@ import Category from "./Category/Category";
 import Author from "./Author/Author";
 import TypeBook from "./TypeBook/TypeBook";
 import Publisher from "./Publisher/Publisher";
-import SideBar from "./Sidebar/SideBar";
+import SideBar from "./SideBar/SideBar";
 import DetailBook from "./Book/DetailBook";
 
 class Manager extends Component {
@@ -44,6 +44,7 @@ class Manager extends Component {
                   <Route path={path.MANAGER_CATEGORY} component={Category} />
                   <Route path={path.MANAGER_TYPE} component={TypeBook} />
                   <Route path={path.DETAIL_BOOK} component={DetailBook} />
+                  <Route component={() => { return (<Redirect to={path.MANAGER_BOOK} />) }} />
                 </Switch>
               </div>
             </CustomScrollbars>

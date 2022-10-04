@@ -25,6 +25,17 @@ import {
 import Lightbox from "react-image-lightbox";
 import { NumericFormat } from "react-number-format";
 import CustomScrollbars from "../../../../components/CustomScrollbars";
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+// import style manually
+import 'react-markdown-editor-lite/lib/index.css';
+
+// Register plugins if required
+// MdEditor.use(YOUR_PLUGINS_HERE);
+
+// Initialize a markdown parser
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
 
 class ModalCreateBook extends Component {
   constructor(props) {
@@ -367,108 +378,95 @@ class ModalCreateBook extends Component {
                   value={name}
                   className="input_focus_book input_hover_book"
                 />
-
-                <Label>Description</Label>
-                <Input
+                <Label>Author</Label>
+                <CreatableSelect
+                  isClearable
+                  isDisabled={this.state.isLoading}
+                  isLoading={this.state.isLoading}
+                  onChange={this.handleChangeAuthor}
+                  options={
+                    arrAuthor &&
+                    arrAuthor.map((item, index) => {
+                      return { value: item.id, label: item.name };
+                    })
+                  }
+                  className="input_focus_book input_hover_book"
+                />
+                <Label>Publisher</Label>
+                <CreatableSelect
+                  isClearable
+                  isDisabled={this.state.isLoading}
+                  isLoading={this.state.isLoading}
+                  onChange={this.handleChangePublisher}
+                  options={
+                    arrPublisher &&
+                    arrPublisher.map((item, index) => {
+                      return { value: item.id, label: item.name };
+                    })
+                  }
+                  className="input_focus_book input_hover_book"
+                />
+                <Label>Price</Label>
+                <NumericFormat
+                  className="form-control input_focus_book input_hover_book"
+                  value={formatPrice}
+                  thousandsGroupStyle="thousands"
+                  thousandSeparator=","
+                  suffix={" VND"}
+                  displayType="Input"
+                  isAllowed={(values, sourceInfo) => {
+                    values.value > 100000000 &&
+                      toast.error("Price is not more than 100.000.000 VND", {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                      });
+                    return values.value < 100000000;
+                  }}
+                  onValueChange={(values, sourceInfo) => {
+                    this.setState({
+                      price: values.value,
+                      formatPrice: values.formattedValue,
+                    });
+                  }}
+                  renderText={(value) => <b>{value}</b>}
+                />
+                <Label>Discount</Label>
+                <NumericFormat
+                  className="form-control input_focus_book input_hover_book"
+                  value={formatDiscount}
+                  thousandsGroupStyle="thousands"
+                  thousandSeparator=","
+                  suffix={" %"}
+                  displayType="Input"
+                  isAllowed={(values, sourceInfo) => {
+                    values.value > 100 &&
+                      toast.error("Discount is not more than 100%", {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                      });
+                    return values.value <= 100;
+                  }}
+                  onValueChange={(values, sourceInfo) => {
+                    let discounted = values.value / 100;
+                    this.setState({
+                      discount: discounted,
+                      formatDiscount: values.formattedValue,
+                    });
+                  }}
+                  renderText={(value) => <b>{value}</b>}
+                />
+                {/* <Input
                   onChange={(e) => this.handleOnChangeInput(e, "description")}
                   value={description}
                   className="input_focus_book input_hover_book"
                   style={{ height: "225px" }}
                   type="textarea"
-                />
+                /> */}
+                
+
               </FormGroup>
             </FormGroup>
-            <FormGroup>
-              <Label>Author</Label>
-
-              <CreatableSelect
-                isClearable
-                isDisabled={this.state.isLoading}
-                isLoading={this.state.isLoading}
-                onChange={this.handleChangeAuthor}
-                options={
-                  arrAuthor &&
-                  arrAuthor.map((item, index) => {
-                    return { value: item.id, label: item.name };
-                  })
-                }
-                className="input_focus_book input_hover_book"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label>Publisher</Label>
-              <CreatableSelect
-                isClearable
-                isDisabled={this.state.isLoading}
-                isLoading={this.state.isLoading}
-                onChange={this.handleChangePublisher}
-                options={
-                  arrPublisher &&
-                  arrPublisher.map((item, index) => {
-                    return { value: item.id, label: item.name };
-                  })
-                }
-                className="input_focus_book input_hover_book"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label>Price</Label>
-              <NumericFormat
-                className="form-control input_focus_book input_hover_book"
-                value={formatPrice}
-                thousandsGroupStyle="thousands"
-                thousandSeparator=","
-                suffix={" VND"}
-                displayType="Input"
-                isAllowed={(values, sourceInfo) => {
-                  values.value > 100000000 &&
-                    toast.error("Price is not more than 100.000.000 VND", {
-                      position: "bottom-right",
-                      autoClose: 3000,
-                    });
-                  return values.value < 100000000;
-                }}
-                onValueChange={(values, sourceInfo) => {
-                  this.setState({
-                    price: values.value,
-                    formatPrice: values.formattedValue,
-                  });
-                }}
-                renderText={(value) => <b>{value}</b>}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label>Discount</Label>
-              {/* <Input
-                onChange={(e) => this.handleOnChangeInput(e, "discount")}
-                value={discount}
-                className="input_focus_book input_hover_book"
-              /> */}
-              <NumericFormat
-                className="form-control input_focus_book input_hover_book"
-                value={formatDiscount}
-                thousandsGroupStyle="thousands"
-                thousandSeparator=","
-                suffix={" %"}
-                displayType="Input"
-                isAllowed={(values, sourceInfo) => {
-                  values.value > 100 &&
-                    toast.error("Discount is not more than 100%", {
-                      position: "bottom-right",
-                      autoClose: 3000,
-                    });
-                  return values.value <= 100;
-                }}
-                onValueChange={(values, sourceInfo) => {
-                  let discounted = values.value / 100;
-                  this.setState({
-                    discount: discounted,
-                    formatDiscount: values.formattedValue,
-                  });
-                }}
-                renderText={(value) => <b>{value}</b>}
-              />
-            </FormGroup>
+          
             <FormGroup>
               <Label>Category</Label>
               <CreatableSelect
@@ -509,6 +507,21 @@ class ModalCreateBook extends Component {
                 value={quantity}
                 className="input_focus_book input_hover_book"
               />
+            </FormGroup>
+            <FormGroup>
+              <Label>Description</Label>
+              <MdEditor
+                className="form-control input_focus_book input_hover_book"
+                style={{ height: '500px', width: "100%"}}
+                value={description}
+                renderHTML={text => mdParser.render(text)}
+                onChange={({html, text}) => {
+                  this.setState({
+                    description: text
+                  }, () => console.log(this.state.description))
+                }}
+              />
+
             </FormGroup>
           </ModalBody>
           <ModalFooter>

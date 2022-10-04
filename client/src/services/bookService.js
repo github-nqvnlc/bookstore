@@ -15,6 +15,7 @@ const deleteBookService = (id) => {
 }
 
 const editBookService = (book) => {
+  console.log(book)
   return axios.put("/api/edit-book", book)
 }
 

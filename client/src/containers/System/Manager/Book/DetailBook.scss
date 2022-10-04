@@ -1,2 +1,119 @@
 @import "../../../../styles/resposive.scss";
 @import "../../../../styles/color.scss";
+
+
+.detail_container {
+    margin-top: 3em;
+    border: 1px solid $color-grey;
+    padding: 1em;
+
+    .image_detail {
+        width: 100%;
+        border: 1px solid $color-grey;
+        padding: 0.2em;
+        cursor: pointer;
+    }
+
+    .detail_content {
+        padding: 0 2em;
+
+        .detail_name {
+            padding: 1em 0;
+            border-bottom: 1px solid $color-main;
+            text-align: justify;
+        }
+
+        .detail_text_group {
+            width: 100%;
+            padding: 1em 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .detail_item {
+                width: 300px;
+                display: flex;
+                align-content: center;
+                align-items: center;
+                justify-content: space-between;
+                line-height: 1;
+                margin: 0;
+
+
+            }
+        }
+
+
+        .detail_item_group {
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+
+            .category {
+                padding: 0 1em;
+                background-color: $color-red;
+                color: $color-white;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .type {
+                padding: 0 1em;
+                background-color: $color-blue-detail;
+                color: $color-white;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        }
+
+        .detail_price {
+            padding: 1em;
+            display: flex;
+            align-items: center;
+            gap: 1em;
+
+            .price_discounted {
+                font-size: 32px;
+                font-weight: 700;
+                color: $color-red;
+            }
+
+            .price_main {
+                padding: 0 1em;
+                font-size: 16px;
+                text-decoration-line: line-through;
+            }
+
+            .discount {
+                background-color: $color-red;
+                color: $color-white;
+                padding: 0.4em 0.6em;
+                border-radius: 5px;
+            }
+        }
+
+        .detail_quantity {
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+            .quantity {
+                padding: 0 1em;
+            }
+        }
+
+        .description {
+            padding: 0 1em;
+            text-align: justify;
+        }
+    }
+
+}
+
+.text_span {
+    font-weight: 600;
+    padding: 0 1em;
+}
+
+.text_defaul {
+    padding: 0 1em;
+}

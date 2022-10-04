@@ -16,7 +16,6 @@
 }
 
 .button_create {
-  margin: 1em 0;
   background-color: $color-main;
   color: white;
   border: none;
@@ -33,6 +32,7 @@
 .form_group_header {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
   gap: 1em;
   width: 100%;
 
@@ -61,6 +61,31 @@
     background-color: $color-red-delete-focus;
     color: $color-white;
     border: none;
-    box-shadow: $box_shadow $color-shadow-red-delete !important;
+    box-shadow: $box_shadow $color-shadow-red-delete  !important;
   }
 }
+
+  .rc-md-editor .editor-container .sec-md {
+    max-height: 100%;
+    min-width: 0;
+  }
+
+  .rc-md-editor .editor-container .sec-html {
+    max-height: 100%;
+    min-width: 0;
+  }
+
+    .rc-md-editor .rc-md-navigation .h1,
+    .rc-md-editor .rc-md-navigation .h2,
+    .rc-md-editor .rc-md-navigation .h3,
+    .rc-md-editor .rc-md-navigation .h4,
+    .rc-md-editor .rc-md-navigation .h5,
+    .rc-md-editor .rc-md-navigation .h6,
+    .rc-md-editor .rc-md-navigation h1,
+    .rc-md-editor .rc-md-navigation h2,
+    .rc-md-editor .rc-md-navigation h3,
+    .rc-md-editor .rc-md-navigation h4,
+    .rc-md-editor .rc-md-navigation h5,
+    .rc-md-editor .rc-md-navigation h6 { 
+      color: #000000 !important;
+    }

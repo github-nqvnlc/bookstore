@@ -78,14 +78,25 @@ export const createNewBookFailed = () => ({
 export const getBook = (id) => {
   return async (dispatch, getState) => {
     try {
-      let res = await getBookService(id);
-      if (res && res.errCode === 0) {
-        dispatch(getBookSuccess(res.book.reverse()));
+      if (id && id === "ALL") {
+        let res = await getBookService(id);
+        if (res && res.errCode === 0) {
+          dispatch(getBookSuccess(res.book.reverse()));
+        } else {
+          dispatch(getBookFailed());
+        }
       } else {
-        dispatch(getBookFailed());
+        let res = await getBookService(id);
+        if (res && res.errCode === 0) {
+          dispatch(getBookSuccess(res.book));
+        } else {
+          dispatch(getBookFailed());
+        }
       }
+      
     } catch (error) {
       dispatch(getBookFailed());
+      console.log(error)
     }
   };
 };
@@ -204,6 +215,7 @@ export const getAuthor = (id) => {
   return async (dispatch, getState) => {
     try {
       let res = await getAuthorService(id);
+      console.log(res)
       if (res && res.errCode === 0) {
         dispatch(getAuthorSuccess(res.author.reverse()));
       } else {
@@ -755,3 +767,6 @@ export const getTypeByNameFailed = (data) => ({
   type: actionTypes.GET_TYPE_BY_NAME_FAILED,
   data: data,
 });
+
+// get by id
+

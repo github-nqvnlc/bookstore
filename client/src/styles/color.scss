@@ -5,15 +5,15 @@ $color-shadow: rgba(40, 175, 98, 0.4);
 $color-shadow_red: rgba(182, 0, 0, 0.4);
 $color-shadow-grey : rgba(0, 0, 0, 0.4);
 
-$color-red: #ff0000;
+$color-red: #C92127;
 $color-red-bold: #b60000;
 $color-white: #fff;
 $color-grey: #b3b3b3;
 $color-darken: #7e7e7e;
 $color-blue-cold: #4088ff;
-$color-blue-detail: #277cae;
-$color-blue-detail-focus: #275dae;
-$color-red-delete: #ae2727;
+$color-blue-detail: #2489F4;
+$color-blue-detail-focus: #1F529F;
+$color-red-delete: #C92127;
 $color-red-delete-focus: #a70000;
 
 $color-shadow-blue-detail: #277cae94;
@@ -23,11 +23,14 @@ $box_shadow: 0 0 0 0.25rem;
 $box_shadow_input: 0 0 3px;
 
 .button {
-  width: 4em;
+  width: auto;
   padding: 0.2em 0.5em;
   margin: 0.2em 0.5em;
   font-size: 14px;
+  background-color: $color-main;
+  color: white !important;
 }
+
 
 .buttonEdit {
   @extend .button;
@@ -52,6 +55,7 @@ $box_shadow_input: 0 0 3px;
     border: none;
     box-shadow: $box_shadow $color-shadow-red-delete  !important;
   }
+
   &:focus {
     background-color: $color-red-delete-focus;
     color: $color-white;
