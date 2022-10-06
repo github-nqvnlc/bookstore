@@ -168,6 +168,23 @@ class SideBar extends Component {
                   </div>
                 </li>
               </Link>
+              <Link
+                onClick={() => this.handleMenuLink()}
+                to="/system/manager/manage-order"
+              >
+                <li>
+                  <i class="fas fa-shopping-cart"></i>
+                  <div
+                    className={
+                      this.state.isOpenMenu === true
+                        ? "text_list"
+                        : "text_list_none"
+                    }
+                  >
+                    Manage Order
+                  </div>
+                </li>
+              </Link>
             </ul>
           </div>
         </div>

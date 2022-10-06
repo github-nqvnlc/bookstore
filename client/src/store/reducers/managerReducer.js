@@ -19,6 +19,7 @@ const managerReducer = (state = initialState, action) => {
     //get book
     case actionTypes.GET_BOOK_SUCCESS:
       state.book = action.data;
+      
       return {
         ...state,
       };

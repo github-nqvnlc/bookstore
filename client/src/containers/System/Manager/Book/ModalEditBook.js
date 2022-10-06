@@ -56,6 +56,8 @@ class ModalEditBook extends Component {
       quantity: "",
       image: "",
 
+      checkEdit: "",
+
       authorData: {},
       publisherData: {},
       categoryData: {},
@@ -222,7 +224,8 @@ class ModalEditBook extends Component {
   handleEditBook = () => {
     let isValid = this.checkValidInput();
     if (isValid === false) return;
-    console.log(this.state.image)
+    console.log(this.props.checkEdit)
+    
     this.toggle();
       this.props.editBook({
         id: this.state.id,
@@ -236,6 +239,8 @@ class ModalEditBook extends Component {
         discount: this.state.discount,
         quantity: this.state.quantity,
         image: this.state.image,
+
+        checkEdit: this.props.checkEdit,
       });
   };
 
@@ -448,7 +453,7 @@ class ModalEditBook extends Component {
                 <Label>Discount</Label>
                 <NumericFormat
                   className="form-control input_focus_book input_hover_book"
-                  value={formatDiscount === "" ? this.state.discount : formatDiscount}
+                  value={formatDiscount === "" ? Math.floor(this.state.discount*100) : formatDiscount}
                   thousandsGroupStyle="thousands"
                   thousandSeparator=","
                   suffix={" %"}

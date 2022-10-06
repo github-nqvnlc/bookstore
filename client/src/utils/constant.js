@@ -14,6 +14,7 @@ export const path = {
   MANAGER_PUBLISHER: "/system/manager/manage-publisher",
   MANAGER_CATEGORY: "/system/manager/manage-category",
   MANAGER_TYPE: "/system/manager/manage-type-book",
+  MANAGER_ORDER: "/system/manager/manage-order",
 
   DETAIL_BOOK: "/system/manager/book/:id",
 };

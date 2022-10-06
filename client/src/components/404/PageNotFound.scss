@@ -1,0 +1,21 @@
+@import "../../styles/resposive.scss";
+@import "../../styles/color.scss";
+
+.page_not_found {
+    width: 95vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .err_code {
+        color: $color-main;
+        font-weight: 900;
+        font-size: 120px;
+    }
+
+    .err_message {
+        color: $color-main;
+
+    }
+}

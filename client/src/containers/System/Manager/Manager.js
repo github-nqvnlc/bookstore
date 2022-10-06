@@ -7,7 +7,7 @@ import * as actions from "../../../store/actions";
 
 import "./Manager.scss";
 import CustomScrollbars from "../../../components/CustomScrollbars";
-import SideContent from "./SideContent/SideContent";
+import ManageAccount from "../Admin/Account/ManageAccount";
 import ManageBook from "./Book/ManageBook";
 import Category from "./Category/Category";
 import Author from "./Author/Author";
@@ -15,6 +15,8 @@ import TypeBook from "./TypeBook/TypeBook";
 import Publisher from "./Publisher/Publisher";
 import SideBar from "./SideBar/SideBar";
 import DetailBook from "./Book/DetailBook";
+import PageNotFound from "../../../components/404/PageNotFound";
+import Order from "./Order/Order";
 
 class Manager extends Component {
   constructor(props) {
@@ -36,15 +38,16 @@ class Manager extends Component {
             <CustomScrollbars>
               <div className="side_content">
                 <Switch>
-                  <Route path={path.DASHBOARD} component={SideContent} />
-                  <Route path={path.MANAGER_CUSTOMER} component={SideContent} />
+                  <Route path={path.DASHBOARD} component={ManageBook} />
+                  <Route path={path.MANAGER_CUSTOMER} component={ManageAccount} />
                   <Route path={path.MANAGER_BOOK} component={ManageBook} />
                   <Route path={path.MANAGER_AUTHOR} component={Author} />
                   <Route path={path.MANAGER_PUBLISHER} component={Publisher} />
                   <Route path={path.MANAGER_CATEGORY} component={Category} />
                   <Route path={path.MANAGER_TYPE} component={TypeBook} />
+                  <Route path={path.MANAGER_ORDER} component={Order} />
                   <Route path={path.DETAIL_BOOK} component={DetailBook} />
-                  <Route component={() => { return (<Redirect to={path.MANAGER_BOOK} />) }} />
+                  <Route path="/not-found" component={PageNotFound} />
                 </Switch>
               </div>
             </CustomScrollbars>

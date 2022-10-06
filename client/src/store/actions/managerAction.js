@@ -142,21 +142,41 @@ export const deleteBookFailed = () => ({
 export const editBook = (book) => {
   return async (dispatch, getState) => {
     try {
-      let res = await editBookService(book);
-      if (res && res.errCode === 0) {
-        toast.success(`Edit book successful!`, {
-          position: "bottom-right",
-          autoClose: 3000,
-        });
-        dispatch(editBookSuccess());
-        dispatch(getBook("ALL"));
-      } else {
-        toast.error(`Edit book failed`, {
-          position: "bottom-right",
-          autoClose: 3000,
-        });
-        dispatch(editBookFailed());
+      console.log(book.checkEdit)
+      if (book.checkEdit && book.checkEdit === "ALL") {
+        let res = await editBookService(book);
+        if (res && res.errCode === 0) {
+          toast.success(`Edit book successful!`, {
+            position: "bottom-right",
+            autoClose: 3000,
+          });
+          dispatch(editBookSuccess());
+          dispatch(getBook("ALL"));
+        } else {
+          toast.error(`Edit book failed`, {
+            position: "bottom-right",
+            autoClose: 3000,
+          });
+          dispatch(editBookFailed());
+        }
+      } else if (book.checkEdit && book.checkEdit === "ONE") {
+        let res = await editBookService(book);
+        if (res && res.errCode === 0) {
+          toast.success(`Edit book successful!`, {
+            position: "bottom-right",
+            autoClose: 3000,
+          });
+          dispatch(editBookSuccess());
+          dispatch(getBook(book.id));
+        } else {
+          toast.error(`Edit book failed`, {
+            position: "bottom-right",
+            autoClose: 3000,
+          });
+          dispatch(editBookFailed());
+        }
       }
+      
     } catch (error) {
       toast.error(`Edit book error! ${error}`, {
         position: "bottom-right",

@@ -169,7 +169,7 @@ let getAuthorService = (authorId) => {
       }
       resolve({
         errCode: 2,
-        errMessage: "Get author faild!",
+        errMessage: "Get author failed!",
       });
     } catch (e) {
       reject(e);
@@ -614,6 +614,7 @@ let getCategoryByNameService = (name) => {
     }
   });
 };
+
 
 module.exports = {
   //Book
