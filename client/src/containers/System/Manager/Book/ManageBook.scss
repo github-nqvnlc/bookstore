@@ -30,7 +30,7 @@
       align-items: center;
       padding-top: 1em;
       margin-top: 1em;
-      border-top: 1px solid $color-main ;
+      border-top: 1px solid $color-main;
     }
   }
 
@@ -119,7 +119,6 @@
             align-items: center;
             color: $color-white;
           }
-
         }
 
         .preview_image_book {
@@ -151,12 +150,14 @@
 
           .price_main {
             padding: 0 0.5em;
-            font-size: 13px;
+            font-size: 12px;
             text-decoration-line: line-through;
           }
 
           .price_discounted {
             color: $color-red;
+            font-size: 16px;
+            font-weight: 500;
           }
         }
 
@@ -187,7 +188,7 @@
               background-color: $color-blue-detail-focus;
               color: $color-white;
               border: none;
-              box-shadow: $box_shadow $color-shadow-blue-detail  !important;
+              box-shadow: $box_shadow $color-shadow-blue-detail !important;
             }
           }
 
@@ -207,7 +208,7 @@
               background-color: $color-red-delete-focus;
               color: $color-white;
               border: none;
-              box-shadow: $box_shadow $color-shadow-red-delete  !important;
+              box-shadow: $box_shadow $color-shadow-red-delete !important;
             }
           }
         }

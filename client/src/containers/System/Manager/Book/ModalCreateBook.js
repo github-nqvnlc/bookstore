@@ -25,17 +25,16 @@ import {
 import Lightbox from "react-image-lightbox";
 import { NumericFormat } from "react-number-format";
 import CustomScrollbars from "../../../../components/CustomScrollbars";
-import MarkdownIt from 'markdown-it';
-import MdEditor from 'react-markdown-editor-lite';
+import MarkdownIt from "markdown-it";
+import MdEditor from "react-markdown-editor-lite";
 // import style manually
-import 'react-markdown-editor-lite/lib/index.css';
+import "react-markdown-editor-lite/lib/index.css";
 
 // Register plugins if required
 // MdEditor.use(YOUR_PLUGINS_HERE);
 
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
-
 
 class ModalCreateBook extends Component {
   constructor(props) {
@@ -375,6 +374,7 @@ class ModalCreateBook extends Component {
                 <Label>Name Book</Label>
                 <Input
                   onChange={(e) => this.handleOnChangeInput(e, "name")}
+                  placeholder="Title book..."
                   value={name}
                   className="input_focus_book input_hover_book"
                 />
@@ -384,6 +384,7 @@ class ModalCreateBook extends Component {
                   isDisabled={this.state.isLoading}
                   isLoading={this.state.isLoading}
                   onChange={this.handleChangeAuthor}
+                  placeholder="Select or create new author"
                   options={
                     arrAuthor &&
                     arrAuthor.map((item, index) => {
@@ -398,6 +399,7 @@ class ModalCreateBook extends Component {
                   isDisabled={this.state.isLoading}
                   isLoading={this.state.isLoading}
                   onChange={this.handleChangePublisher}
+                  placeholder="Select or create new publisher"
                   options={
                     arrPublisher &&
                     arrPublisher.map((item, index) => {
@@ -413,6 +415,7 @@ class ModalCreateBook extends Component {
                   thousandsGroupStyle="thousands"
                   thousandSeparator=","
                   suffix={" VND"}
+                  placeholder="ex: 100.000 VND"
                   displayType="Input"
                   isAllowed={(values, sourceInfo) => {
                     values.value > 100000000 &&
@@ -437,6 +440,7 @@ class ModalCreateBook extends Component {
                   thousandsGroupStyle="thousands"
                   thousandSeparator=","
                   suffix={" %"}
+                  placeholder="ex: 50%"
                   displayType="Input"
                   isAllowed={(values, sourceInfo) => {
                     values.value > 100 &&
@@ -462,11 +466,9 @@ class ModalCreateBook extends Component {
                   style={{ height: "225px" }}
                   type="textarea"
                 /> */}
-                
-
               </FormGroup>
             </FormGroup>
-          
+
             <FormGroup>
               <Label>Category</Label>
               <CreatableSelect
@@ -474,6 +476,7 @@ class ModalCreateBook extends Component {
                 isDisabled={this.state.isLoading}
                 isLoading={this.state.isLoading}
                 onChange={this.handleChangeCategory}
+                placeholder="Select or create new category..."
                 options={
                   arrCategory &&
                   arrCategory.map((item, index) => {
@@ -490,6 +493,7 @@ class ModalCreateBook extends Component {
                 isDisabled={this.state.isLoading}
                 isLoading={this.state.isLoading}
                 onChange={this.handleChangeTypeBook}
+                placeholder="Select or create new type book..."
                 options={
                   arrType &&
                   arrType.map((item, index) => {
@@ -504,6 +508,7 @@ class ModalCreateBook extends Component {
               <Label>Quantity</Label>
               <Input
                 onChange={(e) => this.handleOnChangeInput(e, "quantity")}
+                placeholder="Quantity of book..."
                 value={quantity}
                 className="input_focus_book input_hover_book"
               />
@@ -512,16 +517,19 @@ class ModalCreateBook extends Component {
               <Label>Description</Label>
               <MdEditor
                 className="form-control input_focus_book input_hover_book"
-                style={{ height: '500px', width: "100%"}}
+                style={{ height: "500px", width: "100%" }}
+                placeholder="Description of book... text here"
                 value={description}
-                renderHTML={text => mdParser.render(text)}
-                onChange={({html, text}) => {
-                  this.setState({
-                    description: text
-                  }, () => console.log(this.state.description))
+                renderHTML={(text) => mdParser.render(text)}
+                onChange={({ html, text }) => {
+                  this.setState(
+                    {
+                      description: text,
+                    },
+                    () => console.log(this.state.description)
+                  );
                 }}
               />
-
             </FormGroup>
           </ModalBody>
           <ModalFooter>

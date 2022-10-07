@@ -13,7 +13,7 @@ import Category from "./Category/Category";
 import Author from "./Author/Author";
 import TypeBook from "./TypeBook/TypeBook";
 import Publisher from "./Publisher/Publisher";
-import SideBar from "./SideBar/SideBar";
+import SideBar from "./Sidebar/SideBar";
 import DetailBook from "./Book/DetailBook";
 import PageNotFound from "../../../components/404/PageNotFound";
 import Order from "./Order/Order";
@@ -39,7 +39,10 @@ class Manager extends Component {
               <div className="side_content">
                 <Switch>
                   <Route path={path.DASHBOARD} component={ManageBook} />
-                  <Route path={path.MANAGER_CUSTOMER} component={ManageAccount} />
+                  <Route
+                    path={path.MANAGER_CUSTOMER}
+                    component={ManageAccount}
+                  />
                   <Route path={path.MANAGER_BOOK} component={ManageBook} />
                   <Route path={path.MANAGER_AUTHOR} component={Author} />
                   <Route path={path.MANAGER_PUBLISHER} component={Publisher} />
