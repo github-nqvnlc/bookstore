@@ -5,11 +5,13 @@ const initialState = {
   author: [],
   publisher: [],
   category: [],
+  catalog: [],
   type: [],
 
   authorByName: [],
   publisherByName: [],
   categoryByName: [],
+  catalogByName: [],
   typeByName: [],
 
 };
@@ -68,7 +70,6 @@ const managerReducer = (state = initialState, action) => {
 
     // create category
     case actionTypes.CREATE_CATEGORY_SUCCESS:
-      state.categoryCountCreated = state.categoryCountCreated + 1;
       return {
         ...state,
       };
@@ -80,6 +81,23 @@ const managerReducer = (state = initialState, action) => {
       };
     case actionTypes.GET_CATEGORY_FAILED:
       state.category = [];
+      return {
+        ...state,
+      };
+    
+      // create catalog
+    case actionTypes.CREATE_CATALOG_SUCCESS:
+      return {
+        ...state,
+      };
+    //get catalog
+    case actionTypes.GET_CATALOG_SUCCESS:
+      state.catalog = action.data;
+      return {
+        ...state,
+      };
+    case actionTypes.GET_CATALOG_FAILED:
+      state.catalog = [];
       return {
         ...state,
       };

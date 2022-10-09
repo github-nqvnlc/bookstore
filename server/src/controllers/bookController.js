@@ -93,6 +93,35 @@ let deleteCategory = async (req, res) => {
   let message = await bookService.deleteCategoryService(req.body.id);
   return res.status(200).json(message);
 };
+//Catalog
+let createCatalog = async (req, res) => {
+  let message = await bookService.createCatalogService(req.body);
+  return res.status(200).json(message);
+};
+let getCatalog = async (req, res) => {
+  let id = req.query.id;
+  let catalog = await bookService.getCatalogService(id);
+  return res.status(200).json({
+    errCode: 0,
+    errMessage: "oke",
+    catalog,
+  });
+};
+let editCatalog = async (req, res) => {
+  let data = req.body;
+  let message = await bookService.editCatalogService(data);
+  return res.status(200).json(message);
+};
+let deleteCatalog = async (req, res) => {
+  if (!req.body.id) {
+    return res.status(200).json({
+      errCode: 0,
+      errMessage: "Missing required parameters!",
+    });
+  }
+  let message = await bookService.deleteCatalogService(req.body.id);
+  return res.status(200).json(message);
+};
 
 //Publisher
 let createPublisher = async (req, res) => {
@@ -176,7 +205,7 @@ let getPublisherByName = async (req, res) => {
 };
 let getCategoryByName = async (req, res) => {
   let name = req.query.name;
-  let category = await bookService.getCategoryByNameService(name);
+  let category = await bookService.getCatalogByNameService(name);
   return res.status(200).json({
     errCode: 0,
     errMessage: "oke",
@@ -211,6 +240,12 @@ module.exports = {
   getCategory: getCategory,
   editCategory: editCategory,
   deleteCategory: deleteCategory,
+
+  //Catalog
+  createCatalog: createCatalog,
+  getCatalog: getCatalog,
+  editCatalog: editCatalog,
+  deleteCatalog: deleteCatalog,
 
   //Publisher
   createPublisher: createPublisher,

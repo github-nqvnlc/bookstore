@@ -24,6 +24,12 @@ import {
   deleteCategoryService,
   editCategoryService,
   getCategoryService,
+  
+  //catalog
+  createCatalogSevice,
+  deleteCatalogService,
+  editCatalogService,
+  getCatalogService,
 
   //type
   createTypeSevice,
@@ -35,6 +41,7 @@ import {
   getAuthorByNameService,
   getPublisherByNameService,
   getCategoryByNameService,
+  getCatalogByNameService,
   getTypeByNameService,
 } from "../../services/bookService";
 
@@ -482,6 +489,7 @@ export const createCategorySuccess = () => ({
 export const createCategoryFailed = () => ({
   type: actionTypes.CREATE_CATEGORY_FAILED,
 });
+
 //get category
 export const getCategory = (id) => {
   return async (dispatch, getState) => {
@@ -568,6 +576,133 @@ export const editCategorySuccess = () => ({
 });
 export const editCategoryFailed = () => ({
   type: actionTypes.EDIT_CATEGORY_FAILED,
+});
+
+//===============================================================//
+//create catalog
+export const createCatalog = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await createCatalogSevice(data);
+      if (res && res.errCode === 0) {
+        toast.success("Create new catalog successfull!", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        dispatch(createCatalogSuccess());
+        dispatch(getCatalog("ALL"));
+        dispatch(getCatalogByName(data.name));
+      } else {
+        toast.error(`Create catalog failed ${res.errMessage}`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+        dispatch(createCatalogFailed());
+      }
+    } catch (error) {
+      dispatch(createCatalogFailed());
+    }
+  };
+};
+export const createCatalogSuccess = () => ({
+  type: actionTypes.CREATE_CATALOG_SUCCESS,
+});
+export const createCatalogFailed = () => ({
+  type: actionTypes.CREATE_CATALOG_FAILED,
+});
+
+
+//get catalog
+export const getCatalog = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getCatalogService(id);
+      if (res && res.errCode === 0) {
+        dispatch(getCatalogSuccess(res.catalog.reverse()));
+      } else {
+        dispatch(getCatalogFailed());
+      }
+    } catch (error) {
+      dispatch(getCatalogFailed());
+    }
+  };
+};
+export const getCatalogSuccess = (data) => ({
+  type: actionTypes.GET_CATALOG_SUCCESS,
+  data: data,
+});
+export const getCatalogFailed = (data) => ({
+  type: actionTypes.GET_CATALOG_FAILED,
+  data: data,
+});
+//delete catalog
+export const deleteCatalog = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await deleteCatalogService(id);
+      if (res && res.errCode === 0) {
+        toast.success(`Delete catalog successful!`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+        dispatch(deleteCatalogSuccess());
+        dispatch(getCatalog("ALL"));
+      } else {
+        toast.error("Delete catalog failed!", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+        dispatch(deleteCatalogFailed());
+      }
+    } catch (error) {
+      dispatch(deleteCatalogFailed());
+    }
+  };
+};
+export const deleteCatalogSuccess = () => ({
+  type: actionTypes.DELETE_CATALOG_SUCCESS,
+});
+export const deleteCatalogFailed = () => ({
+  type: actionTypes.DELETE_CATALOG_FAILED,
+});
+//edit catalog
+export const editCatalog = (catalog) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await editCatalogService(catalog);
+      if (res && res.errCode === 0) {
+        toast.success(`Edit catalog successful!`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+        dispatch(editCatalogSuccess());
+        dispatch(getCatalog("ALL"));
+      } else {
+        toast.error(`Edit catalog failed`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+        dispatch(editCatalogFailed());
+      }
+    } catch (error) {
+      toast.error(`Edit catalog error! ${error}`, {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+      dispatch(editCatalogFailed());
+    }
+  };
+};
+export const editCatalogSuccess = () => ({
+  type: actionTypes.EDIT_CATALOG_SUCCESS,
+});
+export const editCatalogFailed = () => ({
+  type: actionTypes.EDIT_CATALOG_FAILED,
 });
 
 //===============================================================//
@@ -761,6 +896,29 @@ export const getCategoryByNameSuccess = (data) => ({
   data: data,
 });
 export const getCategoryByNameFailed = (data) => ({
+  type: actionTypes.GET_CATEGORY_BY_NAME_FAILED,
+  data: data,
+});
+
+export const getCatalogByName = (name) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getCatalogByNameService(name);
+      if (res && res.errCode === 0) {
+        dispatch(getCatalogByNameSuccess(res.category));
+      } else {
+        dispatch(getCatalogByNameFailed());
+      }
+    } catch (error) {
+      dispatch(getCatalogByNameFailed());
+    }
+  };
+};
+export const getCatalogByNameSuccess = (data) => ({
+  type: actionTypes.GET_CATEGORY_BY_NAME_SUCCESS,
+  data: data,
+});
+export const getCatalogByNameFailed = (data) => ({
   type: actionTypes.GET_CATEGORY_BY_NAME_FAILED,
   data: data,
 });

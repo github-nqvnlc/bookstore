@@ -1,0 +1,130 @@
+@import "../../styles/resposive.scss";
+@import "../../styles/color.scss";
+
+.footer_static {
+    padding: 2em 1em;
+    background-color: $color-white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    .left_container {
+        border-right: 1px solid $color-grey;
+        padding-right: 1em;
+
+        @include Responsive(MD) {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .logo {
+            padding: 1em 0;
+
+            img {
+                width: auto;
+                height: 70px;
+
+                @include Responsive(XS) {
+                    height: 40px;
+                }
+            }
+        }
+
+        .description {
+            p {
+                margin-bottom: 0.5em;
+                font-size: 13px;
+                font-weight: 400;
+                color: $color-text;
+            }
+        }
+
+        .address {
+            @extend .description;
+        }
+
+        .description_footer {
+            @extend .description;
+        }
+
+        .social_icon {
+            a {
+                text-decoration: none;
+
+                img {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .right_container {
+        padding-top: 2em;
+
+        .footer_title {
+            color: $color-text;
+
+            h5 {
+                font-weight: 700;
+            }
+        }
+
+        .footer_content {
+            a {
+                text-decoration: none;
+                list-style: none;
+            }
+
+            ul {
+                padding: 0 0.5em;
+
+                .list_content {
+                    padding: 0.5em 0;
+                    font-size: 12px;
+                    color: $color-text;
+                    transition: padding 0.75s;
+
+                    &:hover {
+                        padding: 0.5em 1em;
+                        color: $color-main;
+                        list-style: square;
+                    }
+                }
+
+            }
+        }
+
+        a {
+            display: flex;
+            flex-direction: row;
+            text-decoration: none;
+
+            i {
+                color: $color-text;
+                font-size: 13px;
+                padding: 0.2em 1em;
+                min-width: 3em;
+            }
+
+            .list_contact {
+                font-size: 12px;
+                color: $color-text;
+
+            }
+        }
+    }
+}
+
+.signature {
+    margin: 0 auto;
+
+    p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        height: 25px;
+        color: $color-white;
+        background-color: $color-main;
+    }
+
+}

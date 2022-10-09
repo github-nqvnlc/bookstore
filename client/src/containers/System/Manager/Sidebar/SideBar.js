@@ -153,6 +153,23 @@ class SideBar extends Component {
               </Link>
               <Link
                 onClick={() => this.handleMenuLink()}
+                to="/system/manager/manage-catalog"
+              >
+                <li>
+                  <i class="fas fa-stream"></i>
+                  <div
+                    className={
+                      this.state.isOpenMenu === true
+                        ? "text_list"
+                        : "text_list_none"
+                    }
+                  >
+                    Manage Catalog
+                  </div>
+                </li>
+              </Link>
+              <Link
+                onClick={() => this.handleMenuLink()}
                 to="/system/manager/manage-type-book"
               >
                 <li>

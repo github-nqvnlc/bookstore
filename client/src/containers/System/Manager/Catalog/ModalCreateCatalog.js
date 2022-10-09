@@ -13,28 +13,27 @@ import {
     Row,
     Col,
 } from "reactstrap";
+import CurrencyFormat from 'react-currency-format';
 
-
-
-class ModalCreateTypeBook extends Component {
+class ModalCreateCatalog extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isOpenModal: false,
-            //typeBook
+            //category
             name: "",
             description: "",
-            catalogId: ""
+            categoryId: "",
         };
     }
     componentDidMount() { }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.typeBook !== this.props.typeBook) {
+        if (prevProps.category !== this.props.category) {
             this.setState({
                 name: "",
                 description: "",
-                catalogId:""
+                categoryId: ""
             })
         }
     }
@@ -70,15 +69,14 @@ class ModalCreateTypeBook extends Component {
         });
     };
 
-    handleCreateTypeBook = () => {
+    handleCreateCatalog = () => {
         let isValid = this.checkValidInput();
         if (isValid === false) return;
         this.toggle();
 
-        this.props.createNewTypeBook({
+        this.props.createNewCatalog({
             name: this.state.name,
-            description: this.state.description,
-            catalogId: this.state.catalogId
+            description: this.state.description
         })
     }
 
@@ -86,7 +84,7 @@ class ModalCreateTypeBook extends Component {
         let {
             name,
             description,
-            catalogId
+            categoryId,
         } = this.state;
 
         return (
@@ -98,10 +96,10 @@ class ModalCreateTypeBook extends Component {
                     centered
 
                 >
-                    <ModalHeader toggle={() => this.toggle()}>Create New Type Book</ModalHeader>
+                    <ModalHeader toggle={() => this.toggle()}>Create New Catalog</ModalHeader>
                     <ModalBody>
                         <FormGroup style={{ width: "100%", }}>
-                            <Label>Name Type Book</Label>
+                            <Label>Name Catalog</Label>
                             <Input
                                 onChange={(e) =>
                                     this.handleOnChangeInput(e, "name")
@@ -109,12 +107,12 @@ class ModalCreateTypeBook extends Component {
                                 value={name}
                                 className="input_focus_book input_hover_book"
                             />
-                            <Label>Catalog</Label>
+                            <Label>Category</Label>
                             <Input
                                 onChange={(e) =>
-                                    this.handleOnChangeInput(e, "catalogId")
+                                    this.handleOnChangeInput(e, "categoryId")
                                 }
-                                value={catalogId}
+                                value={categoryId}
                                 className="input_focus_book input_hover_book"
                             />
 
@@ -131,7 +129,7 @@ class ModalCreateTypeBook extends Component {
                         </FormGroup>
                     </ModalBody>
                     <ModalFooter>
-                        <Button className="btn_create" onClick={() => this.handleCreateTypeBook()}>
+                        <Button className="btn_create" onClick={() => this.handleCreateCatalog()}>
                             Create
                         </Button>
                         <Button className="btn_cancel" onClick={() => this.toggle()}>
@@ -147,13 +145,13 @@ class ModalCreateTypeBook extends Component {
 const mapStateToProps = (state) => {
     return {
         language: state.app.language,
-        typeBook: state.manager.typeBook,
+        category: state.manager.category,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createNewTypeBook: (data) => dispatch(actions.createType(data)),
+        createNewCatalog: (data) => dispatch(actions.createCatalog(data)),
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(ModalCreateTypeBook);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalCreateCatalog);

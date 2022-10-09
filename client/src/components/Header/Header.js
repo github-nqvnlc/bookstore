@@ -44,6 +44,7 @@ class Header extends Component {
         isSticky: false,
       });
     }
+    console.log(this.state.isSticky)
   };
 
   handleToggler = () => {
@@ -61,7 +62,9 @@ class Header extends Component {
     this.props.changeLanguageAppRedux(language);
   };
   render() {
+
     let logoBrand = logo;
+
     let avatar = avt;
     const { processLogout, language, userInfo, image } = this.props;
     if (userInfo && userInfo !== null) {
@@ -69,6 +72,7 @@ class Header extends Component {
     }
     console.log(userInfo.roleId);
     window.addEventListener("scroll", this.checkSticky);
+
 
     return (
       <div className="header_container ">

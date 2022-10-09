@@ -14,6 +14,7 @@ let createNewBookService = (data) => {
         image: data.image,
         authorId: data.authorId,
         categoryId: data.categoryId,
+        catalogId: data.catalogId,
         publisherId: data.publisherId,
         typeId: data.typeId,
       });
@@ -30,12 +31,13 @@ let getBookService = (bookId) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (bookId === "ALL") {
-        
+
         let book = await db.Book.findAll({
           include: [
             { model: db.Author, as: "authorData" },
             { model: db.Publisher, as: "publisherData" },
             { model: db.Category, as: "categoryData" },
+            { model: db.Catalog, as: "catalogData" },
             { model: db.Type, as: "typeData" },
           ],
           raw: true,
@@ -50,6 +52,7 @@ let getBookService = (bookId) => {
             { model: db.Author, as: "authorData" },
             { model: db.Publisher, as: "publisherData" },
             { model: db.Category, as: "categoryData" },
+            { model: db.Catalog, as: "catalogData" },
             { model: db.Type, as: "typeData" },
           ],
           raw: true,
@@ -90,6 +93,7 @@ let editBookService = (data) => {
         book.image = data.image;
         book.authorId = data.authorId;
         book.categoryId = data.categoryId;
+        book.catalogId = data.catalogId;
         book.publisherId = data.publisherId;
         book.typeId = data.typeId;
         await book.save();
@@ -261,7 +265,10 @@ let getCategoryService = (categoryId) => {
       if (categoryId !== "ALL") {
         let category = await db.Category.findOne({
           where: { id: categoryId },
-          include: [{ model: db.Book, as: "categoryData" }],
+          include: [
+            { model: db.Book, as: "categoryData" },
+            { model: db.Catalog, as: "categoryCatalogData" },
+          ],
           raw: true,
           nest: true,
         });
@@ -269,7 +276,7 @@ let getCategoryService = (categoryId) => {
       }
       resolve({
         errCode: 2,
-        errMessage: "Get category faild!",
+        errMessage: "Get category failed!",
       });
     } catch (e) {
       reject(e);
@@ -325,6 +332,110 @@ let deleteCategoryService = (id) => {
     resolve({
       errCode: 0,
       errMessage: "Delete category successful!",
+    });
+  });
+};
+//Catalog
+let createCatalogService = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await db.Catalog.create({
+        name: data.name,
+        description: data.description,
+        categoryId: data.categoryId,
+      });
+      resolve({
+        errCode: 0,
+        errMessage: "oke",
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let getCatalogService = (catalogId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (catalogId === "ALL") {
+        let catalog = await db.Catalog.findAll({
+          // include: [{ model: db.Book, as: "categoryCatalogData" }],
+          raw: true,
+          nest: true,
+        });
+        resolve(catalog);
+      }
+      if (catalogId !== "ALL") {
+        let catalog = await db.Catalog.findOne({
+          where: { id: catalogId },
+          include: [
+            { model: db.Book, as: "catalogData" },
+            { model: db.Category, as: "categoryCatalogData" },
+            { model: db.Type, as: "catalogTypeData" },
+          ],
+          raw: true,
+          nest: true,
+        });
+        resolve(catalog);
+      }
+      resolve({
+        errCode: 2,
+        errMessage: "Get catalog faild!",
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let editCatalogService = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.id) {
+        resolve({
+          errCode: 2,
+          errMessage: "Missing required parameters!",
+        });
+      }
+      let catalog = await db.Catalog.findOne({
+        where: { id: data.id },
+        raw: false,
+      });
+      if (catalog) {
+        catalog.name = data.name;
+        catalog.description = data.description;
+        catalog.categoryId = data.categoryId;
+        await catalog.save();
+        resolve({
+          errCode: 0,
+          errMessage: "Edit catalog successful!",
+        });
+      } else {
+        resolve({
+          errCode: 1,
+          errMessage: "Catalog not found!",
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+let deleteCatalogService = (id) => {
+  return new Promise(async (resolve, reject) => {
+    let catalog = await db.Catalog.findOne({
+      where: { id: id },
+    });
+    if (!catalog) {
+      resolve({
+        errCode: 2,
+        errMessage: "This catalog does not exist!",
+      });
+    }
+    await db.Catalog.destroy({
+      where: { id: id },
+    });
+    resolve({
+      errCode: 0,
+      errMessage: "Delete catalog successful!",
     });
   });
 };
@@ -435,6 +546,7 @@ let createTypeService = (data) => {
       await db.Type.create({
         name: data.name,
         description: data.description,
+        catalogId: data.catalogId
       });
       resolve({
         errCode: 0,
@@ -459,7 +571,10 @@ let getTypeService = (typeId) => {
       if (typeId !== "ALL") {
         let type = await db.Type.findOne({
           where: { id: typeId },
-          include: [{ model: db.Book, as: "typeData" }],
+          include: [
+            { model: db.Book, as: "typeData" },
+            { model: db.Catalog, as: "catalogTypeData " }
+          ],
           raw: true,
           nest: true,
         });
@@ -490,6 +605,7 @@ let editTypeService = (data) => {
       if (type) {
         type.name = data.name;
         type.description = data.description;
+        type.catalogId = data.catalogId
         await type.save();
         resolve({
           errCode: 0,
@@ -614,6 +730,27 @@ let getCategoryByNameService = (name) => {
     }
   });
 };
+let getCatalogByNameService = (name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (name) {
+        let catalog = await db.Catalog.findOne({
+          where: { name: name },
+          include: [{ model: db.Book, as: "catalogData" }],
+          raw: true,
+          nest: true,
+        });
+        resolve(catalog);
+      }
+      resolve({
+        errCode: 2,
+        errMessage: "Get catalog faild!",
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
 
 module.exports = {
@@ -635,6 +772,12 @@ module.exports = {
   editCategoryService: editCategoryService,
   deleteCategoryService: deleteCategoryService,
 
+  //Catalog
+  createCatalogService: createCatalogService,
+  getCatalogService: getCatalogService,
+  editCatalogService: editCatalogService,
+  deleteCatalogService: deleteCatalogService,
+
   //Publisher
   getPublisherService: getPublisherService,
   createPublisherService: createPublisherService,
@@ -652,4 +795,5 @@ module.exports = {
   getPublisherByNameService: getPublisherByNameService,
   getCategoryByNameService: getCategoryByNameService,
   getTypeByNameService: getTypeByNameService,
+  getCatalogByNameService: getCatalogByNameService,
 };

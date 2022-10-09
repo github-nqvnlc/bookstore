@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import Header from "../../components/Header/Header";
 import Banner from "../../components/Banner/Banner";
+import Footer from "../../components/Footer/footer";
 import Section from "../../components/Section/Section";
 
 class HomePage extends Component {
@@ -12,7 +13,7 @@ class HomePage extends Component {
             <React.Fragment>
                 <Header />
                 <Banner />
-                
+
                 <Section
                     name="Vietnamese Books"
                 />
@@ -22,10 +23,10 @@ class HomePage extends Component {
                 <Section
                     name="E-Books"
                 />
-
+                <Footer />
             </React.Fragment>
         )
-        
+
     }
 }
 

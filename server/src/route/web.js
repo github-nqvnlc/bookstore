@@ -43,6 +43,12 @@ const initWebRoutes = (app) => {
   router.get("/api/get-category", bookController.getCategory);
   router.put("/api/edit-category", bookController.editCategory);
   router.delete("/api/delete-category", bookController.deleteCategory);
+  
+  // Handle Catalog
+  router.post("/api/create-catalog", bookController.createCatalog);
+  router.get("/api/get-catalog", bookController.getCatalog);
+  router.put("/api/edit-catalog", bookController.editCatalog);
+  router.delete("/api/delete-catalog", bookController.deleteCatalog);
 
   //Handle Publisher
   router.post("/api/create-publisher", bookController.createPublisher);

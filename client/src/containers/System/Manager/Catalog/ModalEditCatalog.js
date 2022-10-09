@@ -13,31 +13,38 @@ import {
     Row,
     Col,
 } from "reactstrap";
+import CurrencyFormat from 'react-currency-format';
 
-
-
-class ModalCreateTypeBook extends Component {
+class ModalEditCatalog extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isOpenModal: false,
-            //typeBook
+            //book
+            id: "",
             name: "",
             description: "",
-            catalogId: ""
+            catalogId: "",
+
+            previewUrlImage: "",
+
+            catalog: [],
         };
     }
     componentDidMount() { }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.typeBook !== this.props.typeBook) {
+        if (prevProps.catalogEdit !== this.props.catalogEdit) {
+            let catalog = this.props.catalogEdit
+            console.log(catalog)
             this.setState({
-                name: "",
-                description: "",
-                catalogId:""
+                id: catalog.id,
+                name: catalog.name,
+                description: catalog.description
+                
             })
         }
-    }
+     }
 
     toggle = () => {
         this.props.toggleModal();
@@ -70,23 +77,24 @@ class ModalCreateTypeBook extends Component {
         });
     };
 
-    handleCreateTypeBook = () => {
-        let isValid = this.checkValidInput();
+    handleEditCatalog = () => {
+        let isValid = this.checkValidInput()
         if (isValid === false) return;
-        this.toggle();
+        this.toggle()
 
-        this.props.createNewTypeBook({
+        this.props.editCatalogRedux({
+            id: this.state.id,
             name: this.state.name,
-            description: this.state.description,
-            catalogId: this.state.catalogId
+            description: this.state.description
         })
     }
+
+   
 
     render() {
         let {
             name,
             description,
-            catalogId
         } = this.state;
 
         return (
@@ -98,23 +106,15 @@ class ModalCreateTypeBook extends Component {
                     centered
 
                 >
-                    <ModalHeader toggle={() => this.toggle()}>Create New Type Book</ModalHeader>
+                    <ModalHeader toggle={() => this.toggle()}>Edit Catalog</ModalHeader>
                     <ModalBody>
                         <FormGroup style={{ width: "100%", }}>
-                            <Label>Name Type Book</Label>
+                            <Label>Name Catalog</Label>
                             <Input
                                 onChange={(e) =>
                                     this.handleOnChangeInput(e, "name")
                                 }
                                 value={name}
-                                className="input_focus_book input_hover_book"
-                            />
-                            <Label>Catalog</Label>
-                            <Input
-                                onChange={(e) =>
-                                    this.handleOnChangeInput(e, "catalogId")
-                                }
-                                value={catalogId}
                                 className="input_focus_book input_hover_book"
                             />
 
@@ -131,8 +131,8 @@ class ModalCreateTypeBook extends Component {
                         </FormGroup>
                     </ModalBody>
                     <ModalFooter>
-                        <Button className="btn_create" onClick={() => this.handleCreateTypeBook()}>
-                            Create
+                        <Button className="btn_create" onClick={() => this.handleEditCatalog()}>
+                            Edit Catalog
                         </Button>
                         <Button className="btn_cancel" onClick={() => this.toggle()}>
                             Cancel
@@ -147,13 +147,14 @@ class ModalCreateTypeBook extends Component {
 const mapStateToProps = (state) => {
     return {
         language: state.app.language,
-        typeBook: state.manager.typeBook,
+        catalog: state.manager.catalog,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createNewTypeBook: (data) => dispatch(actions.createType(data)),
+        editCatalogRedux: (data) => dispatch(actions.editCatalog(data)),
+        getCatalog: (id) => dispatch(actions.getCatalog(id)),
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(ModalCreateTypeBook);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalEditCatalog);

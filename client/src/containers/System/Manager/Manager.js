@@ -13,10 +13,11 @@ import Category from "./Category/Category";
 import Author from "./Author/Author";
 import TypeBook from "./TypeBook/TypeBook";
 import Publisher from "./Publisher/Publisher";
-import SideBar from "./Sidebar/SideBar";
+import SideBar from "./SideBar/SideBar";
 import DetailBook from "./Book/DetailBook";
 import PageNotFound from "../../../components/404/PageNotFound";
 import Order from "./Order/Order";
+import Catalog from "./Catalog/Catalog";
 
 class Manager extends Component {
   constructor(props) {
@@ -47,6 +48,7 @@ class Manager extends Component {
                   <Route path={path.MANAGER_AUTHOR} component={Author} />
                   <Route path={path.MANAGER_PUBLISHER} component={Publisher} />
                   <Route path={path.MANAGER_CATEGORY} component={Category} />
+                  <Route path={path.MANAGER_CATALOG} component={Catalog} />
                   <Route path={path.MANAGER_TYPE} component={TypeBook} />
                   <Route path={path.MANAGER_ORDER} component={Order} />
                   <Route path={path.DETAIL_BOOK} component={DetailBook} />

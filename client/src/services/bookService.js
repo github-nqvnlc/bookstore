@@ -59,6 +59,24 @@ const editCategoryService = (category) => {
   return axios.put("/api/edit-category", category)
 }
 
+//catalog
+const createCatalogSevice = (data) => {
+  console.log(data);
+  return axios.post("/api/create-catalog", data);
+};
+
+const getCatalogService = (id) => {
+  return axios.get(`/api/get-catalog?id=${id}`);
+}
+
+const deleteCatalogService = (id) => {
+  return axios.delete("/api/delete-catalog", { data: { id: id } })
+}
+
+const editCatalogService = (catalog) => {
+  return axios.put("/api/edit-catalog", catalog)
+}
+
 
 //publisher
 const createPublisherSevice = (data) => {
@@ -109,6 +127,9 @@ const getPublisherByNameService = (name) => {
 const getCategoryByNameService = (name) => {
   return axios.get(`/api/get-category-by-name?name=${name}`);
 }
+const getCatalogByNameService = (name) => {
+  return axios.get(`/api/get-catalog-by-name?name=${name}`);
+}
 
 const getTypeByNameService = (name) => {
   return axios.get(`/api/get-type-by-name?name=${name}`);
@@ -133,13 +154,19 @@ export {
   getCategoryService,
   deleteCategoryService,
   editCategoryService,
-  
+
+  //catalog
+  createCatalogSevice,
+  getCatalogService,
+  deleteCatalogService,
+  editCatalogService,
+
   //publisher
   createPublisherSevice,
   getPublisherService,
   deletePublisherService,
   editPublisherService,
-  
+
   //type
   createTypeSevice,
   getTypeService,
@@ -150,6 +177,7 @@ export {
   getAuthorByNameService,
   getPublisherByNameService,
   getCategoryByNameService,
+  getCatalogByNameService,
   getTypeByNameService,
 
 };

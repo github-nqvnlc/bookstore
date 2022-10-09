@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
             Book.hasMany(models.Order, { foreignKey: "bookId", as: "bookData" })
 
+            Book.belongsTo(models.Catalog, { foreignKey: "catalogId", as: "catalogData" });
             Book.belongsTo(models.Category, { foreignKey: "categoryId", as: "categoryData" });
             Book.belongsTo(models.Type, { foreignKey: "typeId", as: "typeData" });
             Book.belongsTo(models.Author, { foreignKey: "authorId", as: "authorData" });
@@ -29,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
             image: DataTypes.BLOB('long'),
             authorId: DataTypes.INTEGER,
             categoryId: DataTypes.INTEGER,
+            catalogId: DataTypes.INTEGER,
             publisherId: DataTypes.INTEGER,
             typeId: DataTypes.INTEGER,
         },
