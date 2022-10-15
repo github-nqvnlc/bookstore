@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { LANGUAGES } from "../../../../utils/constant"
+ 
 import { connect } from 'react-redux';
 import * as actions from '../../../../store/actions'
 
@@ -185,7 +184,6 @@ class ManageAccount extends Component {
 
 const mapStateToProps = state => {
     return {
-        language: state.app.language,
         role: state.admin.role,
         account: state.admin.account,
     };

@@ -905,7 +905,7 @@ export const getCatalogByName = (name) => {
     try {
       let res = await getCatalogByNameService(name);
       if (res && res.errCode === 0) {
-        dispatch(getCatalogByNameSuccess(res.category));
+        dispatch(getCatalogByNameSuccess(res.catalog));
       } else {
         dispatch(getCatalogByNameFailed());
       }
@@ -915,11 +915,11 @@ export const getCatalogByName = (name) => {
   };
 };
 export const getCatalogByNameSuccess = (data) => ({
-  type: actionTypes.GET_CATEGORY_BY_NAME_SUCCESS,
+  type: actionTypes.GET_CATALOG_BY_NAME_SUCCESS,
   data: data,
 });
 export const getCatalogByNameFailed = (data) => ({
-  type: actionTypes.GET_CATEGORY_BY_NAME_FAILED,
+  type: actionTypes.GET_CATALOG_BY_NAME_FAILED,
   data: data,
 });
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { FormattedMessage } from "react-intl";
-import { LANGUAGES, path } from "../../../utils/constant";
+  
+import { path } from "../../../utils/constant";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions";
@@ -65,7 +65,6 @@ class Manager extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    language: state.app.language,
   };
 };
 

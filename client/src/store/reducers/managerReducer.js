@@ -146,12 +146,24 @@ const managerReducer = (state = initialState, action) => {
     
     case actionTypes.GET_CATEGORY_BY_NAME_SUCCESS:
       state.categoryByName = action.data;
-
+      console.log(state.categoryByName)
       return {
         ...state,
       };
     case actionTypes.GET_CATEGORY_BY_NAME_FAILED:
       state.categoryByName = null;
+      return {
+        ...state,
+      };
+    
+    case actionTypes.GET_CATALOG_BY_NAME_SUCCESS:
+      state.catalogByName = action.data;
+      console.log(state.catalogByName)
+      return {
+        ...state,
+      };
+    case actionTypes.GET_CATALOG_BY_NAME_FAILED:
+      state.catalogByName = null;
       return {
         ...state,
       };

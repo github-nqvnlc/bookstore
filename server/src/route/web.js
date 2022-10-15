@@ -66,6 +66,7 @@ const initWebRoutes = (app) => {
   router.get("/api/get-author-by-name", bookController.getAuthorByName);
   router.get("/api/get-publisher-by-name", bookController.getPublisherByName);
   router.get("/api/get-category-by-name", bookController.getCategoryByName);
+  router.get("/api/get-catalog-by-name", bookController.getCatalogByName);
   router.get("/api/get-type-by-name", bookController.getTypeByName);
 
 

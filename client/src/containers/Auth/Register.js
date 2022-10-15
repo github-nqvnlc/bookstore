@@ -5,7 +5,7 @@ import { push } from "connected-react-router";
 
 import * as actions from "../../store/actions";
 import "./Register.scss";
-import { FormattedMessage } from "react-intl";
+  
 import { path } from "../../utils";
 import Lightbox from "react-image-lightbox";
 import CommonUtils from "../../utils/CommonUtils";
@@ -322,7 +322,6 @@ class Register extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    language: state.app.language,
   };
 };
 

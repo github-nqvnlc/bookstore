@@ -20,10 +20,6 @@ export const path = {
   DETAIL_BOOK: "/system/manager/book/:id",
 };
 
-export const LANGUAGES = {
-  VI: "vi",
-  EN: "en",
-};
 
 export const manageActions = {
   ADD: "ADD",

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../../utils/constant";
+  
+  
 import { toast } from "react-toastify";
 import CommonUtils from "../../../../utils/CommonUtils";
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
-import imageUpload from "../../../../assets/image_upload.png"
+import CreatableSelect from "react-select/creatable";
 import {
     Button, ModalHeader, Modal, ModalBody, ModalFooter, FormGroup,
     Label,
@@ -24,18 +24,36 @@ class ModalCreateTypeBook extends Component {
             //typeBook
             name: "",
             description: "",
-            catalogId: ""
+            catalog: "",
+
+            //get by name
+            catalogByName: {},
+
+            arrCatalog: [],
+            isLoading: false,
         };
     }
-    componentDidMount() { }
+    componentDidMount() { this.props.getCatalog(); }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.typeBook !== this.props.typeBook) {
             this.setState({
                 name: "",
                 description: "",
-                catalogId:""
+                catalog: ""
             })
+        }
+
+        if (prevProps.catalog !== this.props.catalog) {
+            this.setState({
+                arrCatalog: this.props.catalog,
+            });
+        }
+
+        if (prevProps.catalogByName !== this.props.catalogByName) {
+            this.setState({
+                catalogByName: this.props.catalogByName,
+            });
         }
     }
 
@@ -78,17 +96,39 @@ class ModalCreateTypeBook extends Component {
         this.props.createNewTypeBook({
             name: this.state.name,
             description: this.state.description,
-            catalogId: this.state.catalogId
+            catalogId: this.state.catalog
         })
     }
+
+    handleChangeCatalog = (Value, actionMeta) => {
+        console.log("new value: ", Value);
+        console.log(`action: ${actionMeta.action}`);
+        if (actionMeta.action === "create-option") {
+            this.setState({ isLoading: true });
+            this.props.createCatalog({
+                name: Value.label,
+            });
+
+            setTimeout(() => {
+                this.setState({
+                    catalog: this.props.catalogByName.id,
+                    isLoading: false,
+                });
+            }, 3000);
+        }
+        if (actionMeta.action === "select-option") {
+            this.setState({
+                catalog: Value.value,
+            });
+        }
+    };
 
     render() {
         let {
             name,
             description,
-            catalogId
         } = this.state;
-
+        let arrCatalog = this.state.arrCatalog
         return (
             <div>
                 <Modal
@@ -110,14 +150,20 @@ class ModalCreateTypeBook extends Component {
                                 className="input_focus_book input_hover_book"
                             />
                             <Label>Catalog</Label>
-                            <Input
-                                onChange={(e) =>
-                                    this.handleOnChangeInput(e, "catalogId")
+                            <CreatableSelect
+                                isClearable
+                                isDisabled={this.state.isLoading}
+                                isLoading={this.state.isLoading}
+                                onChange={this.handleChangeCatalog}
+                                placeholder="Select or create new catalog..."
+                                options={
+                                    arrCatalog &&
+                                    arrCatalog.map((item, index) => {
+                                        return { value: item.id, label: item.name };
+                                    })
                                 }
-                                value={catalogId}
-                                className="input_focus_book input_hover_book"
+                                className=" input_focus_book input_hover_book"
                             />
-
                             <Label>Description</Label>
                             <Input
                                 onChange={(e) =>
@@ -146,14 +192,20 @@ class ModalCreateTypeBook extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        language: state.app.language,
-        typeBook: state.manager.typeBook,
+         
+        typeBook: state.manager.type,
+        catalog: state.manager.catalog,
+
+        catalogByName: state.manager.catalogByName,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         createNewTypeBook: (data) => dispatch(actions.createType(data)),
+
+        getCatalog: () => dispatch(actions.getCatalog("ALL")),
+        createCatalog: (data) => dispatch(actions.createCatalog(data)),
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ModalCreateTypeBook);

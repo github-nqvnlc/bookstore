@@ -1,93 +1,93 @@
 @import "../../styles/resposive.scss";
 @import "../../styles/color.scss";
 
-.card_component {
-  @include Responsive(SM) {
-    width: 150px;
+.card_container {
+  width: 250px;
+  .card_image {
+    position: relative;
+
+    
   }
 
+  .card_tag_discount {
+    position: absolute;
+    top: -1em;
+    right: -1em;
+    padding: 0;
+
+    .tag_discount {
+      position: relative;
+      width: 50px;
+      height: 50px;
+    }
+
+    .tag_text_discount {
+      position: absolute;
+      height: 50px;
+      width: 50px;
+      top: 0;
+      left: 0;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $color-white;
+    }
+  }
+
+  
   .card_body {
+    border-top: 1px solid $color-grey;
+    padding: 0.5em;
+  }
+
+  .card_title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
+
+  .card_price {
+    text-align: right;
+    padding: 0.5em 0;
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 
-    @include Responsive(SM) {
-      flex-direction: column;
+    .price_main {
+      padding: 0 0.5em;
+      font-size: 12px;
+      text-decoration-line: line-through;
     }
 
-    justify-content: space-between;
-    align-items: center;
-    align-content: center;
-    width: 100%;
+    .price_discounted {
+      color: $color-red;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
 
-    .card_content {
-      width: 65%;
+  .card_subtitle {
+    @extend .card_title;
+    font-weight: 400;
+    text-align: left;
+  }
 
-      @include Responsive(SM) {
-        width: 100%;
-      }
+  .group_button {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid $color-grey;
+    padding-top: 0.5em;
 
-      .card_text {
-        display: flex;
-        flex-direction: row;
-
-        flex-wrap: nowrap;
-        align-content: center;
-        justify-content: flex-start;
-        align-items: baseline;
-
-        @include Responsive(XL) {
-          flex-direction: column;
-        }
-
-        p {
-          text-decoration-line: line-through;
-
-          @include Responsive(XL) {
-            font-size: 14px;
-            margin: 0;
-          }
-        }
-
-        span {
-          text-decoration-line: none;
-          font-size: 20px;
-
-          @include Responsive(XL) {
-            font-size: 18px;
-            padding-left: 0;
-          }
-
-          font-weight: 900;
-          color: $color-red;
-          padding-left: 0.5em;
-        }
-      }
+    .card_button {
+      width: 2em;
+      padding: 0 0.5em;
+      margin: 0 0.25em;
     }
 
-    button {
-      width: 30%;
-      padding: 0 1em;
-      cursor: pointer;
-      background-color: $color-main;
-
-      @include Responsive(SM) {
-        width: 100%;
-      }
-
-      &:hover {
-        background-color: $color-focus;
-        box-shadow: 0 0 0 0.25rem $color-shadow !important;
-      }
-
-      &:focus {
-        background-color: $color-focus;
-        box-shadow: 0 0 0 0.25rem $color-shadow !important;
-      }
-
-      &:active {
-        background-color: $color-focus;
-        box-shadow: 0 0 0 0.25rem $color-shadow !important;
-      }
-    }
+    
   }
 }

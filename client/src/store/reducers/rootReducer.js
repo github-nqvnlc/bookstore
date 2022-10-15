@@ -24,7 +24,7 @@ const userPersistConfig = {
 const appPersistConfig = {
   ...persistCommonConfig,
   key: "app",
-  whitelist: ["language"],
+  whitelist: [""],
 };
 
 const managerPersistConfig = {

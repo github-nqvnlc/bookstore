@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../../utils/constant";
+  
+  
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
 import "./TypeBook.scss";
@@ -8,6 +8,7 @@ import { Button, Table } from "reactstrap";
 import CurrencyFormat from 'react-currency-format';
 import ModalCreateTypeBook from "./ModalCreateTypeBook";
 import ModalEditTypeBook from "./ModalEditTypeBook";
+import TypeDataGrid from "./TypeDataGrid";
 
 class TypeBook extends Component {
     constructor(props) {
@@ -56,7 +57,7 @@ class TypeBook extends Component {
             typeBookEdit: typeBook
         })
     }
-    
+
     handleDeleteTypeBook = (typeBook) => {
         this.props.deleteTypeBook(typeBook.id)
     }
@@ -89,47 +90,8 @@ class TypeBook extends Component {
                         </button>
                     </div>
                     <div className="content_body">
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>
-                                        Type Book Name
-                                    </th>
-                                    <th>
-                                        Type Book Description
-                                    </th>
-                                    <th>
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {arrTypeBook && arrTypeBook.length > 0 &&
-                                    arrTypeBook.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <th scope="row">
-                                                    {index + 1}
-                                                </th>
-                                                <td>
-                                                    {item.name}
-                                                </td>
-                                                <td>
-                                                    {item.description}
-                                                </td>
-                                                <td>
-                                                    <button onClick={() => this.handleEditTypeBook(item)} className="buttonEdit" >Edit</button>
-                                                    <button onClick={() => this.handleDeleteTypeBook(item)} className="buttonDelete">Delete</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })}
-
-                            </tbody>
-                        </Table>
+                        <TypeDataGrid />
+                        
                     </div>
 
                 </div>
@@ -140,7 +102,7 @@ class TypeBook extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        language: state.app.language,
+         
         typeBook: state.manager.type,
     };
 };

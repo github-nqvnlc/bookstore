@@ -1,271 +1,244 @@
-/* eslint-disable jsx-a11y/alt-text */
-import React, { Component } from "react";
+import * as React from 'react';
 import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Button,
-} from "reactstrap";
-import { LANGUAGES } from "../../utils/constant";
 import * as actions from "../../store/actions";
-import { changeLanguageApp } from "../../store/actions/appActions";
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import AccountAvatar from "../AccountAvatar/AccountAvatar";
+import Button from '@mui/material/Button';
+import { Container } from '@mui/material';
+import { useHistory } from "react-router-dom";
 
-import "./Header.scss";
-import logo from "../../assets/logo.png";
-import avt from "../../assets/avatar.png";
-import { Link } from "react-router-dom";
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
 
-class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      togglerOpen: false,
-      isSticky: false,
-    };
-    this.toggleNav = this.toggleNav.bind(this);
-  }
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
 
-  checkSticky = () => {
-    if (window.scrollY >= 50) {
-      this.setState({
-        isSticky: true,
-      });
-    } else {
-      this.setState({
-        isSticky: false,
-      });
-    }
-    console.log(this.state.isSticky)
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
+
+const Header = (props) => {
+  const history = useHistory();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  handleToggler = () => {
-    this.setState({
-      togglerOpen: !this.state.togglerOpen,
-    });
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
   };
-  toggleNav() {
-    this.setState({
-      togglerOpen: !this.state.togglerOpen,
-    });
-  }
 
-  changeLanguage = (language) => {
-    this.props.changeLanguageAppRedux(language);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
   };
-  render() {
 
-    let logoBrand = logo;
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
 
-    let avatar = avt;
-    const { processLogout, language, userInfo, image } = this.props;
-    if (userInfo && userInfo !== null) {
-      this.props.getUserImage(userInfo.userId);
-    }
-    console.log(userInfo.roleId);
-    window.addEventListener("scroll", this.checkSticky);
-
-
+  const handleLogin = () => {
     return (
-      <div className="header_container ">
-        <div className="container">
-          <div className="language">
-            <div
-              className="check_route"
-              style={
-                userInfo.roleId === "3"
-                  ? { display: "none" }
-                  : { display: "block", padding: "0 1em", margin: "o 1em" }
-              }
-            >
-              {this.props.isLoggedIn ? (
-                <div>
-                  {userInfo && userInfo.roleId === "1" ? (
-                    <Link to="/system/admin/manage-account">Go Admin</Link>
-                  ) : (
-                    <Link to="/system/manager/manage-book">Go Manager</Link>
-                  )}
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-            <div
-              className={
-                language === LANGUAGES.VI ? "lang-vi active" : "lang-vi"
-              }
-            >
-              <span onClick={() => this.changeLanguage(LANGUAGES.VI)}>VI</span>
-            </div>
-            <span>|</span>
-            <div
-              className={
-                language === LANGUAGES.EN ? "lang-en active" : "lang-en"
-              }
-            >
-              <span onClick={() => this.changeLanguage(LANGUAGES.EN)}>EN</span>
-            </div>
-          </div>
-        </div>
-        <div className="header_topbar">
-          <div className="topbar_content container">
-            <div className="topbar_content_left col-xs-12 col-sm-6 col-md-6">
-              <div className="topbar_brand ">
-                <img src={logoBrand} />
-              </div>
-            </div>
-            <div className="topbar_content_right col-xs-12 col-sm-6 col-md-6">
-              <div className="topbar_icon">
-                <UncontrolledDropdown>
-                  <DropdownToggle tag="div" className="cart">
-                    <DropdownItem
-                      tag="i"
-                      className="fas fa-cart-plus"
-                    ></DropdownItem>
-                    <DropdownItem
-                      tag="span"
-                      style={{ right: "-5px" }}
-                      className="count"
-                    >
-                      1
-                    </DropdownItem>
-                  </DropdownToggle>
-                  <DropdownMenu className="icon_drop" right>
-                    <DropdownItem tag="div" className="lang_en">
-                      English
-                    </DropdownItem>
-                    <DropdownItem tag="div" className="lang_vi">
-                      Vietnamese
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-                <UncontrolledDropdown>
-                  <DropdownToggle tag="div" className="notice">
-                    <DropdownItem tag="i" className="fa fa-bell"></DropdownItem>
-                    <DropdownItem tag="span" className="count">
-                      1
-                    </DropdownItem>
-                  </DropdownToggle>
-                  <DropdownMenu className="icon_drop" right>
-                    <DropdownItem tag="div" className="lang_en">
-                      English
-                    </DropdownItem>
-                    <DropdownItem tag="div" className="lang_vi">
-                      Vietnamese
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </div>
-              {this.props.isLoggedIn ? (
-                <UncontrolledDropdown>
-                  <DropdownToggle
-                    tag="div"
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      padding: "0 10px",
-                    }}
-                  >
-                    <img
-                      className="avatar_user"
-                      src={image && image !== null ? image : avatar}
-                    />
-                  </DropdownToggle>
-                  <DropdownMenu className="icon_drop" right>
-                    <DropdownItem tag="div" className="lang_en">
-                      Profile{" "}
-                      <span>
-                        {userInfo && userInfo.lastName ? userInfo.lastName : ""}
-                      </span>
-                    </DropdownItem>
-                    <DropdownItem
-                      tag="div"
-                      className="lang_vi"
-                      onClick={processLogout}
-                    >
-                      Logout
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              ) : (
-                <Button className="px-3 button_login">
-                  <Link
-                    style={{ textDecoration: "none", color: "#fff" }}
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
-        <div
-          className={this.state.isSticky ? "header_menu sticky" : "header_menu"}
-        >
-          <div className="main_menu container">
-            <Navbar style={{ padding: 0 }} expand="lg">
-              <NavbarToggler className="nav_toggler" onClick={this.toggleNav}>
-                <i className="fas fa-bars"></i>
-              </NavbarToggler>
-              <Collapse isOpen={this.state.togglerOpen} navbar>
-                <Nav className="list_menu" navbar>
-                  <NavItem className="menu_item">
-                    <NavLink className="menu_link">
-                      <FormattedMessage id="header.vietnamesebooks" />
-                    </NavLink>
-                    <div className="sub_content"></div>
-                  </NavItem>
-                  <NavItem className="menu_item">
-                    <NavLink className="menu_link">
-                      <FormattedMessage id="header.foregionbooks" />
-                    </NavLink>
-                    <div className="sub_content"></div>
-                  </NavItem>
-                  <NavItem className="menu_item">
-                    <NavLink className="menu_link">
-                      <FormattedMessage id="header.e-books" />
-                    </NavLink>
-                    <div className="sub_content">
-                      <div className="">abc</div>
-                    </div>
-                  </NavItem>
-                  <NavItem className="menu_item">
-                    <NavLink className="menu_link">
-                      <FormattedMessage id="header.stationery" />
-                    </NavLink>
-                  </NavItem>
-                  <NavItem className="menu_item">
-                    <NavLink className="menu_link">
-                      <FormattedMessage id="header.sovernir" />
-                    </NavLink>
-                  </NavItem>
-                  <NavItem className="menu_item">
-                    <NavLink className="menu_link">
-                      <FormattedMessage id="header.musictaps" />
-                    </NavLink>
-                  </NavItem>
-                  <NavItem className="menu_item">
-                    <NavLink className="menu_link">
-                      <FormattedMessage id="header.promotions" />
-                    </NavLink>
-                  </NavItem>
-                </Nav>
-              </Collapse>
-            </Navbar>
-          </div>
-        </div>
-      </div>
-    );
+      history.push("/login")
+    )
   }
+
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton sx={{
+          marginRight: "0.2em",
+        }}
+          size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="error">
+            <ShoppingCartOutlinedIcon />
+          </Badge>
+        </IconButton>
+        Cart
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          sx={{
+            marginRight: "0.2em",
+          }}
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        Notifications
+      </MenuItem>
+      <MenuItem>
+        <AccountAvatar />
+        {props.userInfo.lastName}
+      </MenuItem>
+    </Menu>
+  );
+
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="fixed" color="success">
+        <Container maxWidth="xl">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              BookStore
+            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </Search>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                <Badge badgeContent={4} color="error">
+                  <ShoppingCartOutlinedIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={17} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              {props.isLoggedIn ? (
+                <AccountAvatar />
+
+              ) : (
+                <Button color="inherit" onClick={handleLogin}>Login</Button>
+              )}
+            </Box>
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
+    </Box>
+  );
 }
 
 const mapStateToProps = (state) => {
@@ -280,8 +253,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     processLogout: () => dispatch(actions.processLogout()),
-    changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
-    getUserImage: (id) => dispatch(actions.getUserImage(id)),
   };
 };
 

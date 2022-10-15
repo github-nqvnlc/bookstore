@@ -358,7 +358,11 @@ let getCatalogService = (catalogId) => {
     try {
       if (catalogId === "ALL") {
         let catalog = await db.Catalog.findAll({
-          // include: [{ model: db.Book, as: "categoryCatalogData" }],
+          include: [
+            { model: db.Book, as: "catalogData" },
+            { model: db.Category, as: "categoryCatalogData" },
+            // { model: db.Type, as: "catalogTypeData" },
+          ],
           raw: true,
           nest: true,
         });
@@ -562,7 +566,10 @@ let getTypeService = (typeId) => {
     try {
       if (typeId === "ALL") {
         let type = await db.Type.findAll({
-          // include: [{ model: db.Book, as: "typeData" }],
+          include: [
+            { model: db.Book, as: "typeData" },
+            { model: db.Catalog, as: "catalogTypeData" }
+          ],
           raw: true,
           nest: true,
         });
@@ -573,7 +580,7 @@ let getTypeService = (typeId) => {
           where: { id: typeId },
           include: [
             { model: db.Book, as: "typeData" },
-            { model: db.Catalog, as: "catalogTypeData " }
+            { model: db.Catalog, as: "catalogTypeData" }
           ],
           raw: true,
           nest: true,

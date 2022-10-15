@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-dupe-keys */
 import React, { Component } from "react";
-import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../../utils/constant";
+  
+  
 import { toast } from "react-toastify";
 import CommonUtils from "../../../../utils/CommonUtils";
 import { connect } from "react-redux";
@@ -47,6 +47,7 @@ class ModalCreateBook extends Component {
       author: "",
       publisher: "",
       category: "",
+      catalog: "",
       typeBook: "",
       price: "",
       discount: "",
@@ -60,6 +61,7 @@ class ModalCreateBook extends Component {
       authorByName: {},
       publisherByName: {},
       categoryByName: {},
+      catalogByName: {},
       typeByName: {},
 
       previewUrlImage: "",
@@ -68,6 +70,7 @@ class ModalCreateBook extends Component {
       arrAuthor: [],
       arrPublisher: [],
       arrCategory: [],
+      arrCatalog: [],
       arrType: [],
 
       isLoading: false,
@@ -81,6 +84,7 @@ class ModalCreateBook extends Component {
     this.props.getAuthor();
     this.props.getPublisher();
     this.props.getCategory();
+    this.props.getCatalog();
     this.props.getType();
   }
 
@@ -99,6 +103,11 @@ class ModalCreateBook extends Component {
     if (prevProps.category !== this.props.category) {
       this.setState({
         arrCategory: this.props.category,
+      });
+    }
+    if (prevProps.catalog !== this.props.catalog) {
+      this.setState({
+        arrCatalog: this.props.catalog,
       });
     }
     if (prevProps.type !== this.props.type) {
@@ -123,6 +132,12 @@ class ModalCreateBook extends Component {
     if (prevProps.categoryByName !== this.props.categoryByName) {
       this.setState({
         categoryByName: this.props.categoryByName,
+      });
+    }
+
+    if (prevProps.catalogByName !== this.props.catalogByName) {
+      this.setState({
+        catalogByName: this.props.catalogByName,
       });
     }
 
@@ -218,6 +233,7 @@ class ModalCreateBook extends Component {
       authorId: this.state.author,
       publisherId: this.state.publisher,
       categoryId: this.state.category,
+      catalogId: this.state.catalog,
       typeId: this.state.typeBook,
       price: this.state.price,
       discount: this.state.discount,
@@ -301,15 +317,51 @@ class ModalCreateBook extends Component {
       });
     }
   };
+  handleChangeCatalog = (Value, actionMeta) => {
+    console.log("new value: ", Value);
+    console.log(`action: ${actionMeta.action}`);
+    if (actionMeta.action === "create-option") {
+      this.setState({ isLoading: true });
+      if (this.state.category === "") {
+        this.props.createCatalog({
+          name: Value.label,
+        });
+      } else {
+        this.props.createCatalog({
+          name: Value.label,
+          categoryId: this.state.category,
+        });
+      }
+       
+      setTimeout(() => {
+        this.setState({
+          catalog: this.props.catalogByName.id,
+          isLoading: false,
+        });
+      }, 3000);
+    }
+    if (actionMeta.action === "select-option") {
+      this.setState({
+        catalog: Value.value,
+      });
+    }
+  };
 
   handleChangeTypeBook = (Value, actionMeta) => {
     console.log("new value: ", Value);
     console.log(`action: ${actionMeta.action}`);
     if (actionMeta.action === "create-option") {
       this.setState({ isLoading: true });
-      this.props.createType({
-        name: Value.label,
-      });
+      if (this.state.catalog === "") {
+        this.props.createType({
+          name: Value.label,
+        });
+      } else {
+        this.props.createType({
+          name: Value.label,
+          catalogId: this.state.catalog
+        });
+      }
       setTimeout(() => {
         this.setState({
           typeBook: this.props.typeByName.id,
@@ -331,6 +383,7 @@ class ModalCreateBook extends Component {
     let arrAuthor = this.state.arrAuthor;
     let arrPublisher = this.state.arrPublisher;
     let arrCategory = this.state.arrCategory;
+    let arrCatalog = this.state.arrCatalog;
     let arrType = this.state.arrType;
 
     return (
@@ -459,13 +512,6 @@ class ModalCreateBook extends Component {
                   }}
                   renderText={(value) => <b>{value}</b>}
                 />
-                {/* <Input
-                  onChange={(e) => this.handleOnChangeInput(e, "description")}
-                  value={description}
-                  className="input_focus_book input_hover_book"
-                  style={{ height: "225px" }}
-                  type="textarea"
-                /> */}
               </FormGroup>
             </FormGroup>
 
@@ -486,7 +532,24 @@ class ModalCreateBook extends Component {
                 className=" input_focus_book input_hover_book"
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup style={this.state.category === "" ? {display: "none"} : {display: "block"}}>
+              <Label>Catalog</Label>
+              <CreatableSelect
+                isClearable
+                isDisabled={this.state.isLoading}
+                isLoading={this.state.isLoading}
+                onChange={this.handleChangeCatalog}
+                placeholder="Select or create new catalog..."
+                options={
+                  arrCatalog &&
+                  arrCatalog.map((item, index) => {
+                    return { value: item.id, label: item.name };
+                  })
+                }
+                className=" input_focus_book input_hover_book"
+              />
+            </FormGroup>
+            <FormGroup style={this.state.catalog === "" ? { display: "none" } : { display: "block" }}>
               <Label>Type Book</Label>
               <CreatableSelect
                 isClearable
@@ -517,7 +580,7 @@ class ModalCreateBook extends Component {
               <Label>Description</Label>
               <MdEditor
                 className="form-control input_focus_book input_hover_book"
-                style={{ height: "500px", width: "100%" }}
+                style={{ height: "200px", width: "100%" }}
                 placeholder="Description of book... text here"
                 value={description}
                 renderHTML={(text) => mdParser.render(text)}
@@ -561,17 +624,19 @@ class ModalCreateBook extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    language: state.app.language,
+     
     book: state.manager.book,
     author: state.manager.author,
     publisher: state.manager.publisher,
     category: state.manager.category,
+    catalog: state.manager.catalog,
     type: state.manager.type,
 
     // get by name
     authorByName: state.manager.authorByName,
     publisherByName: state.manager.publisherByName,
     categoryByName: state.manager.categoryByName,
+    catalogByName: state.manager.catalogByName,
     typeByName: state.manager.typeByName,
   };
 };
@@ -584,10 +649,12 @@ const mapDispatchToProps = (dispatch) => {
     getAuthorByName: (name) => dispatch(actions.getAuthorByName(name)),
     getPublisher: () => dispatch(actions.getPublisher("ALL")),
     getCategory: () => dispatch(actions.getCategory("ALL")),
+    getCatalog: () => dispatch(actions.getCatalog("ALL")),
     getType: () => dispatch(actions.getType("ALL")),
     createAuthor: (data) => dispatch(actions.createAuthor(data)),
     createPublisher: (data) => dispatch(actions.createPublisher(data)),
     createCategory: (data) => dispatch(actions.createCategory(data)),
+    createCatalog: (data) => dispatch(actions.createCatalog(data)),
     createType: (data) => dispatch(actions.createType(data)),
     deleteAuthor: (id) => dispatch(actions.deleteAuthor(id)),
   };

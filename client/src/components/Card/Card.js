@@ -1,62 +1,119 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Button,
-} from "reactstrap";
-import "./Card.scss";
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { Badge, IconButton, Stack, Tooltip } from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import CurrencyFormat from 'react-currency-format';
 
-class CardItem extends Component {
-  render() {
-    return (
-      <Card
-        body
-        style={{
-          width: "100%",
-          padding: 0,
-          margin: 0,
-        }}
-        className="card_component"
-        tag="div"
-      >
-        <img
-          alt="Sample"
-          src="https://nhasachphuongnam.com/images/thumbnails/213/213/detailed/234/harry-potter-va-dua-tre-bi-nguyen-rua-tb-2022.jpg"
+export default function ImgMediaCard(props) {
+  const image64 = new Buffer(props.book.image, "base64").toString("binary");
+  return (
+    <Badge badgeContent={Math.floor(props.book.discount * 100) + "%"} color="error">
+      <Card sx={{ maxWidth: 200 }}>
+        <CardMedia
+          component="img"
+          alt={props.book.name}
+          height="200"
+          image={image64}
         />
-        <CardBody>
-          <div className="card_body">
-            <div className="card_content">
-              <CardTitle tag="h5">{this.props.title}</CardTitle>
-              <CardSubtitle className="mb-2 text-muted card_text" tag="div">
-                <p>{this.props.price} đ</p>{" "}
-                <span>
-                  {this.props.price - this.props.price * this.props.discount} đ
-                </span>
-              </CardSubtitle>
-              <CardText>
-                {/* kasjdlaskdjaslkasjdlaskdjaslkasjdlaskdjaslkasjdlaskdjaslkasjdlaskdjasl */}
-              </CardText>
-            </div>
-            <Button>Buy</Button>
-          </div>
-        </CardBody>
+        <CardContent sx={{ padding: "0.5em" }}>
+          <Typography
+            sx={{
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            }}
+            gutterBottom variant="subtitle1" component="div">
+            {props.book.name}
+          </Typography>
+          <Stack
+            sx={{ width: "100%" }}
+            direction={props.book.price <= 1000000 ? "row" : "column"}
+            justifyContent={"center"}
+            alignItems={props.book.price <= 1000000 ? "center" : "flex-end"}
+            spacing={1}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+              }}
+              color="error" gutterBottom variant="h6" component="div">
+              <CurrencyFormat
+                value={
+                  Math.round(
+                    (props.book.price - props.book.price * props.book.discount) / 1000
+                  ) * 1000
+                }
+                placeholder="xxx.xxx VND"
+                displayType={"text"}
+                thousandSeparator={true}
+                suffix={" VND"}
+                renderText={(value) => (
+                  <div className="price_discounted">{value}</div>
+                )}
+              />
+            </Typography>
+            <Typography
+              sx={{
+                textDecorationLine: "line-through",
+              }}
+              gutterBottom variant="caption" component="div">
+              <CurrencyFormat
+                value={props.book.price}
+                placeholder="xxx.xxx VND"
+                displayType={"text"}
+                thousandSeparator={true}
+                suffix={" VND"}
+                renderText={(value) => (
+                  <div
+                    style={
+                      props.book.discount === 0
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                    className="price_main"
+                  >
+                    {value}
+                  </div>
+                )}
+              />
+            </Typography>
+          </Stack>
+        </CardContent>
+        <CardActions sx={{ marginTop: 0, paddingTop: 0 }}>
+          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-end">
+            <Tooltip title="Add to cart">
+              <IconButton
+                sx={{ margin: 0, }}
+                color="success"
+                variant="outlined"
+                aria-label="add to shopping cart">
+                <AddShoppingCartIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Add to cart">
+              <IconButton
+                sx={{ margin: 0, }}
+                color="success"
+                variant="outlined"
+                aria-label="add to shopping cart">
+                <AddShoppingCartIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Buy now">
+              <Button
+                size="small"
+                variant="contained"
+                color='success'
+              >Buy now</Button>
+            </Tooltip>
+          </Stack>
+        </CardActions>
       </Card>
-    );
-  }
+    </Badge>
+  );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.user.isLoggedIn,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CardItem);

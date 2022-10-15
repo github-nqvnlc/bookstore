@@ -231,7 +231,30 @@
             min-height: 50px;
             margin: 0;
             padding: 1em;
-            z-index: 1;
+            z-index: 1080;
+
+            ul {
+              padding: 0 0.5em;
+              padding-bottom: 1em;
+
+              a {
+                text-decoration: none;
+                list-style: none;
+
+                .list_content {
+                  font-size: 12px;
+                  color: $color-text;
+                  transition: padding 0.75s;
+
+                  &:hover {
+                    padding: 0.5em 1em;
+                    color: $color-main;
+                    list-style: square;
+                  }
+                }
+
+              }
+            }
           }
 
           .menu_link {
@@ -271,6 +294,8 @@
 
             .sub_content {
               display: block;
+
+
             }
           }
         }

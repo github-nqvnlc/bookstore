@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../../utils/constant";
+  
+  
 import { toast } from "react-toastify";
 import CommonUtils from "../../../../utils/CommonUtils";
 import { connect } from "react-redux";
@@ -134,7 +134,7 @@ class ModalCreatePublisher extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        language: state.app.language,
+         
         publisher: state.manager.publisher,
     };
 };

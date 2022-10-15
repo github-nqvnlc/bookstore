@@ -205,11 +205,20 @@ let getPublisherByName = async (req, res) => {
 };
 let getCategoryByName = async (req, res) => {
   let name = req.query.name;
-  let category = await bookService.getCatalogByNameService(name);
+  let category = await bookService.getCategoryByNameService(name);
   return res.status(200).json({
     errCode: 0,
     errMessage: "oke",
     category,
+  });
+};
+let getCatalogByName = async (req, res) => {
+  let name = req.query.name;
+  let catalog = await bookService.getCatalogByNameService(name);
+  return res.status(200).json({
+    errCode: 0,
+    errMessage: "oke",
+    catalog,
   });
 };
 let getTypeByName = async (req, res) => {
@@ -263,5 +272,6 @@ module.exports = {
   getAuthorByName: getAuthorByName,
   getPublisherByName: getPublisherByName,
   getCategoryByName: getCategoryByName,
+  getCatalogByName: getCatalogByName,
   getTypeByName: getTypeByName,
 };

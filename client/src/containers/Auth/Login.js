@@ -4,7 +4,7 @@ import { push } from "connected-react-router";
 
 import * as actions from "../../store/actions";
 import "./Login.scss";
-import { FormattedMessage } from "react-intl";
+  
 import { handleLoginApi } from "../../services/userService";
 import banner from "../../assets/Banner/bookwallpapers.jfif";
 import logo from "../../assets/logo.png";
@@ -143,7 +143,6 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    language: state.app.language,
   };
 };
 

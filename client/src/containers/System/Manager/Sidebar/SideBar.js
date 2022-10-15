@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../../utils/constant";
+  
+  
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
 import "./SideBar.scss";
@@ -156,7 +156,7 @@ class SideBar extends Component {
                 to="/system/manager/manage-catalog"
               >
                 <li>
-                  <i class="fas fa-stream"></i>
+                  <i class="fas fa-bookmark"></i>
                   <div
                     className={
                       this.state.isOpenMenu === true
@@ -212,7 +212,7 @@ class SideBar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    language: state.app.language,
+     
   };
 };
 

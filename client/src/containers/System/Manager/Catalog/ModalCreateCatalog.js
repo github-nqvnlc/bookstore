@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../../utils/constant";
+  
+  
 import { toast } from "react-toastify";
 import CommonUtils from "../../../../utils/CommonUtils";
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
-import imageUpload from "../../../../assets/image_upload.png"
+import CreatableSelect from "react-select/creatable";
 import {
     Button, ModalHeader, Modal, ModalBody, ModalFooter, FormGroup,
     Label,
@@ -13,7 +13,6 @@ import {
     Row,
     Col,
 } from "reactstrap";
-import CurrencyFormat from 'react-currency-format';
 
 class ModalCreateCatalog extends Component {
     constructor(props) {
@@ -23,18 +22,37 @@ class ModalCreateCatalog extends Component {
             //category
             name: "",
             description: "",
-            categoryId: "",
+            category: "",
+
+            //get by name props
+            categoryByName: {},
+
+            arrCategory: [],
+            isLoading: false,
+
         };
     }
-    componentDidMount() { }
+    componentDidMount() { this.props.getCategory(); }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.category !== this.props.category) {
+        if (prevProps.catalog !== this.props.catalog) {
             this.setState({
                 name: "",
                 description: "",
-                categoryId: ""
+                category: ""
             })
+        }
+
+        if (prevProps.category !== this.props.category) {
+            this.setState({
+                arrCategory: this.props.category,
+            });
+        }
+
+        if (prevProps.categoryByName !== this.props.categoryByName) {
+            this.setState({
+                categoryByName: this.props.categoryByName,
+            });
         }
     }
 
@@ -76,17 +94,40 @@ class ModalCreateCatalog extends Component {
 
         this.props.createNewCatalog({
             name: this.state.name,
-            description: this.state.description
+            description: this.state.description,
+            categoryId: this.state.category
         })
     }
+
+    handleChangeCategory = (Value, actionMeta) => {
+        console.log("new value: ", Value);
+        console.log(`action: ${actionMeta.action}`);
+        if (actionMeta.action === "create-option") {
+            this.setState({ isLoading: true });
+            this.props.createCategory({
+                name: Value.label,
+            });
+
+            setTimeout(() => {
+                this.setState({
+                    category: this.props.categoryByName.id,
+                    isLoading: false,
+                });
+            }, 3000);
+        }
+        if (actionMeta.action === "select-option") {
+            this.setState({
+                category: Value.value,
+            });
+        }
+    };
 
     render() {
         let {
             name,
             description,
-            categoryId,
         } = this.state;
-
+        let arrCategory = this.state.arrCategory;
         return (
             <div>
                 <Modal
@@ -104,16 +145,24 @@ class ModalCreateCatalog extends Component {
                                 onChange={(e) =>
                                     this.handleOnChangeInput(e, "name")
                                 }
+                                placeholder="Name catalog..."
                                 value={name}
                                 className="input_focus_book input_hover_book"
                             />
                             <Label>Category</Label>
-                            <Input
-                                onChange={(e) =>
-                                    this.handleOnChangeInput(e, "categoryId")
+                            <CreatableSelect
+                                isClearable
+                                isDisabled={this.state.isLoading}
+                                isLoading={this.state.isLoading}
+                                onChange={this.handleChangeCategory}
+                                placeholder="Select or create new category..."
+                                options={
+                                    arrCategory &&
+                                    arrCategory.map((item, index) => {
+                                        return { value: item.id, label: item.name };
+                                    })
                                 }
-                                value={categoryId}
-                                className="input_focus_book input_hover_book"
+                                className=" input_focus_book input_hover_book"
                             />
 
                             <Label>Description</Label>
@@ -144,14 +193,20 @@ class ModalCreateCatalog extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        language: state.app.language,
+         
         category: state.manager.category,
+        catalog: state.manager.catalog,
+        categoryByName: state.manager.categoryByName,
+
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         createNewCatalog: (data) => dispatch(actions.createCatalog(data)),
+
+        getCategory: () => dispatch(actions.getCategory("ALL")),
+        createCategory: (data) => dispatch(actions.createCategory(data)),
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ModalCreateCatalog);

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, withRouter } from "react-router";
-import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../../utils/constant";
+  
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
 import "./DetailBook.scss";
@@ -239,7 +238,7 @@ class DetailBook extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    language: state.app.language,
+     
     book: state.manager.book,
   };
 };

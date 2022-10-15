@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../../../utils/constant";
+  
+  
 import { toast } from "react-toastify";
 import CommonUtils from "../../../../utils/CommonUtils";
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
-import imageUpload from "../../../../assets/image_upload.png"
+import CreatableSelect from "react-select/creatable";
 import {
     Button, ModalHeader, Modal, ModalBody, ModalFooter, FormGroup,
     Label,
@@ -20,31 +20,49 @@ class ModalEditCatalog extends Component {
         super(props);
         this.state = {
             isOpenModal: false,
-            //book
+            //catalog
             id: "",
             name: "",
             description: "",
-            catalogId: "",
+            category: "",
 
-            previewUrlImage: "",
+            categoryCatalogData: {},
 
-            catalog: [],
+            //get by name
+            categoryByName: {},
+
+            //get all arr
+            arrCategory: [],
         };
     }
-    componentDidMount() { }
+    componentDidMount() {
+        this.props.getCategory();
+    }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.category !== this.props.category) {
+            this.setState({
+                arrCategory: this.props.category,
+            });
+        }
+
+        if (prevProps.categoryByName !== this.props.categoryByName) {
+            this.setState({
+                categoryByName: this.props.categoryByName,
+            });
+        }
+
         if (prevProps.catalogEdit !== this.props.catalogEdit) {
             let catalog = this.props.catalogEdit
-            console.log(catalog)
             this.setState({
                 id: catalog.id,
                 name: catalog.name,
-                description: catalog.description
-                
+                description: catalog.description,
+                category: catalog.categoryId,
+                categoryCatalogData: catalog.categoryCatalogData,
             })
         }
-     }
+    }
 
     toggle = () => {
         this.props.toggleModal();
@@ -54,6 +72,7 @@ class ModalEditCatalog extends Component {
         let isValid = true;
         let arrInput = [
             "name",
+            "category"
         ];
 
         for (let i = 0; i < arrInput.length; i++) {
@@ -82,14 +101,36 @@ class ModalEditCatalog extends Component {
         if (isValid === false) return;
         this.toggle()
 
-        this.props.editCatalogRedux({
+        this.props.editCatalog({
             id: this.state.id,
             name: this.state.name,
+            categoryId: this.state.category,
             description: this.state.description
         })
     }
 
-   
+    handleChangeCategory = (Value, actionMeta) => {
+        console.log("new value: ", Value);
+        console.log(`action: ${actionMeta.action}`);
+        if (actionMeta.action === "create-option") {
+            this.setState({ isLoading: true });
+            this.props.createCategory({
+                name: Value.label,
+            });
+            setTimeout(() => {
+                this.setState({
+                    category: this.props.categoryByName.id,
+                    isLoading: false,
+                });
+            }, 3000);
+        }
+        if (actionMeta.action === "select-option") {
+            this.setState({
+                category: Value.value,
+            });
+        }
+    };
+
 
     render() {
         let {
@@ -97,6 +138,8 @@ class ModalEditCatalog extends Component {
             description,
         } = this.state;
 
+        console.log(this.state.categoryCatalogData)
+        let arrCategory = this.state.arrCategory
         return (
             <div>
                 <Modal
@@ -117,7 +160,25 @@ class ModalEditCatalog extends Component {
                                 value={name}
                                 className="input_focus_book input_hover_book"
                             />
-
+                            <Label>Category</Label>
+                            <CreatableSelect
+                                isClearable
+                                defaultValue={{
+                                    value: this.state.category,
+                                    label: this.state.categoryCatalogData.name,
+                                }}
+                                isDisabled={this.state.isLoading}
+                                isLoading={this.state.isLoading}
+                                onChange={this.handleChangeCategory}
+                                placeholder="Select or create new category..."
+                                options={
+                                    arrCategory &&
+                                    arrCategory.map((item, index) => {
+                                        return { value: item.id, label: item.name };
+                                    })
+                                }
+                                className=" input_focus_book input_hover_book"
+                            />
                             <Label>Description</Label>
                             <Input
                                 onChange={(e) =>
@@ -146,15 +207,21 @@ class ModalEditCatalog extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        language: state.app.language,
+         
         catalog: state.manager.catalog,
+        category: state.manager.category,
+
+        categoryByName: state.manager.categoryByName,
+
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        editCatalogRedux: (data) => dispatch(actions.editCatalog(data)),
+        editCatalog: (data) => dispatch(actions.editCatalog(data)),
         getCatalog: (id) => dispatch(actions.getCatalog(id)),
+        getCategory: () => dispatch(actions.getCategory("ALL")),
+        createCategory: (data) => dispatch(actions.createCategory(data)),
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ModalEditCatalog);

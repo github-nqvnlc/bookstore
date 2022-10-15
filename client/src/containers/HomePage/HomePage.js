@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Header from "../../components/Header/Header";
 import Banner from "../../components/Banner/Banner";
 import Footer from "../../components/Footer/footer";
-import Section from "../../components/Section/Section";
+import LayoutBook from "../../components/LayoutBook/LayoutBook";
 
 class HomePage extends Component {
     render() {
@@ -13,16 +13,8 @@ class HomePage extends Component {
             <React.Fragment>
                 <Header />
                 <Banner />
-
-                <Section
-                    name="Vietnamese Books"
-                />
-                <Section
-                    name="English Books"
-                />
-                <Section
-                    name="E-Books"
-                />
+                <LayoutBook/>
+                
                 <Footer />
             </React.Fragment>
         )
