@@ -10,6 +10,8 @@
     margin-top: 3em;
     border: 1px solid $color-grey;
     padding: 1em;
+    border-radius: 10px;
+    background-color: $color-white;
 
     .image_detail {
         width: 100%;
@@ -159,7 +161,7 @@
         background-color: $color-red-delete-focus;
         color: $color-white;
         border: none;
-        box-shadow: $box_shadow $color-shadow-red-delete  !important;
+        box-shadow: $box_shadow $color-shadow-red-delete !important;
     }
 }
 

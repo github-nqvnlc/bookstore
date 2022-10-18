@@ -359,7 +359,7 @@ let getCatalogService = (catalogId) => {
       if (catalogId === "ALL") {
         let catalog = await db.Catalog.findAll({
           include: [
-            { model: db.Book, as: "catalogData" },
+            // { model: db.Book, as: "catalogData" },
             { model: db.Category, as: "categoryCatalogData" },
             // { model: db.Type, as: "catalogTypeData" },
           ],

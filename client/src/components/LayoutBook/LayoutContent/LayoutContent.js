@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import ImgMediaCard from '../../Card/Card'
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions";
+import { Box, Grid } from '@mui/material';
 
 class LayoutContent extends Component {
-    
+
     constructor(props) {
         super(props)
         this.state = {
             book: [],
+
+            loading: false,
         }
     }
 
@@ -22,18 +25,29 @@ class LayoutContent extends Component {
                 book: this.props.book,
             })
         }
+
+        if (prevState.loading !== this.props.loading) {
+            this.setState({
+                loading: this.props.loading,
+            })
+        }
     }
 
     render() {
         let book = this.state.book
-        console.log(book)
         return (
-            <div>
-                {book?.map((item, index) => {
-                    return (<ImgMediaCard book={item} key={index} />)
-                })}
-                
-            </div>
+            <Box>
+                <Grid container spacing={2}>
+                    {book?.map((item, index) => {
+                        return (
+                            <Grid >
+                                <ImgMediaCard loading={this.state.loading} book={item} key={index} />
+                            </Grid>
+                        )
+                    })}
+                </Grid>
+
+            </Box>
         )
     }
 }
@@ -46,6 +60,8 @@ const mapStateToProps = (state) => {
         categoryByName: state.manager.categoryByName,
         catalogByName: state.manager.catalogByName,
         typeByName: state.manager.typeByName,
+
+        loading: state.manager.loading,
     };
 };
 

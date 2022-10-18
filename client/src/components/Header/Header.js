@@ -11,7 +11,6 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
@@ -22,6 +21,7 @@ import AccountAvatar from "../AccountAvatar/AccountAvatar";
 import Button from '@mui/material/Button';
 import { Container } from '@mui/material';
 import { useHistory } from "react-router-dom";
+import ToggleMenu from '../ToggleMenu/ToggleMenu';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -94,28 +94,6 @@ const Header = (props) => {
     )
   }
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -132,6 +110,27 @@ const Header = (props) => {
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          overflow: 'visible',
+          filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+          width: 200,
+          mt: 4.5,
+          '&:before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            right: 18,
+            width: 10,
+            height: 10,
+            bgcolor: 'background.paper',
+            transform: 'translateY(-50%) rotate(45deg)',
+            zIndex: 0,
+          },
+        },
+      }}
     >
       <MenuItem>
         <IconButton sx={{
@@ -142,7 +141,7 @@ const Header = (props) => {
             <ShoppingCartOutlinedIcon />
           </Badge>
         </IconButton>
-        Cart
+        Shopping Cart
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -171,15 +170,7 @@ const Header = (props) => {
       <AppBar position="fixed" color="success">
         <Container maxWidth="xl">
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
+            <ToggleMenu />
             <Typography
               variant="h6"
               noWrap
@@ -236,7 +227,6 @@ const Header = (props) => {
         </Container>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
     </Box>
   );
 }

@@ -85,7 +85,9 @@ export const createNewBookFailed = () => ({
 export const getBook = (id) => {
   return async (dispatch, getState) => {
     try {
+      dispatch({ type: actionTypes.GET_BOOK_START })
       if (id && id === "ALL") {
+        
         let res = await getBookService(id);
         if (res && res.errCode === 0) {
           dispatch(getBookSuccess(res.book.reverse()));

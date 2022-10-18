@@ -8,14 +8,16 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
+import GroupIcon from '@mui/icons-material/Group';
 import ShoppingBag from '@mui/icons-material/ShoppingBag';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
+import { Redirect, useHistory } from "react-router";
 
 const AccountMenu = (props) => {
+    const history= useHistory();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const open = Boolean(anchorEl);
@@ -95,13 +97,13 @@ const AccountMenu = (props) => {
                     <ListItemIcon>
                         <ShoppingBag fontSize="small" />
                     </ListItemIcon>
-                    Your cart
+                    Your shopping cart
                 </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={() => (history.push("/system/manager/manage-book"))}>
                     <ListItemIcon>
-                        <PersonAdd fontSize="small" />
+                        <GroupIcon fontSize="small" />
                     </ListItemIcon>
-                    Add another account
+                    Go to Manager
                 </MenuItem>
                 <MenuItem>
                     <ListItemIcon>

@@ -14,14 +14,20 @@ const initialState = {
   catalogByName: [],
   typeByName: [],
 
+  loading: false,
 };
 
 const managerReducer = (state = initialState, action) => {
   switch (action.type) {
     //get book
+    case actionTypes.GET_BOOK_START:
+      state.loading = true;
+      return {
+        ...state,
+      };
     case actionTypes.GET_BOOK_SUCCESS:
       state.book = action.data;
-      
+      state.loading = false;
       return {
         ...state,
       };

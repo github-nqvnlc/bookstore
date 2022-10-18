@@ -37,6 +37,7 @@ class DetailBook extends Component {
       author: {},
       publisher: {},
       category: {},
+      catalog: {},
       type: {},
       bookEdit: {},
       //format number
@@ -76,6 +77,7 @@ class DetailBook extends Component {
           author: this.props.book.authorData,
           publisher: this.props.book.publisherData,
           category: this.props.book.categoryData,
+          catalog: this.props.book.catalogData,
           type: this.props.book.typeData,
           previewUrlImage: image64,
         })
@@ -117,7 +119,7 @@ class DetailBook extends Component {
 
 
 
-    let { book, author, publisher, category, type, previewUrlImage, isLoading } = this.state
+    let { book, author, publisher, category, catalog, type, previewUrlImage, isLoading } = this.state
     let descriptionHTML = new MarkdownIt().render(`${book.description}`)
 
     return (
@@ -176,6 +178,10 @@ class DetailBook extends Component {
                   <div className="detail_item_group">
                     <p className="text_span">Type book:</p>
                     <p className="type">{type.name}</p>
+                  </div>
+                  <div className="detail_item_group">
+                    <p className="text_span">Catalog:</p>
+                    <p className="type">{catalog.name}</p>
                   </div>
                   <div className="detail_item_group">
                     <p className="text_span">Category:</p>

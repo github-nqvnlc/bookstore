@@ -128,6 +128,11 @@ class Login extends Component {
                     onClick={(e) => {
                       this.handleLogin(e);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        this.handleLogin(e);
+                      }
+                    }}
                   >
                     Login
                   </button>

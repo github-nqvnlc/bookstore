@@ -18,6 +18,7 @@ const LayoutSidebar = (props) => {
     React.useEffect(() => {
         props.getCategory();
         props.getCatalog();
+        props.getType();
     }, [])
     const handleClick = () => {
         setOpen(!open);
@@ -28,23 +29,26 @@ const LayoutSidebar = (props) => {
         <React.Fragment>
 
             <List
-                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                sx={{ padding: "1em", borderRadius: "10px", width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
                 component="nav"
                 aria-labelledby="nested-list-subheader"
                 subheader={
                     <ListSubheader component="div" id="nested-list-subheader">
-                        <Typography variant="h5" gutterBottom>
-                            Category
+                        <Typography
+                            sx={{
+                                fontWeight: 600,
+                            }}
+                            variant="h5" gutterBottom>
+                            All Category
                         </Typography>
                     </ListSubheader>
                 }
             >
                 {props.category?.map((itemCategory, indexCategory) => {
                     let toggler = "toggler" + indexCategory;
-                    console.log(toggler)
                     return (
                         <div>
-                            <ListItemButton id={toggler} onClick={handleClick}>
+                            <ListItemButton id={toggler} color="success" onClick={handleClick}>
                                 <ListItemText primary={itemCategory.name} />
                                 {/* {open ? <ExpandLess /> : <ExpandMore />} */}
                             </ListItemButton>
@@ -63,7 +67,7 @@ const LayoutSidebar = (props) => {
                                                     {props.type?.map((itemType, indexType) => {
                                                         if (itemType.catalogId === itemCatalog.id) {
                                                             return (
-                                                                <List component="div" disablePadding>
+                                                                <List key={indexType} component="div" disablePadding>
                                                                     <ListItemButton sx={{ pl: 6 }}>
                                                                         <FiberManualRecordSharpIcon sx={{ fontSize: 7, marginRight: "0.7em" }} />
                                                                         <ListItemText primary={itemType.name} />

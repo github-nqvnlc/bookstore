@@ -26,9 +26,8 @@ let handleUserLogin = async (req, res) => {
           where: { email: email },
           raw: true,
         });
-        console.log(user.email);
         if (user) {
-          let check = await bcrypt.compareSync(password, user.password);
+          let check = await bcrypt.compareSync(password, user?.password);
           if (check) {
             let token = await generateToken(user?.id,user?.email, user?.roleId, user?.lastName)
             res.status(200).json({
