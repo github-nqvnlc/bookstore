@@ -4,7 +4,8 @@ export const path = {
   LOGIN: "/login",
   REGISTER: "/register",
   LOG_OUT: "/logout",
-  SYSTEM: "/system",
+  SYSTEM: "/system", 
+  BOOK_DETAIL: "/book/:id",
 
   //SYSTEM
   DASHBOARD: "/system/manager/dashboard",
@@ -21,17 +22,3 @@ export const path = {
 };
 
 
-export const manageActions = {
-  ADD: "ADD",
-  EDIT: "EDIT",
-  DELETE: "DELETE",
-};
-
-export const dateFormat = {
-  SEND_TO_SERVER: "DD/MM/YYYY",
-};
-
-export const YesNoObj = {
-  YES: "Y",
-  NO: "N",
-};

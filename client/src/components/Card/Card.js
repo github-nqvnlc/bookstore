@@ -10,8 +10,10 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CurrencyFormat from 'react-currency-format';
+import { useHistory } from 'react-router';
 
 export default function ImgMediaCard(props) {
+  const history = useHistory();
   const image64 = new Buffer(props.book.image, "base64").toString("binary");
   const [love, setLove] = React.useState(false);
 
@@ -20,16 +22,24 @@ export default function ImgMediaCard(props) {
   }
 
   return (
-    <Box sx={{width: "100%", height: "100%", padding: "1em"}}>
+    <Box sx={{ width: "100%", height: "100%", padding: "1em" }}>
       <Badge invisible={props.book.discount !== 0 ? false : true} badgeContent={props.book.discount !== 0 && Math.floor(props.book.discount * 100) + "%"} color="error">
         <Card sx={{ maxWidth: 200 }}>
           <CardMedia
+            sx={{ cursor: "pointer" }}
             component="img"
             alt={props.book.name}
             height="200"
             image={image64}
+            onClick={(e) => {
+              history.push(`/book/${props.book.id}`)
+            }}
           />
-          <CardContent sx={{ padding: "0.5em" }}>
+          <CardContent
+            onClick={(e) => {
+              history.push(`/book/${props.book.id}`)
+            }}
+            sx={{ padding: "0.5em", cursor: "pointer" }}>
             <Typography
               sx={{
                 overflow: "hidden",
@@ -42,7 +52,7 @@ export default function ImgMediaCard(props) {
             <Stack
               sx={{ width: "100%" }}
               direction={props.book.price <= 1000000 ? "row" : "column"}
-              justifyContent={"center"}
+              justifyContent={"flex-end"}
               alignItems={props.book.price <= 1000000 ? "center" : "flex-end"}
               spacing={1}
             >
@@ -127,6 +137,7 @@ export default function ImgMediaCard(props) {
                   sx={{ margin: 0, }}
                   color="success"
                   variant="outlined"
+                  onClick={() => props.addToCart()}
                   aria-label="Add to shopping cart">
                   <AddShoppingCartIcon />
                 </IconButton>

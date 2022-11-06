@@ -17,7 +17,7 @@ import * as actions from "../../store/actions";
 import { Redirect, useHistory } from "react-router";
 
 const AccountMenu = (props) => {
-    const history= useHistory();
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const open = Boolean(anchorEl);
@@ -91,7 +91,7 @@ const AccountMenu = (props) => {
                 <MenuItem>
                     <Avatar src={props.image && props.image !== null ? props.image : null} /> {props.userInfo.lastName}, Profile
                 </MenuItem>
-                
+
                 <Divider />
                 <MenuItem>
                     <ListItemIcon>
@@ -134,7 +134,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-    processLogout: () => dispatch(actions.processLogout()),
+        processLogout: () => dispatch(actions.processLogout()),
         getUserImage: (id) => dispatch(actions.getUserImage(id)),
 
     };

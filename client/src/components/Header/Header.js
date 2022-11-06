@@ -22,6 +22,9 @@ import Button from '@mui/material/Button';
 import { Container } from '@mui/material';
 import { useHistory } from "react-router-dom";
 import ToggleMenu from '../ToggleMenu/ToggleMenu';
+import Cart from '../Cart/Cart';
+
+import bnHeader from "../../assets/Banner/bnHeader.jpg";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -67,6 +70,7 @@ const Header = (props) => {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [openCart, setOpenCart] = React.useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -132,18 +136,19 @@ const Header = (props) => {
         },
       }}
     >
-      <MenuItem>
+      <MenuItem onClick={() => { setOpenCart(!openCart); setMobileMoreAnchorEl(null); }}>
         <IconButton sx={{
           marginRight: "0.2em",
         }}
+          
           size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={props.numberCart} color="error">
             <ShoppingCartOutlinedIcon />
           </Badge>
         </IconButton>
         Shopping Cart
       </MenuItem>
-      <MenuItem>
+      {/* <MenuItem>
         <IconButton
           sx={{
             marginRight: "0.2em",
@@ -157,7 +162,7 @@ const Header = (props) => {
           </Badge>
         </IconButton>
         Notifications
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem>
         <AccountAvatar />
         {props.userInfo.lastName}
@@ -167,7 +172,14 @@ const Header = (props) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
+      
+     
       <AppBar position="fixed" color="success">
+        <Box sx={{ width: "100vw", bgcolor: "#fdf2d6" }} >
+          <Container>
+            <img style={{ width: "100%" }} src={bnHeader} />
+          </Container>
+        </Box>
         <Container maxWidth="xl">
           <Toolbar>
             <ToggleMenu />
@@ -175,7 +187,8 @@ const Header = (props) => {
               variant="h6"
               noWrap
               component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
+              sx={{ display: { xs: 'none', sm: 'block' }, cursor: "pointer" }}
+              onClick={() => {history.push("/");}}
             >
               BookStore
             </Typography>
@@ -189,13 +202,15 @@ const Header = (props) => {
               />
             </Search>
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="error">
+            <Box sx={{ display: { xs: 'none', md: 'flex' },  }}>
+              <IconButton onClick={() => { setOpenCart(!openCart)}} sx={{ mr: "1em" }} size="large"  color="inherit">
+                <Badge badgeContent={props.numberCart} color="error">
                   <ShoppingCartOutlinedIcon />
                 </Badge>
               </IconButton>
-              <IconButton
+              <Cart isOpen={openCart} isClose={()=>{setOpenCart(!openCart)}}  />
+
+              {/* <IconButton
                 size="large"
                 aria-label="show 17 new notifications"
                 color="inherit"
@@ -203,7 +218,7 @@ const Header = (props) => {
                 <Badge badgeContent={17} color="error">
                   <NotificationsIcon />
                 </Badge>
-              </IconButton>
+              </IconButton> */}
               {props.isLoggedIn ? (
                 <AccountAvatar />
 
@@ -237,6 +252,8 @@ const mapStateToProps = (state) => {
     isLoggedIn: state.user.isLoggedIn,
     userInfo: state.user.userInfo,
     image: state.user.image,
+
+    numberCart: state.cart.numberCart,
   };
 };
 

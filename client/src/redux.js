@@ -9,6 +9,7 @@ import { persistStore } from 'redux-persist';
 
 import createRootReducer from './store/reducers/rootReducer';
 import actionTypes from './store/actions/actionTypes';
+import cartReducer from "./store/reducers/cartReducer";
 
 const environment = process.env.NODE_ENV || "development";
 let isDevelopment = environment === "development";

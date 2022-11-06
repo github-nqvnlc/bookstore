@@ -30,6 +30,7 @@
     "@babel/node": "^7.18.9",
     "@babel/preset-env": "^7.18.9",
     "nodemon": "^2.0.19",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "ws": "3.3.2"
   }
 }

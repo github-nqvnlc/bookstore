@@ -97,7 +97,7 @@ const ToggleMenu = (props) => {
                 <Box sx={{ borderRadius: "10px", minWidth: "400px" }}>
                     <Stack direction="row">
                         <Box sx={{
-                            minWidth: "200px",
+                            minWidth: "250px",
                         }}>
                             <Typography
                                 sx={{ padding: "1em", }} variant="h6" gutterBottom>
@@ -211,10 +211,11 @@ const ToggleMenu = (props) => {
                 onClose={handleClose}
                 sx={{
                     display: { md: "none", xs: "block" },
-                    width: "90vw",
+                    minWidth: "300px",
                     flexShrink: 0,
                     '& .MuiDrawer-paper': {
-                        width: "100vw",
+                        width: "420px",
+                        minWidth: "300px",
                         boxSizing: 'border-box',
                     },
                 }}>

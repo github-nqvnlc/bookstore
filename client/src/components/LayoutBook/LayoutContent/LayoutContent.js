@@ -41,7 +41,7 @@ class LayoutContent extends Component {
                     {book?.map((item, index) => {
                         return (
                             <Grid >
-                                <ImgMediaCard loading={this.state.loading} book={item} key={index} />
+                                <ImgMediaCard addToCart={() => { this.props.AddCart(item) }} loading={this.state.loading} book={item} key={index} />
                             </Grid>
                         )
                     })}
@@ -62,6 +62,7 @@ const mapStateToProps = (state) => {
         typeByName: state.manager.typeByName,
 
         loading: state.manager.loading,
+
     };
 };
 
@@ -71,6 +72,8 @@ const mapDispatchToProps = (dispatch) => {
         getCategory: () => dispatch(actions.getCategory("ALL")),
         getCatalog: () => dispatch(actions.getCatalog("ALL")),
         getType: () => dispatch(actions.getType("ALL")),
+
+        AddCart: (book) => dispatch(actions.AddCart(book)),
 
     };
 };
