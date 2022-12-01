@@ -10,9 +10,18 @@ import CounterInput from "react-counter-input";
 import { NumericFormat } from 'react-number-format';
 import FlatList from 'flatlist-react';
 import CartItem from './CartItem';
+import Order from './Order';
 
 const Cart = (props) => {
-  const [deliveryOption, setDeliveryOption] = React.useState();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   let TotalCart = 0;
   let TransportFee = 10000;
@@ -33,6 +42,7 @@ const Cart = (props) => {
         sx={{
           minWidth: "300px",
           width: { sm: "500px", xs: "100vw" },
+          overflowY: "hidden",
         }}
       >
         <Stack
@@ -55,7 +65,10 @@ const Cart = (props) => {
             width: "100%",
           }}
         >
-          <List sx={{ height: "50vh" }}>
+          <List sx={{
+            height: "70vh",
+            overflowY: "scroll",
+          }}>
             {props.Carts?.map((item, index) => {
               let priceDiscounted = Math.round((item.price - item.price * item.discount) / 1000) * 1000;
               let priceMain = Math.round(item.price)
@@ -77,41 +90,13 @@ const Cart = (props) => {
         <Box sx={{
           width: "100%",
           p: { sm: "1em", xs: "0.5em" },
+          bgcolor: "#fff",
           position: "absolute",
           bottom: 0,
           right: 0,
         }}>
           <Divider sx={{ mb: "1em" }} />
-          <Box sx={{ width: "100%", mb: "1em", }}>
-            <Stack sx={{ width: "100%", }} direction="row" justifyContent="space-between" spacing={1} alignItems={{ sm: "flex-end", xs: "flex-end" }}>
-              <Typography
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  
-                }}
-              >
-                Delivery options:
-              </Typography>
-              <FormControl disabled={props.numberCart > 0 ? false : true} size="small" color='success' sx={{ m: 1, width: "200px", heigh: "20px" }}>
-                <InputLabel sx={{fontSize: "14px"}} id="demo-simple-select-standard-label">Options</InputLabel>
-                <Select
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  value={props.numberCart > 0 ? 0 : deliveryOption}
-                  onChange={(event) => { setDeliveryOption(event.target.value) }}
-                  label="Options"
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-            </Stack>
-          </Box>
-
-
-          <Stack sx={{ width: "100%", }} direction="row" justifyContent="space-between"  spacing={1} alignItems={{ sm: "center", xs: "flex-end" }}>
+          <Stack sx={{ width: "100%", }} direction="row" justifyContent="space-between" spacing={1} alignItems={{ sm: "center", xs: "flex-end" }}>
             <Typography
               sx={{
                 fontSize: "14px",
@@ -121,7 +106,7 @@ const Cart = (props) => {
               Transport fee:
             </Typography>
             <NumericFormat
-              value={props.numberCart > 0 ? TransportFee : 0 }
+              value={props.numberCart > 0 ? TransportFee : 0}
               thousandsGroupStyle="thousands"
               thousandSeparator=","
               suffix={" VND"}
@@ -139,7 +124,7 @@ const Cart = (props) => {
               )}
             />
           </Stack>
-          <Stack sx={{ width: "100%", }} direction="row" justifyContent="space-between"  spacing={1} alignItems={{ sm: "center", xs: "flex-end" }}>
+          <Stack sx={{ width: "100%", }} direction="row" justifyContent="space-between" spacing={1} alignItems={{ sm: "center", xs: "flex-end" }}>
             <Typography
               sx={{
                 fontSize: "14px",
@@ -149,7 +134,7 @@ const Cart = (props) => {
               VAT:
             </Typography>
             <NumericFormat
-              value={props.numberCart > 0 ? VAT : 0 }
+              value={props.numberCart > 0 ? VAT : 0}
               thousandsGroupStyle="thousands"
               thousandSeparator=","
               suffix={" VND"}
@@ -207,16 +192,19 @@ const Cart = (props) => {
             alignItem="flex-end"
           >
             <Button
-              sx={{
-                width: "200px"
-              }}
               color="success" variant="contained"
               disabled={props.numberCart > 0 ? false : true}
+              onClick={handleClickOpen}
             >
-              Payment
+              Next payment Information
             </Button>
           </Stack>
-
+          <Order
+            cart={props.Carts}
+            open={open}
+            onClose={handleClose}
+            total={TotalCart}
+          />
         </Box>
       </Box>
     </Drawer>

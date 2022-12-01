@@ -11,12 +11,21 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CurrencyFormat from 'react-currency-format';
 import { useHistory } from 'react-router';
+import Order from '../Cart/Order';
 
 export default function ImgMediaCard(props) {
   const history = useHistory();
   const image64 = new Buffer(props.book.image, "base64").toString("binary");
   const [love, setLove] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleLikeBook = () => {
     setLove(!love);
   }
@@ -147,12 +156,22 @@ export default function ImgMediaCard(props) {
                   size="small"
                   variant="contained"
                   color='success'
+                  onClick={handleClickOpen}
                 >Buy now</Button>
               </Tooltip>
             </Stack>
           </CardActions>
         </Card>
       </Badge>
+      <Order
+        // cart={props.book}
+        open={open}
+        onClose={handleClose}
+        total={Math.round(
+          (props.book.price - props.book.price * props.book.discount) / 1000
+        ) * 1000}
+        book={props.book}
+      />
     </Box>
   );
 }

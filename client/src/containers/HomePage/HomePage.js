@@ -9,6 +9,9 @@ import { Route, Switch } from "react-router";
 import { path } from "../../utils/constant";
 import BookDetail from "../../components/BookDetail/BookDetail";
 import { Box } from "@mui/material";
+import LayoutSection from "../../components/LayoutBook/LayoutSection";
+import PaymentReturn from "../../components/Cart/PaymentReturn";
+import Profile from "../../components/Profile/Profile";
 
 class HomePage extends Component {
     render() {
@@ -24,6 +27,15 @@ class HomePage extends Component {
                         </Route>
                         <Route path={path.BOOK_DETAIL}>
                             <BookDetail />
+                        </Route>
+                        <Route path={path.SECTION_BOOK}>
+                            <LayoutSection />
+                        </Route>
+                        <Route  path={path.PAYMENT_RETURN}>
+                            <PaymentReturn />
+                        </Route>
+                        <Route path={path.PROFILE_USER}>
+                            <Profile />
                         </Route>
                     </Switch>
                 </Box>

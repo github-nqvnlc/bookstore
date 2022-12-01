@@ -2,7 +2,7 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     role: [],
-    account:[]
+    account: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -19,9 +19,8 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...copyState,
             }
-        
+
         case actionTypes.FETCH_ROLE_FAILED:
-            console.log('failed', action);
             return {
                 ...state,
 
@@ -32,7 +31,7 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
-        
+
         case actionTypes.GET_ALL_ACCOUNT_FAILED:
             state.account = []
             return {

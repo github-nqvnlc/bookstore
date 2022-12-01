@@ -9,17 +9,28 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Order.belongsTo(models.Book, { foreignKey: "bookId", as: "bookData" });
         }
     }
     Order.init(
         {
+            orderCode: DataTypes.STRING,
             createOn: DataTypes.DATE,
             createBy: DataTypes.STRING,
             totalPrice: DataTypes.FLOAT,
             shippingAddress: DataTypes.STRING,
             shippingPhone: DataTypes.STRING,
-            bookId: DataTypes.INTEGER,
+            deliveryOption: DataTypes.STRING,
+            status: DataTypes.STRING,
+            email: DataTypes.STRING,
+            book: {
+                type: DataTypes.TEXT('long'),
+                get: function () {
+                    return JSON.parse(this.getDataValue("book"));
+                },
+                set: function (value) {
+                    return this.setDataValue("book", JSON.stringify(value));
+                }
+            },
         },
         {
             sequelize,

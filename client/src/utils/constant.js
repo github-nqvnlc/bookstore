@@ -6,6 +6,8 @@ export const path = {
   LOG_OUT: "/logout",
   SYSTEM: "/system", 
   BOOK_DETAIL: "/book/:id",
+  SECTION_BOOK: "/:type/:name/:id",
+  PAYMENT_RETURN: "/payment-return/:code",
 
   //SYSTEM
   DASHBOARD: "/system/manager/dashboard",
@@ -19,6 +21,10 @@ export const path = {
   MANAGER_ORDER: "/system/manager/manage-order",
 
   DETAIL_BOOK: "/system/manager/book/:id",
+
+
+  //Profile
+  PROFILE_USER: "/profile/:userId"
 };
 
 

@@ -950,3 +950,16 @@ export const getTypeByNameFailed = (data) => ({
 
 // get by id
 
+export const getCategoryById = (id) => {
+  return async (dispatch, getState) => {
+    let res = await getCategoryService(id);
+    if (res && res.errCode === 0) {
+      dispatch(getCategoryByIdSuccess(res.category))
+    }
+  }
+}
+
+export const getCategoryByIdSuccess = (data) => ({
+  type: actionTypes.GET_CATEGORY_BY_ID,
+  data: data,
+});

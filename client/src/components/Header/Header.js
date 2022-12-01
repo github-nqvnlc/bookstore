@@ -140,7 +140,7 @@ const Header = (props) => {
         <IconButton sx={{
           marginRight: "0.2em",
         }}
-          
+
           size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={props.numberCart} color="error">
             <ShoppingCartOutlinedIcon />
@@ -148,21 +148,6 @@ const Header = (props) => {
         </IconButton>
         Shopping Cart
       </MenuItem>
-      {/* <MenuItem>
-        <IconButton
-          sx={{
-            marginRight: "0.2em",
-          }}
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        Notifications
-      </MenuItem> */}
       <MenuItem>
         <AccountAvatar />
         {props.userInfo.lastName}
@@ -172,8 +157,8 @@ const Header = (props) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      
-     
+
+
       <AppBar position="fixed" color="success">
         <Box sx={{ width: "100vw", bgcolor: "#fdf2d6" }} >
           <Container>
@@ -188,7 +173,7 @@ const Header = (props) => {
               noWrap
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' }, cursor: "pointer" }}
-              onClick={() => {history.push("/");}}
+              onClick={() => { history.push("/"); }}
             >
               BookStore
             </Typography>
@@ -202,26 +187,16 @@ const Header = (props) => {
               />
             </Search>
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' },  }}>
-              <IconButton onClick={() => { setOpenCart(!openCart)}} sx={{ mr: "1em" }} size="large"  color="inherit">
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, }}>
+              <IconButton onClick={() => { setOpenCart(!openCart) }} sx={{ mr: "1em" }} size="large" color="inherit">
                 <Badge badgeContent={props.numberCart} color="error">
                   <ShoppingCartOutlinedIcon />
                 </Badge>
               </IconButton>
-              <Cart isOpen={openCart} isClose={()=>{setOpenCart(!openCart)}}  />
+              <Cart isOpen={openCart} isClose={() => { setOpenCart(!openCart) }} />
 
-              {/* <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton> */}
               {props.isLoggedIn ? (
                 <AccountAvatar />
-
               ) : (
                 <Button color="inherit" onClick={handleLogin}>Login</Button>
               )}
@@ -235,7 +210,11 @@ const Header = (props) => {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <Badge badgeContent={props.numberCart} color="error">
+
+                  <MoreIcon />
+                </Badge>
+
               </IconButton>
             </Box>
           </Toolbar>

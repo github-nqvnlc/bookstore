@@ -10,7 +10,7 @@ const CartItem = (props) => {
 
     const image64 = new Buffer(props.book.image, "base64").toString("binary")
 
-
+    console.log("checkprops cartitem", props.book)
     return (
         <ListItem sx={{ borderBottom: "1px solid", mt: "0.5em", p: {xs: "0.5em"} }} alignItems="center">
             <IconButton onClick={() => props.deleteCart()} size="large" color="error">
@@ -96,7 +96,7 @@ const CartItem = (props) => {
                     <IconButton sx={{width: "0.5em", height: "0.5em"}} color="success" onClick={() => { props.decrease() }}>
                         <RemoveIcon />
                     </IconButton>
-                    <Button sx={{ width: "0.5em", height: "0.5em" }}>{props.book.quantity}</Button>
+                    <Button sx={{ width: "0.5em", height: "0.5em" }}>{props.quantity ? props.quantity : props.book.quantity}</Button>
                     <IconButton sx={{ width: "0.5em", height: "0.5em" }} color="success" onClick={() => { props.increase()}}>
                         <AddIcon />
                     </IconButton>

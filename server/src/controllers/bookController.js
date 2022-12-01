@@ -1,4 +1,4 @@
-import bookService from "../services/bookService";
+ import bookService from "../services/bookService";
 
 //Book
 let createNewBook = async (req, res) => {
@@ -23,7 +23,7 @@ let editBook = async (req, res) => {
 let deleteBook = async (req, res) => {
   if (!req.body.id) {
     return res.status(200).json({
-      errCode: 0,
+      errCode: 1,
       errMessage: "Missing required parameters!",
     });
   }

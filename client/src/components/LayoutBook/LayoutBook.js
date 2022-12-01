@@ -1,4 +1,5 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
+import { Stack } from '@mui/system';
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import "./LayoutBook.scss";
@@ -14,21 +15,7 @@ export default class LayoutBook extends Component {
                     mb: "1em",
                 }}
                 maxWidth="xl">
-                <Box
-                    sx={{
-                        width: "100%",
-                        pl: "2em",
-                        pr: "2em",
-                        bgcolor: "#fff",
-                        borderRadius: "10px",
-                    }}
-                >
-                    <Typography
-                        sx={{ padding: "1em", }} variant="h6" gutterBottom>
-                        All Book
-                    </Typography>
-                    <LayoutContent />
-                </Box>
+                <LayoutContent categoryId="all" nameContent="All book" />
 
             </Container>
         )

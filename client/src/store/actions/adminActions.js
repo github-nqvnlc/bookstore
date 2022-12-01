@@ -53,7 +53,7 @@ export const createNewAccount = (data) => {
                     progress: undefined,
                 })
                 dispatch(createAccountSuccess())
-                dispatch(getAllAccount())
+                dispatch(getAllAccount('ALL'))
             } else {
                 toast.error(`Create account error! ${res.errMessage}`, {
                     position: "top-right",
@@ -77,17 +77,26 @@ export const createAccountFailed = () => ({
 
 
 //Get all account
-export const getAllAccount = () => {
+export const getAllAccount = (id) => {
     return async (dispatch, getState) => {
         let token = getState().user.token
         try {
-            let res = await getAllAccountSevice('ALL', token)
-            if (res && res.errCode === 0) {
-
-                dispatch(getAllAccountSuccess(res.users.reverse()))
+            if (id === 'ALL') {
+                let res = await getAllAccountSevice(id, token)
+                if (res && res.errCode === 0) {
+                    dispatch(getAllAccountSuccess(res.users.reverse()))
+                } else {
+                    dispatch(getAllAccountFailed());
+                }
             } else {
-                dispatch(getAllAccountFailed());
+                let res = await getAllAccountSevice(id, token)
+                if (res && res.errCode === 0) {
+                    dispatch(getAllAccountSuccess(res.users))
+                } else {
+                    dispatch(getAllAccountFailed());
+                }
             }
+            
         } catch (e) {
             dispatch(getAllAccountFailed());
         }
@@ -115,7 +124,7 @@ export const deleteAccount = (id) => {
                     autoClose: 3000,
                 })
                 dispatch(deleteAccountSuccess())
-                dispatch(getAllAccount())
+                dispatch(getAllAccount('ALL'))
             } else {
                 toast.error("Delete account error!", {
                     position: "top-right",
@@ -152,7 +161,7 @@ export const editAccount = (account) => {
                     autoClose: 3000,
                 })
                 dispatch(editAccountSuccess())
-                dispatch(getAllAccount())
+                dispatch(getAllAccount('ALL'))
             } else {
                 toast.error(`Edit account error! ${res.errMessage}`, {
                     position: "top-right",

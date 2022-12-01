@@ -9,6 +9,10 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
+            orderCode: {
+                allowNull: false,
+                type: Sequelize.STRING,
+            },
             createOn: {
                 allowNull: false,
                 type: Sequelize.DATE,
@@ -25,8 +29,17 @@ module.exports = {
             shippingPhone: {
                 type: Sequelize.STRING,
             },
-            bookId: {
-                type: Sequelize.INTEGER,
+            book: {
+                type: Sequelize.TEXT('long'),
+            },
+            deliveryOption: {
+                type: Sequelize.STRING,
+            },
+            status: {
+                type: Sequelize.STRING,
+            },
+            email: {
+                type: Sequelize.STRING,
             },
 
             createdAt: {

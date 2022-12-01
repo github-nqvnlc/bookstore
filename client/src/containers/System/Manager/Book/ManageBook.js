@@ -92,18 +92,7 @@ class ManageBook extends Component {
       });
     }
 
-    if (prevState.filterAuthor !== this.state.filterAuthor) {
-      this.render();
-    }
-    if (prevState.filterPublisher !== this.state.filterPublisher) {
-      this.render();
-    }
-    if (prevState.filterCategory !== this.state.filterCategory) {
-      this.render();
-    }
-    if (prevState.filterType !== this.state.filterType) {
-      this.render();
-    }
+  
   }
 
   toggleModal = () => {

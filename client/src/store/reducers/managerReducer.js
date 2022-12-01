@@ -14,6 +14,8 @@ const initialState = {
   catalogByName: [],
   typeByName: [],
 
+  categoryById: [],
+
   loading: false,
 };
 
@@ -185,6 +187,12 @@ const managerReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    
+    case actionTypes.GET_CATEGORY_BY_ID:
+      state.categoryById = action.data;
+      return {
+        ...state
+      }
     
     
     default:

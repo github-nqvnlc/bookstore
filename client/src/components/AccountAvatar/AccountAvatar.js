@@ -88,22 +88,24 @@ const AccountMenu = (props) => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem>
+                <MenuItem onClick={() => (history.push(`/profile/${props.userInfo.userId}`))}>
                     <Avatar src={props.image && props.image !== null ? props.image : null} /> {props.userInfo.lastName}, Profile
                 </MenuItem>
 
                 <Divider />
-                <MenuItem>
+                <MenuItem >
                     <ListItemIcon>
                         <ShoppingBag fontSize="small" />
                     </ListItemIcon>
                     Your shopping cart
                 </MenuItem>
-                <MenuItem onClick={() => (history.push("/system/manager/manage-book"))}>
+                <MenuItem sx={
+                    props.userInfo.roleId === "3" ? { display: "none" } : { display: "block" }
+                } onClick={() => (props.userInfo.roleId === "1"? history.push("/system/admin/manage-account") : history.push("/system/manager/manage-book"))}>
                     <ListItemIcon>
                         <GroupIcon fontSize="small" />
                     </ListItemIcon>
-                    Go to Manager
+                    {props.userInfo.roleId === "1" ? "Go to Admin" : "Go to Manager"}
                 </MenuItem>
                 <MenuItem>
                     <ListItemIcon>

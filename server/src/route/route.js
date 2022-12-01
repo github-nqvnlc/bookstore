@@ -2,6 +2,8 @@ import express from "express";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
 import bookController from "../controllers/bookController";
+import orderController from "../controllers/orderController";
+import paymentController from "../controllers/paymentController";
 // import { isAuth, isAdmin, isCustomer, isManager } from "../middleware/authorization";
 
 const router = express.Router();
@@ -70,6 +72,15 @@ const initWebRoutes = (app) => {
   router.get("/api/get-type-by-name", bookController.getTypeByName);
 
 
+  //Handle Order 
+  router.post("/api/create-order", orderController.createOrder);
+  router.get("/api/get-order", orderController.getOrder);
+  router.put("/api/edit-order", orderController.editOrder);
+  router.delete("/api/delete-order", orderController.deleteOrder);
+
+  //payment
+  router.post("/create_payment_url", paymentController.create_payment_url)
+  router.get("/vnp_return", paymentController.get_payment_return)
 
   return app.use("/", router);
 };

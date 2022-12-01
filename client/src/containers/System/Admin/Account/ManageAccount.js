@@ -192,7 +192,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getRoleStart: () => dispatch(actions.fetchRoleStart()),
-        getAllAccount: () => dispatch(actions.getAllAccount()),
+        getAllAccount: () => dispatch(actions.getAllAccount('ALL')),
         deleteAccount: (id) => dispatch(actions.deleteAccount(id)),
 
     };

@@ -354,7 +354,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editAccountRedux: (data) => dispatch(actions.editAccount(data)),
-    getAllAccount: () => dispatch(actions.getAllAccount()),
+    getAllAccount: () => dispatch(actions.getAllAccount('ALL')),
   };
 };
 

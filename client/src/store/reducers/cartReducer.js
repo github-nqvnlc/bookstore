@@ -2,31 +2,24 @@ import { combineReducers } from 'redux';
 import actionTypes from "../actions/actionTypes";
 
 const initialState = {
-    bookInCart: [],
 
     numberCart: 0,
     Carts: [],
+
+    urlPayment: {},
+
+    order: [],
 }
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.ADD_TO_CART_SUCCESS:
-            let check = false;
-            state.bookInCart?.map((item, index) => {
-                if (item === action.data) { check = true; }
-            })
-            if (check === false) {
-                state.bookInCart = [...state.bookInCart, action.data]
-            }
-            return {
-                ...state,
-            }
-        case actionTypes.REMOVE_TO_CART:
-            state.bookInCart = state.bookInCart?.filter(item => item !== action.data)
-            return {
-                ...state,
-            }
 
+        case actionTypes.GET_ORDER:
+            return {
+                ...state,
+                order: action.data
+            }
+    
        //=================
         case actionTypes.GET_NUMBER_CART:
             return {
@@ -93,7 +86,13 @@ const cartReducer = (state = initialState, action) => {
                     return item.id !== action.payload.id
                 })
             }
-
+        
+        case actionTypes.CREATE_PAYMENT:
+            state.urlPayment = action.data
+            console.log("state.urlPayment", state.urlPayment)
+            return {
+                ...state,
+            }
 
         default:
             return state;

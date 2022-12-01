@@ -2,7 +2,6 @@ import axios from "../axios";
 
 //book
 const createNewBookSevice = (data) => {
-  console.log(data);
   return axios.post("/api/create-new-book", data);
 };
 
@@ -43,7 +42,6 @@ const editAuthorService = (author) => {
 
 //category
 const createCategorySevice = (data) => {
-  console.log(data);
   return axios.post("/api/create-category", data);
 };
 
@@ -61,7 +59,6 @@ const editCategoryService = (category) => {
 
 //catalog
 const createCatalogSevice = (data) => {
-  console.log(data);
   return axios.post("/api/create-catalog", data);
 };
 
@@ -80,7 +77,6 @@ const editCatalogService = (catalog) => {
 
 //publisher
 const createPublisherSevice = (data) => {
-  console.log(data);
   return axios.post("/api/create-publisher", data);
 };
 
@@ -99,7 +95,6 @@ const editPublisherService = (publisher) => {
 
 //type
 const createTypeSevice = (data) => {
-  console.log(data);
   return axios.post("/api/create-type", data);
 };
 

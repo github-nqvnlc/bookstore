@@ -97,11 +97,12 @@ let getAllUsers = (userId) => {
         users = await db.User.findOne({
           where: { id: userId },
           attributes: {
-            exclude: ["password", "image", "createdAt", "updatedAt"],
+            exclude: ["password", "createdAt", "updatedAt"],
           },
           included: [
             {
               model: db.Role,
+              as: "roleData"
             }
           ],
           raw: true,

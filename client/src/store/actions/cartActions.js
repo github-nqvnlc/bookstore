@@ -1,6 +1,9 @@
+import { toast } from 'react-toastify';
+import { createOrderService, deleteOrderService, editOrderService, getOrderService } from '../../services/orderService';
+import { createPaymentService, getPaymentReturnService } from '../../services/paymentService';
 import actionTypes from './actionTypes';
 
-export const addToCart = (book) =>({
+export const addToCart = (book) => ({
     type: actionTypes.ADD_TO_CART_SUCCESS,
     data: book
 })
@@ -50,3 +53,101 @@ export function DecreaseQuantity(payload) {
         payload
     }
 }
+
+export const createOrder = (data) => {
+    return async (dispatch, getState) => {
+        let res = await createOrderService(data)
+        if (res && res.errCode === 0) {
+            dispatch(createOrderSuccess(res))
+            toast.success(`Order successful!`, {
+                position: "bottom-right",
+                autoClose: 3000,
+            });
+        }
+    }
+}
+
+export const createOrderSuccess = (data) => ({
+    type: actionTypes.CREATE_ORDER,
+    data: data
+})
+
+
+export const getOrder = () => {
+    return async (dispatch, getState) => {
+        let res = await getOrderService();
+        console.log(res.order)
+        if (res && res.errCode === 0) {
+            dispatch(getOrderSuccess(res.order))
+        }
+    }
+}
+
+export const getOrderSuccess = (data) => ({
+    type: actionTypes.GET_ORDER,
+    data: data
+})
+
+export const editOrder = (data) => {
+    return async (dispatch, getState) => {
+        let res = await editOrderService(data)
+        if (res && res.errCode === 0) {
+            
+            return ({
+                type: actionTypes.EDIT_ORDER,
+                data: data,
+            })
+        } 
+
+    }
+}
+
+export const deleteOrder = (orderCode) => {
+    return async (dispatch, getState) => { 
+        try {
+            let res = await deleteOrderService(orderCode);
+            if (res && res.errCode === 0) {
+                toast.success(`Delete order successful!`, {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                });
+                dispatch(getOrder())
+                return ({
+                    type: actionTypes.DELETE_ORDER,
+                })
+            } else {
+                toast.error("Delete order failed!", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                });
+            }
+        } catch (e) {
+            toast.error(e, {
+                position: "bottom-right",
+                autoClose: 3000,
+            });
+        }
+    }
+}
+
+// Payment
+export const createPayment = (data) => {
+    return async (dispatch, getState) => {
+        let res = await createPaymentService(data)
+        if (res) {
+            dispatch(createPaymentSuccess(res))
+        }
+    }
+}
+
+export const createPaymentSuccess = (data) => ({
+    type: actionTypes.CREATE_PAYMENT,
+    data: data
+})
+
+export const get_payment_return = (payload) => {
+    return async (dispatch, getState) => {
+        let res = await getPaymentReturnService()
+    }
+}
+

@@ -55,7 +55,7 @@ const BookDataGrid = (props) => {
     const [loading, setLoading] = React.useState(false)
     React.useEffect(() => {
         setBook(props.book)
-    })
+    }, [])
 
 
     const columns = [

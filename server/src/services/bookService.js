@@ -567,7 +567,7 @@ let getTypeService = (typeId) => {
       if (typeId === "ALL") {
         let type = await db.Type.findAll({
           include: [
-            { model: db.Book, as: "typeData" },
+            // { model: db.Book, as: "typeData" },
             { model: db.Catalog, as: "catalogTypeData" }
           ],
           raw: true,

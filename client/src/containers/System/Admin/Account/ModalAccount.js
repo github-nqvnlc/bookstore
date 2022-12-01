@@ -344,7 +344,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createNewAccount: (data) => dispatch(actions.createNewAccount(data)),
-    getAllAccount: () => dispatch(actions.getAllAccount()),
+    getAllAccount: () => dispatch(actions.getAllAccount('ALL')),
   };
 };
 

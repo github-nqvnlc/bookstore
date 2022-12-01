@@ -11,6 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import MarkdownIt from 'markdown-it';
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
+import Order from "../Cart/Order";
 
 class BookDetail extends Component {
     constructor(props) {
@@ -36,6 +37,8 @@ class BookDetail extends Component {
             previewUrlImage: "",
 
             love: false,
+
+            open: false,
         }
     }
 
@@ -66,6 +69,18 @@ class BookDetail extends Component {
 
         }
     }
+
+    handleClickOpen = () => {
+        this.setState({
+            open: true,
+        });
+    };
+
+    handleClose = () => {
+        this.setState({
+            open: false,
+        });
+    };
 
     openPreviewImage = (image) => {
         this.setState({
@@ -111,7 +126,7 @@ class BookDetail extends Component {
                             }}
                             underline="hover"
                             color="inherit"
-
+                            onClick={() => { this.props.history.push(`/category/${this.state.category.name}/${this.state.category.id}`) }}
                         >
                             {this.state.category.name}
                         </Link>
@@ -121,7 +136,7 @@ class BookDetail extends Component {
                             }}
                             underline="hover"
                             color="inherit"
-
+                            onClick={() => { this.props.history.push(`/catalog/${this.state.catalog.name}/${this.state.catalog.id}`) }}
                         >
                             {this.state.catalog.name}
                         </Link>
@@ -131,7 +146,7 @@ class BookDetail extends Component {
                             }}
                             underline="hover"
                             color="inherit"
-
+                            onClick={() => { this.props.history.push(`/type/${this.state.type.name}/${this.state.type.id}`) }}
                         >
                             {this.state.type.name}
                         </Link>
@@ -176,7 +191,7 @@ class BookDetail extends Component {
                                     <Button onClick={() => { this.props.AddCart(this.state.book) }} sx={{ width: "50%", height: "3em" }} color="success" variant="outlined">Add to cart</Button>
                                 </Tooltip>
                                 <Tooltip title="Buy now">
-                                    <Button sx={{ width: "50%", height: "3em" }} color="success" variant="contained">Buy now</Button>
+                                    <Button onClick={this.handleClickOpen} sx={{ width: "50%", height: "3em" }} color="success" variant="contained">Buy now</Button>
                                 </Tooltip>
                             </Stack>
                         </Box>
@@ -405,6 +420,15 @@ class BookDetail extends Component {
                         className="preview_lightbox"
                     />
                 )}
+                <Order
+                    // cart={props.book}
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    total={Math.round(
+                        (this.state.book.price - this.state.book.price * this.state.book.discount) / 1000
+                    ) * 1000}
+                    book={this.state.book}
+                />
             </Container>
         )
     }

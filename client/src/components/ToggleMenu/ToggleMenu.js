@@ -16,9 +16,12 @@ import * as actions from "../../store/actions";
 import { Backdrop, Drawer, Link, List, ListItem, ListItemButton, ListItemText, MenuList, Paper, Stack } from "@mui/material";
 import { Container } from "reactstrap";
 import LayoutSidebar from "../LayoutBook/LayoutSidebar/LayoutSidebar";
+import { useHistory} from "react-router";
+import { NavLink } from "react-router-dom";
 
 
 const ToggleMenu = (props) => {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [hover, setHover] = React.useState(0)
 
@@ -128,19 +131,22 @@ const ToggleMenu = (props) => {
                             hover === 0 && setHover(indexCategory + 1)
                             return (
                                 <Box sx={{ minWidth: "200px", }} hidden={hover && hover === indexCategory + 1 ? false : true} >
+
                                     <Typography
                                         sx={{
                                             padding: "1em",
                                             minWidth: "100px",
                                         }} variant="h6" gutterBottom>
                                         {itemCategory.name}
-                                        <Link href="#" underline="hover">
+                                        <NavLink to={`/category/${itemCategory.name}/${itemCategory.id}`} underline="hover">
                                             <Typography sx={{
                                                 pl: "1em",
                                                 cursor: "pointer",
                                             }} variant="caption" gutterBottom>View all{" >>"}</Typography>
-                                        </Link>
+                                        </NavLink>
                                     </Typography>
+
+
 
                                     <Grid xs={12} container spacing={0}>
                                         {catalog?.map((itemCatalog, indexCatalog) => {
